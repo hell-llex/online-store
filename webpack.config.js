@@ -11,7 +11,8 @@ const isProduction = process.env.NODE_ENV === 'production'
 const stylesHandler = MiniCssExtractPlugin.loader
 
 const config = {
-  entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')],
+  // entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')],
+  entry: path.resolve(__dirname, './online-store/src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
@@ -20,15 +21,18 @@ const config = {
   },
   devServer: {
     open: true,
+    host: 'localhost',
     port: 8080,
-    // devtool: 'inline-source-map',
-    // static: path.resolve(__dirname, './dist'),
-    historyApiFallback: true,
-    client: {
-      overlay: false
-    }
-    // contentBase: path.join(__dirname, 'public')
+    hot: true,
+    compress: true
     // open: true,
+    // port: 8080,
+    // // devtool: 'inline-source-map',
+    // // static: path.resolve(__dirname, './dist'),
+    // historyApiFallback: true,
+    // client: {
+    //   overlay: false
+    // },
     // host: 'localhost'
   },
   plugins: [
@@ -83,9 +87,11 @@ const config = {
 module.exports = () => {
   if (isProduction) {
     config.mode = 'production'
+    config.entry = ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')]
     config.plugins.push(new WorkboxWebpackPlugin.GenerateSW())
   } else {
     config.mode = 'development'
+    config.entry = path.resolve(__dirname, './online-store/src/index.ts')
   }
   return config
 }
