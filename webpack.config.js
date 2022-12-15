@@ -1,17 +1,17 @@
 // Generated using webpack-cli https://github.com/webpack/webpack-cli
 
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
-const ESLintPlugin = require('eslint-webpack-plugin');
+const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
+// const ESLintPlugin = require('eslint-webpack-plugin')
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
-const stylesHandler = MiniCssExtractPlugin.loader;
+const stylesHandler = MiniCssExtractPlugin.loader
 
 const config = {
-  entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index')],
+  entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')],
   output: {
     path: path.resolve(__dirname, 'dist'),
     clean: true,
@@ -21,14 +21,20 @@ const config = {
   devServer: {
     open: true,
     port: 8080,
+    // devtool: 'inline-source-map',
+    // static: path.resolve(__dirname, './dist'),
+    historyApiFallback: true,
+    client: {
+      overlay: false
+    }
     // contentBase: path.join(__dirname, 'public')
     // open: true,
     // host: 'localhost'
   },
   plugins: [
-    new ESLintPlugin({
-      files: './online-store/src/*.ts'
-    }),
+    // new ESLintPlugin({
+    //   files: './online-store/src/*.ts'
+    // }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, './online-store/index.html'),
       favicon: path.resolve(__dirname, './online-store/assets/icons/favicon.ico')
@@ -61,11 +67,11 @@ const config = {
       },
       {
         test: /\.(?:png|svg|jpg|jpeg|gif|ogg|mp3|wav)$/i,
-        type: 'asset/resource',
+        type: 'asset/resource'
       },
       {
         test: /\.(?:ico|svg)$/,
-        type: 'asset/resource',
+        type: 'asset/resource'
       }
     ]
   },
