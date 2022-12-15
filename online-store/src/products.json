@@ -1,0 +1,212 @@
+[
+    {
+      "name": "Iphone 13",
+      "image": "iphone-13-black",
+      "manufacturer": "Apple",
+      "color": "Black",
+      "numberCamera": "2",
+      "popular": "Yes",
+      "quantity": "8",
+      "year": "2021"
+    },
+    {
+      "name": "Iphone 13",
+      "image": "iphone-13-green",
+      "manufacturer": "Apple",
+      "color": "Green",
+      "numberCamera": "2",
+      "popular": "Yes",
+      "quantity": "7",
+      "year": "2021"
+    },
+    {
+      "name": "Iphone 13",
+      "image": "iphone-13-red",
+      "manufacturer": "Apple",
+      "color": "Red",
+      "numberCamera": "2",
+      "popular": "Yes",
+      "quantity": "6",
+      "year": "2021"
+    },
+    {
+      "name": "Iphone XR",
+      "image": "iphone-xr-yellow",
+      "manufacturer": "Apple",
+      "color": "Yellow",
+      "numberCamera": "1",
+      "popular": "Yes",
+      "quantity": "3",
+      "year": "2018"
+    },
+    {
+      "name": "Iphone XR",
+      "image": "iphone-xr-white",
+      "manufacturer": "Apple",
+      "color": "White",
+      "numberCamera": "1",
+      "popular": "Yes",
+      "quantity": "2",
+      "year": "2018"
+    },
+    {
+      "name": "Iphone XR",
+      "image": "iphone-xr-red",
+      "manufacturer": "Apple",
+      "color": "Red",
+      "numberCamera": "1",
+      "popular": "Yes",
+      "quantity": "1",
+      "year": "2018"
+    },
+    {
+      "name": "Samsung Galaxy S22",
+      "image": "samsung-s22-black",
+      "manufacturer": "Samsung",
+      "color": "Black",
+      "numberCamera": "3",
+      "popular": "No",
+      "quantity": "9",
+      "year": "2022"
+    },
+    {
+      "name": "Samsung Galaxy S22",
+      "image": "samsung-s22-green",
+      "manufacturer": "Samsung",
+      "color": "Green",
+      "numberCamera": "3",
+      "popular": "No",
+      "quantity": "6",
+      "year": "2022"
+    },
+    {
+      "name": "Samsung Galaxy S22",
+      "image": "samsung-s22-pink",
+      "manufacturer": "Samsung",
+      "color": "Pink",
+      "numberCamera": "3",
+      "popular": "No",
+      "quantity": "5",
+      "year": "2022"
+    },
+    {
+      "name": "Samsung Galaxy A32",
+      "image": "samsung-a32-black",
+      "manufacturer": "Samsung",
+      "color": "Black",
+      "numberCamera": "4",
+      "popular": "No",
+      "quantity": "3",
+      "year": "2021"
+    },
+    {
+      "name": "Samsung Galaxy A32",
+      "image": "samsung-a32-white",
+      "manufacturer": "Samsung",
+      "color": "White",
+      "numberCamera": "4",
+      "popular": "No",
+      "quantity": "1",
+      "year": "2021"
+    },
+    {
+      "name": "Samsung Galaxy A32",
+      "image": "samsung-a32-purple",
+      "manufacturer": "Samsung",
+      "color": "Purple",
+      "numberCamera": "4",
+      "popular": "No",
+      "quantity": "2",
+      "year": "2021"
+    },
+    {
+      "name": "Google Pixel 6",
+      "image": "google-6-black",
+      "manufacturer": "Google",
+      "color": "Black",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "7",
+      "year": "2021"
+    },
+    {
+      "name": "Google Pixel 6",
+      "image": "google-6-coral",
+      "manufacturer": "Google",
+      "color": "Coral",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "3",
+      "year": "2021"
+    },
+    {
+      "name": "Google Pixel 6",
+      "image": "google-6-mint",
+      "manufacturer": "Google",
+      "color": "Mint",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "4",
+      "year": "2021"
+    },
+    {
+      "name": "Xiaomi Redmi Note 10S",
+      "image": "xiaomi-note-10s-black",
+      "manufacturer": "Xiaomi",
+      "color": "Black",
+      "numberCamera": "4",
+      "popular": "Yes",
+      "quantity": "5",
+      "year": "2021"
+    },
+    {
+      "name": "Xiaomi Redmi Note 10S",
+      "image": "xiaomi-note-10s-white",
+      "manufacturer": "Xiaomi",
+      "color": "White",
+      "numberCamera": "4",
+      "popular": "Yes",
+      "quantity": "6",
+      "year": "2021"
+    },
+    {
+      "name": "Xiaomi Redmi Note 10S",
+      "image": "xiaomi-note-10s-blue",
+      "manufacturer": "Xiaomi",
+      "color": "Blue",
+      "numberCamera": "4",
+      "popular": "Yes",
+      "quantity": "4",
+      "year": "2021"
+    },
+    {
+      "name": "Xiaomi Redmi 10C",
+      "image": "xiaomi-10c-black",
+      "manufacturer": "Xiaomi",
+      "color": "Black",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "8",
+      "year": "2022"
+    },
+    {
+      "name": "Xiaomi Redmi 10C",
+      "image": "xiaomi-10c-blue",
+      "manufacturer": "Xiaomi",
+      "color": "Blue",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "9",
+      "year": "2022"
+    },
+    {
+      "name": "Xiaomi Redmi 10C",
+      "image": "xiaomi-10c-mint",
+      "manufacturer": "Xiaomi",
+      "color": "Mint",
+      "numberCamera": "2",
+      "popular": "No",
+      "quantity": "3",
+      "year": "2022"
+    }
+]
