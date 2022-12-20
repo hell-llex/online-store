@@ -12,25 +12,24 @@ function CreateProductCard(b: HTMLElement, n: number) {
     const elem = [document.createElement('div'), document.createElement('div'), document.createElement('h3'), document.createElement('p')];
     elem[0].className = 'product-item';
     b.append(elem[0]);
-    
+
     const cardsDom: NodeListOf<HTMLElement> = document.querySelectorAll('.product-item');
-    
+
     elem[1].className = 'product-img';
     cardsDom[i].append(elem[1]);
 
     const imgDom: NodeListOf<HTMLElement> = document.querySelectorAll('.product-img');
-    
+
     imgDom[i].classList.add(Products[i].image);
 
     cardsDom[i].append(elem[2]);
     const nameDom: NodeListOf<HTMLElement> = document.querySelectorAll('.product-item h3');
     nameDom[i].innerHTML = Products[i].name;
 
-    const nameCard = ['Manufacturer',  'Year', 'Number of camera', 'Color', 'Quantity', 'Popular']
+    const nameCard = ['Manufacturer', 'Year', 'Number of camera', 'Color', 'Quantity', 'Popular']
     const infoCard = [Products[i].manufacturer, Products[i].year, Products[i].numberCamera, Products[i].color, Products[i].quantity, Products[i].popular]
-    
-    console.log(cardsDom[i])
-    
+
+
     for (let index = 0; index < 6; index++) {
       const _p = document.createElement('p');
       _p.innerHTML = `<b>${nameCard[index]}: </b> ${infoCard[index]}`;
