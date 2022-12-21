@@ -1,59 +1,44 @@
 import { itemInBasket } from './index.ts'
+import Data from './products-v1.json'
+import { calcTotalPrice } from './calcTotalPrice.js'
 const productCardContainer = document.querySelector('.products__card-container')
 const productHeader = document.querySelector('.products__header')
 const btnMinusPage = document.querySelector('[data-action="minusPage"]')
 const btnPlusPage = document.querySelector('[data-action="plusPage"]')
 const counterPage = document.querySelector('[data-counterPage]')
 
-console.log(itemInBasket)
+const btnAddTest = document.querySelector('.btn-add-test')
+const btnDelTest = document.querySelector('.btn-del-test')
 
-/* window.addEventListener('click', (event) => {
-  if (event.target.dataset.action === 'plus' || event.target.dataset.action === 'minus') {
-    console.log(event.target)
-    if (event.target.dataset.action === 'plus') {
-      const itemCard = event.target.closest('.products__item-card')
-      const counter = itemCard.querySelector('[data-counter]')
-      counter.innerText = ++counter.innerText
-    }
-    if (event.target.dataset.action === 'minus') {
-      const itemCard = event.target.closest('.products__item-card')
-      const counter = itemCard.querySelector('[data-counter]')
-      if (+counter.innerText > 1) {
-        counter.innerText = --counter.innerText
-      }
-    }
-  }
-}) */
-
-export function addCardBasket (product) {
+function addCardBasket (product) {
   itemInBasket.push(product)
-  paintCardInBasket(itemInBasket)
+  renderCardInBasket(itemInBasket)
+  calcTotalPrice()
 }
 
-export function delCardBasket (product) {
+function delCardBasket (product) {
   itemInBasket.forEach((el, index) => {
     if (el.id === product.id) {
       itemInBasket.splice(index, 1)
     }
-    console.log(itemInBasket)
-    paintCardInBasket(itemInBasket)
+    renderCardInBasket(itemInBasket)
+    calcTotalPrice()
   })
 }
 
-function paintCardInBasket (arr) {
+function renderCardInBasket (arr) {
   productCardContainer.innerHTML = ''
   productHeader.innerHTML = ''
-  console.log(arr)
   if (arr.length === 0) {
     productCardContainer.innerHTML = ''
   }
-
+  // iterate array itemInBasket and render all cards in basket
   arr.forEach((el, index) => {
     const productCardHTML = `
-    <div class="products__item-card">
+    <div class="products__item-card" data-identifier="${el.id}">
       <div class="products__position"> ${index + 1} </div>
       <div class="item-card__info">
-        <img alt="" src="${el.thumbnail}">
+        <img alt="${el.title}" src="${el.thumbnail}">
         <div class="item-card__detail">
           <div class="item-card__title">
             <h3>${el.title}</h3>
@@ -68,8 +53,11 @@ function paintCardInBasket (arr) {
       </div>
       <div class="number-control">
         <div class="stock-control"> Stock: ${el.stock}</div>
-        <div class="incDec-control"> <button data-action="minus">-</button> 1 <button data-action="plus">+</button></div>
-        <div class="amount-control"> €${el.price}</div>
+        <div class="incDec-control">
+        <button data-action="minus">-</button>
+        <span class="item__count" data-counterItem>${el.count}</span>
+        <button data-action="plus">+</button></div>
+        <div class="amount-control">${el.price} €</div>
         <button class="btn-del-test" data-action="del">del</button>
       </div>
     </div>`
@@ -87,4 +75,62 @@ function paintCardInBasket (arr) {
   </div>`
 
   productHeader.insertAdjacentHTML('afterbegin', productHeaderHTML)
+  calcTotalPrice()
 }
+
+// handle clicking on + -
+window.addEventListener('click', handleClickPlusMinus)
+
+function handleClickPlusMinus (event) {
+  if (event.target.dataset.action === 'plus' || event.target.dataset.action === 'minus') {
+    const itemCard = event.target.closest('.products__item-card')
+    let itemCounter = itemCard.querySelector('[data-counterItem]')
+    const itemID = itemCard.getAttribute('data-identifier')
+    const stockControl = Data[itemID - 1].stock
+    if (event.target.dataset.action === 'plus') {
+      if (+itemCounter.innerText < stockControl) {
+        itemCounter = ++itemCounter
+        itemInBasket.forEach((el) => {
+          if (el.id === +itemID) {
+            el.count = ++el.count
+          }
+        })
+        renderCardInBasket(itemInBasket)
+        calcTotalPrice()
+      }
+    }
+    if (event.target.dataset.action === 'minus') {
+      if (+itemCounter.innerText === 1) {
+        event.target.closest('.products__item-card').remove()
+        delCardBasket(Data[itemID - 1])
+        calcTotalPrice()
+      }
+
+      if (+itemCounter.innerText > 1) {
+        itemCounter = --itemCounter
+        itemInBasket.forEach((el) => {
+          if (el.id === +itemID) {
+            el.count = --el.count
+          }
+        })
+        renderCardInBasket(itemInBasket)
+        calcTotalPrice()
+      }
+    }
+  }
+}
+
+btnAddTest.addEventListener('click', (e) => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'
+  addCardBasket(Data[10])
+  renderCardInBasket(itemInBasket)
+  console.log('add')
+})
+
+productCardContainer.addEventListener('click', (event) => {
+  const itemCard = event.target.closest('.products__item-card')
+  const itemID = itemCard.getAttribute('data-identifier')
+  if (event.target.dataset.action === 'del') { // TODO прокидываешь мне товар по которому прожато 'удалить товар'
+    delCardBasket(Data[itemID - 1])
+    console.log('del')
+  }
+})
