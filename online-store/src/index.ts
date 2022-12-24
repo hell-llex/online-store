@@ -5,13 +5,17 @@ import Data from './products-v1.json'
 // import Filter from './components/filter';
 import Button from './components/button';
 import CreateProductCard from './components/cards';
+import { addLocalStorage, getLocalStorage } from './localStorage.js'
 // import * as noUiSlider from 'nouislider';
 // import 'nouislider/dist/nouislider.css';
 const log = console.log;
-export let itemInBasket:any = [Data[1], Data[2], Data[3],Data[4], Data[5], Data[6]] // global array with item in basket
 
+export let itemInBasket:any
+itemInBasket = getLocalStorage() // global array of items in basket get value from localStarage
 
+window.addEventListener('beforeunload', addLocalStorage)    //catch reload-page event
 
+window.addEventListener('load', getLocalStorage)
 
 
 
