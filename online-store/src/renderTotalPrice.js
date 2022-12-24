@@ -1,10 +1,7 @@
 import { itemInBasket } from './index.ts'
 const summary = document.querySelector('.summary')
 
-/* localStorage.setItem('itemInBasket', JSON.stringify(itemInBasket)) // сериализуем и записываем в локалстораж
-JSON.parse(localStorage.getItem('itemInBasket')) // достаем из локала и парсим обратно */
-
-export function calcTotalPrice () {
+export function renderTotalPrice () {
   summary.innerHTML = ''
   let priceTotal = 0
   let totalCountEl = 0
