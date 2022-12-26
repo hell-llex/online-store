@@ -1,9 +1,9 @@
 import { itemInBasket } from '../../index'
 import Data from '../../products-v1.json'
-import { renderTotalPrice } from './renderTotalPrice.js'
-import { renderProductHeader } from './renderProductHeader.js'
-import { renderCardsInBasket } from './renderCardsInBasket.js'
-import { handleClickPlusMinusDel } from './handleClickPlusMinusDel.js'
+import { renderTotalPrice } from './renderTotalPrice'
+import { renderProductHeader } from './renderProductHeader'
+import { renderCardsInBasket } from './renderCardsInBasket'
+import { handleClickPlusMinusDel } from './handleClickPlusMinusDel'
 const productCardContainer = document.querySelector('.products__card-container')
 const btnAddTest = document.querySelector('.btn-add-test')
 const summaryForm = document.querySelector('.summary__form')
