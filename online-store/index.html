@@ -11,22 +11,21 @@
 <body class="body">
   <div class="wrapper">
     <header class="header">
-      <nav class="nav">
-
-      </nav>
-      <div class="logo">
-
-      </div>
-      <div class="search">
-
-      </div>
-      <div class="cart">
-
+      <!-- <div class="logo" class="logo">Online-Store</div>
+      <div class="basket">
         <p>0</p>
-      </div>
+      </div> -->
+      <!-- <a href="#/" data-href="#/" onclick="locationResolver(this.dataset.href)" class="logo">Online-Store</a>
+      <a href="#/basket/" data-href="#/basket/" onclick="locationResolver(this.dataset.href)" class="basket">
+        <p>0</p>
+      </a> -->
+      <a href="#/" data-href="#/" class="logo">Online-Store</a>
+      <a href="#/basket/" data-href="#/basket/" class="basket">
+        <p>0</p>
+      </a>
     </header>
     <main class="main">
-      <div class="page__home">
+      <div class="page__home" id="page__home">
         <div class="main-container">
           <aside class="filters">
             <ul class="filters-list">
@@ -104,9 +103,17 @@
           </div>
         </div>
       </div>
-      <div class="page__basket"></div>
-      <div class="page__product-description"></div>
-
+      <div class="page__basket" id="page__basket">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ex impedit, beatae cupiditate maxime
+          voluptatibus inventore harum nobis quis fugiat excepturi error iure voluptatum fugit magni explicabo deleniti,
+          doloribus consequuntur facere, rerum quisquam quos. A quia inventore illum aut ipsam impedit saepe ipsum fuga!
+        </p>
+      </div>
+      <div class="page__product-description">
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero, sunt.</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero, sunt.</p>
+        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Vero, sunt.</p>
+      </div>
     </main>
     <footer class="footer">
       <a href="https://github.com/hell-llex" class="my-logo"></a>
