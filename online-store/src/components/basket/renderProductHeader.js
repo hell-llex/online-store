@@ -1,4 +1,4 @@
-import { itemInBasket } from './index.ts'
+import { itemInBasket } from '../../index'
 const productHeader = document.querySelector('.products__header')
 
 export function renderProductHeader () {

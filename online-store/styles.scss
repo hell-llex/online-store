@@ -19,7 +19,7 @@ $font-height-130: 130%;
   font-family: 'Roboto Mono', monospace;
   font-style: normal;
   font-size: $font-n2;
-  line-height: $font-height-130;
+  line-height: 110%;
   color: $color-dark;
   background-color: aqua;
   text-decoration: none;
@@ -104,7 +104,7 @@ li {
   margin: 50px 0px;
 }
 
-.basket{
+.icon-basket {
   position: relative;
   display: block;
   width: 100px;
@@ -610,4 +610,17 @@ li {
 .summary {
   margin-top: 30px;
   height: 10vh;
+}
+
+.summary__promo {
+  line-height: 110%;
+}
+.summary__input {
+margin-bottom: 10px;
+}
+.correct {
+  background: rgb(99, 185, 99);
+}
+.incorrect {
+  background:rgb(240, 131, 131);
 }

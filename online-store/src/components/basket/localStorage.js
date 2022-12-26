@@ -1,4 +1,4 @@
-import { itemInBasket } from './index.ts'
+import { itemInBasket } from '../../index'
 export function addLocalStorage () {
   localStorage.setItem('storage', JSON.stringify(itemInBasket)) // сериализуем и записываем в локалстораж
 }
