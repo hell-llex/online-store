@@ -1,4 +1,4 @@
-import { itemInBasket } from './index.ts'
+import { itemInBasket } from '../../index'
 
 export function handleClickPlusMinusDel (event) {
   if (event.target.dataset.action === 'plus' || event.target.dataset.action === 'minus' || event.target.dataset.action === 'del') {

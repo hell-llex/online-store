@@ -1,5 +1,5 @@
 // TODO fix при удалении элемента на 2й сранице корзины рендорит первую страницу
-import { itemInBasket } from './index.ts'
+import { itemInBasket } from '../../index'
 const productCardContainer = document.querySelector('.products__card-container')
 const productHeader = document.querySelector('.products__header')
 

@@ -1,4 +1,4 @@
-import { itemInBasket } from './index.ts'
+import { itemInBasket } from '../../index'
 const summary = document.querySelector('.summary')
 
 export function renderTotalPrice () {

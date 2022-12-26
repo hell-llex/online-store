@@ -1,5 +1,5 @@
-import { itemInBasket } from './index.ts'
-import Data from './products-v1.json'
+import { itemInBasket } from '../../index'
+import Data from '../../products-v1.json'
 import { renderTotalPrice } from './renderTotalPrice.js'
 import { renderProductHeader } from './renderProductHeader.js'
 import { renderCardsInBasket } from './renderCardsInBasket.js'

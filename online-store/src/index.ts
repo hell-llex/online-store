@@ -1,11 +1,11 @@
 import '../index.html';
 import '../styles.scss';
-import './basket'
+import './components/basket/basket.js'
 import Data from './products-v1.json'
 // import Filter from './components/filter';
 import Button from './components/button';
 import CreateProductCard from './components/cards';
-import { addLocalStorage, getLocalStorage } from './localStorage.js'
+import { addLocalStorage, getLocalStorage } from './components/basket/localStorage.js'
 // import * as noUiSlider from 'nouislider';
 // import 'nouislider/dist/nouislider.css';
 const log = console.log;
