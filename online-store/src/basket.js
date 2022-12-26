@@ -4,21 +4,26 @@ import { renderTotalPrice } from './renderTotalPrice.js'
 import { renderProductHeader } from './renderProductHeader.js'
 import { renderCardsInBasket } from './renderCardsInBasket.js'
 import { handleClickPlusMinusDel } from './handleClickPlusMinusDel.js'
-
+const productCardContainer = document.querySelector('.products__card-container')
 const btnAddTest = document.querySelector('.btn-add-test')
+const summaryForm = document.querySelector('.summary__form')
 
 function renderBasket () {
   renderProductHeader()
   renderCardsInBasket()
   renderTotalPrice()
-  console.log(itemInBasket)
+  console.log('render this: ', itemInBasket)
 }
 
 // handle clicking on + - Del
-window.addEventListener('click', (e) => {
-  handleClickPlusMinusDel(e)
-  renderBasket()
+productCardContainer.addEventListener('click', (e) => {
+  if (e.target.dataset.action === 'plus' || e.target.dataset.action === 'minus' || e.target.dataset.action === 'del') {
+    handleClickPlusMinusDel(e)
+    renderBasket()
+  }
 })
+/* console.log('summaryForm :>> ', summaryForm)
+summaryForm.addEventListener('change', (e) => { if (e !== null) { renderBasket() } }) */
 
 btnAddTest.addEventListener('click', (e) => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'
   addCardBasket(Data[10])
