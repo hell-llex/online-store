@@ -24,7 +24,14 @@ const config = {
     host: 'localhost',
     port: 8080,
     hot: true,
-    compress: true
+    compress: true,
+    // devtool: 'inline-source-map',
+    // static: path.resolve(__dirname, './dist'),
+    historyApiFallback: true,
+    client: {
+      overlay: false
+    }
+    // contentBase: path.join(__dirname, 'public')
     // open: true,
     // port: 8080,
     // // devtool: 'inline-source-map',

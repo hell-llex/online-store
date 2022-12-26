@@ -37,6 +37,7 @@ li {
 .wrapper {
   width: 80vw;
   margin: 0px auto;
+  height: 100%;
 }
 
 .header {
@@ -532,4 +533,81 @@ li {
   width: 100vw;
   height: 100vh;
   background-color: #000000b4;
+}
+
+
+
+.hide {
+  display: none;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 2vw;
+  font-size: 14px;
+  min-height: calc(100vh - 10vh - 100px);
+}
+
+.products {
+  height: 70vh;
+}
+
+.products__header {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: aquamarine;
+}
+
+.products__card-container {
+  height: 60vh;
+}
+
+.products__item-card {
+  display: grid;
+  grid-template-columns: 1fr 7fr 2fr;
+  align-items: center;
+  justify-items: center;
+  height: 15vh;
+}
+
+.item-card__info {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.item-card__info img {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+
+}
+
+.item-card__description,
+.item-card__other,
+.item-card__title {
+  line-height: 100%;
+}
+
+.number-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.number-control>div {
+  line-height: 100%;
+}
+
+.incDec-control {
+  margin: 5px auto 5px auto;
+}
+
+.summary {
+  margin-top: 30px;
+  height: 10vh;
 }
