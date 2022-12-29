@@ -1,4 +1,4 @@
-function Button() {
+export function Button() {
   const btnReset = document.querySelector('.btn-reset') as HTMLElement;
   const btnView = document.querySelector('.btn-switch-view') as HTMLElement;
   const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
@@ -22,4 +22,3 @@ function Button() {
     }
   });
 }
-export default Button;

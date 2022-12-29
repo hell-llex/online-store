@@ -1,5 +1,5 @@
-function Routing () {
-  const log = (e) => console.log(`${e} ==>`, e)
+export function Routing () {
+  // const log = (e) => console.log(`${e} ==>`, e)
 
   const basket = document.querySelector('.icon-basket')
   const logo = document.querySelector('.logo')
@@ -21,6 +21,7 @@ function Routing () {
   //   (main[1] as HTMLElement).style.display = 'none';
   //   (main[2] as HTMLElement).style.display = 'flex';
   // }
+
   // =========================================================
   // logo?.addEventListener('click', (e) => locations(e));
   // basket?.addEventListener('click', (e) => locations(e));
@@ -104,12 +105,12 @@ function Routing () {
 
   const locationResolver = (location) => {
     if (location === '#/' || location === '#/home/' || location === '#/home') {
-      log(location)
+      // log(location)
       main[0].style.display = 'flex'
       main[1].style.display = 'none'
       main[2].style.display = 'none'
     } else if (location === '#/basket/' || location === '#/basket') {
-      log(location)
+      // log(location)
       main[0].style.display = 'none'
       main[1].style.display = 'flex'
       main[2].style.display = 'none'
@@ -132,17 +133,4 @@ function Routing () {
   logo?.addEventListener('click', () => {
     locationResolver(logo.dataset.href)
   })
-
-  // console.log(window.location.href)
-
-  // window.addEventListener('load', () => {
-  //   const location = window.location.hash
-  //   log(location);
-  //   // if (location) {
-  //   //   locationResolver(location)
-  //   // }
-  // })
-
-  // =========================================================
 }
-export default Routing

@@ -4,6 +4,6 @@ export function addLocalStorage () {
 }
 
 export function getLocalStorage () {
-  console.log('json', JSON.parse(localStorage.getItem('storage')))
+  // console.log('json', JSON.parse(localStorage.getItem('storage')))
   return JSON.parse(localStorage.getItem('storage')) // достаем из локала и парсим обратно
 }
