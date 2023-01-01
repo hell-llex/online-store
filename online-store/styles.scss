@@ -55,7 +55,7 @@ li {
 }
 
 .wrapper {
-  width: 80vw;
+  width: 90vw;
   margin: 0px auto;
   height: 100%;
 }
@@ -91,7 +91,7 @@ li {
 
 .main {
   height: 100%;
-  width: 100%;
+  // width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -100,6 +100,8 @@ li {
     height: 100%;
     width: 100%;
     display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .page__basket {
@@ -217,13 +219,21 @@ li {
   border-radius: 25px;
 
   .catalog-sort {
-    margin: 10px;
+    width: 100%;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 2rem;
     font-size: $font-n3;
+
+    .line {
+      height: 0.8rem;
+      width: 100%;
+      background-color: #000000;
+      border-radius: 1rem;
+    }
 
     .btn-switch-view {
       padding: 5px;
@@ -269,19 +279,15 @@ li {
       }
     }
 
-    hr {
-      width: 500px;
-      border: 2px solid $color-dark;
-    }
-
     .btn-sort {
-      width: 300px;
-      height: 50px;
 
-      // border: 1px solid $color-dark;
+      height: 5rem;
+      font-size: 1.8rem;
+
       .sort-input {
-        width: 130px;
-        height: 40px;
+        min-width: 18rem;
+        height: 4rem;
+        border-radius: 1rem;
         cursor: pointer;
       }
     }
@@ -310,26 +316,6 @@ li {
     text-align: center;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .footer {
   display: flex;
