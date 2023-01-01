@@ -2,12 +2,13 @@ import '../index.html';
 import '../styles.scss';
 import './components/basket/basket'
 import Data from './products-v1.json'
-// import Filter from './components/filter';
+import { loadFilter } from './components/filter/filter';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';
 import { addLocalStorage, getLocalStorage } from './components/basket/localStorage'
 import { Routing } from './components/routing/routing';
 import { Loader } from './components/loader/loader';
+
 Loader()
 
 
@@ -23,8 +24,5 @@ window.addEventListener('beforeunload', addLocalStorage)    //catch reload-page 
 
 window.addEventListener('load', getLocalStorage)
 
-const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
-// CreateProductCard(catalogProducts, 21);
-// Filter();
-
 Button()
+

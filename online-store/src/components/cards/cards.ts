@@ -1,9 +1,10 @@
 import './cards.scss';
 import { productsDataI } from '../types';
+import { loadFilter } from '../filter/filter';
 
 const log = (e: any) => console.log(`${e} ==>`, e);
 
-let productsData = {}; // полный получаемый объект
+export let productsData = {}; // полный получаемый объект
 export const products: string[] = []; // массив со всеми элементами в виде HTML строки
 
 function CreateProductCard(setting: Array<productsDataI>): void { // принимает массив данных
@@ -39,5 +40,7 @@ export function loadProduct(quantity: number = 100) { // дефолтное зн
     }) => {
       Object.assign(productsData, data) // копирует объект
       CreateProductCard(data.products) // передает массив в функцию CreateProductCard
+      // console.log('productsData :>> ', productsData);
+      loadFilter(data.products)
     })
 }
