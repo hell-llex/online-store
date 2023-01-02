@@ -8,9 +8,9 @@ import { loadProduct } from './components/cards/cards';
 import { addLocalStorage, getLocalStorage } from './components/basket/localStorage'
 import { Routing } from './components/routing/routing';
 import { Loader } from './components/loader/loader';
+import { SortProductCard } from './components/sort/sort';
 
 Loader()
-
 
 const log = console.log;
 
@@ -26,3 +26,4 @@ window.addEventListener('load', getLocalStorage)
 
 Button()
 
+SortProductCard()
