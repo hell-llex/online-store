@@ -4,10 +4,16 @@ import { loadFilter } from '../filter/filter';
 
 const log = (e: any) => console.log(`${e} ==>`, e);
 
-export let productsData = {}; // полный получаемый объект
-export const products: string[] = []; // массив со всеми элементами в виде HTML строки
+export let productsData = {
+  limit: 0,
+  products: [],
+  skip: 0,
+  total: 0
+}; // полный получаемый объект
+export let products: string[] = []; // массив со всеми элементами в виде HTML строки
 
-function CreateProductCard(setting: Array<productsDataI>): void { // принимает массив данных
+export function CreateProductCard(setting: Array<productsDataI>): void { // принимает массив данных
+  const currentProducts: string[] = [];
   setting.forEach(elem => {
     const card: string = `<div class="product-item">
     <div class="product-img"
@@ -15,8 +21,8 @@ function CreateProductCard(setting: Array<productsDataI>): void { // прини�
     <h3>${elem.title}</h3>
     <p><b>Category: </b> ${elem.category}</p>
     <p><b>Brand: </b> ${elem.brand}</p>
-    <p><b>Price: </b> ${elem.price}</p>
-    <p><b>Discount: </b> ${elem.discountPercentage}</p>
+    <p><b>Price: €</b>${elem.price}</p>
+    <p><b>Discount: </b> ${elem.discountPercentage}%</p>
     <p><b>Rating: </b> ${elem.rating}</p>
     <p><b>Stock: </b> ${elem.stock}</p>
     <div class="product-btn">
@@ -24,9 +30,10 @@ function CreateProductCard(setting: Array<productsDataI>): void { // прини�
       <div class="btn__description">Details</div>
     </div>
     </div>`;
-    products.push(card);
+    currentProducts.push(card);
   });
-  (document.querySelector('.catalog-products') as HTMLElement).innerHTML = products.join('');
+  products = currentProducts.slice();
+  (document.querySelector('.catalog-products') as HTMLElement).innerHTML = currentProducts.join('');
 }
 
 export function loadProduct(quantity: number = 100) { // дефолтное значение стоит на 100 карточек, переопределеятся в вызове функции

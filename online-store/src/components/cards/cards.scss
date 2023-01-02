@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;1,700&display=swap');
-@import '~normalize.css';
 
 $font-n2: 44px;
 $font-n3: 22px;
@@ -7,33 +6,6 @@ $font-n4: 18px;
 $color-light: #FFFFFF;
 $color-dark: #000000;
 $font-height-130: 130%;
-
-
-.main {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .page__home {
-    height: 100%;
-    width: 100%;
-    display: flex;
-  }
-
-  .page__basket {
-    height: 100%;
-    width: 100%;
-    display: none;
-  }
-
-  .page__product-description {
-    height: 100%;
-    width: 100%;
-    display: none;
-  }
-}
 
 .catalog {
   .catalog-products {
