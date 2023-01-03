@@ -37,6 +37,7 @@ export function CreateProductCard(setting: Array<productsDataI> | string): void 
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML = currentProducts.join('');
   }
   (document.querySelector('.found') as HTMLElement).innerHTML = `Found:${currentProducts.length}`;
+  (document.querySelector('.found') as HTMLElement).dataset.found = `${currentProducts.length}`;
 }
 
 export function loadProduct(quantity: number = 100) { // дефолтное значение стоит на 100 карточек, переопределеятся в вызове функции
