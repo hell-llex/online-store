@@ -38,7 +38,7 @@ $font-height-130: 130%;
   position: relative;
   // height: 100vh;
   width: 30vw;
-  background-color: blue;
+  background-color:cadetblue;
   font-size: $font-n4;
   line-height: normal;
 
@@ -81,6 +81,10 @@ $font-height-130: 130%;
           justify-content: space-between;
           align-items: center;
           gap: 10px;
+
+          &.inactive {
+            opacity: 0.5;
+          }
 
           .item-label {
             min-height: 2rem;
@@ -126,6 +130,21 @@ $font-height-130: 130%;
       transform: translate(3px, 3px);
     }
   }
+}
+
+.not-found {
+  margin: 0 auto;
+  padding: 0 0 10rem 0;
+  min-width: 70rem;
+  min-height: 60rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  font-style: bold;
+  font-weight: 700;
+  line-height: $font-height-130;
+  text-align: center;
 }
 
 // .catalog {
