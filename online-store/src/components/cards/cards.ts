@@ -1,21 +1,21 @@
 import './cards.scss';
 import { productsDataI } from '../types';
 import { loadFilter } from '../filter/filter';
+type productsData = { limit: number, products: Array<productsDataI>, skip: number, total: number }
 
 const log = (e: any) => console.log(`${e} ==>`, e);
 
-export let productsData = {
-  limit: 0,
-  products: [],
-  skip: 0,
-  total: 0
-}; // полный получаемый объект
+export let productsData: productsData = { limit: 0, products: [], skip: 0, total: 0 }; // полный получаемый объект
 export let products: string[] = []; // массив со всеми элементами в виде HTML строки
 
-export function CreateProductCard(setting: Array<productsDataI>): void { // принимает массив данных
+export function CreateProductCard(setting: Array<productsDataI> | string): void { // принимает массив данных
   const currentProducts: string[] = [];
-  setting.forEach(elem => {
-    const card: string = `<div class="product-item">
+  if (typeof setting === 'string') {
+    (document.querySelector('.catalog-products') as HTMLElement).style.display = 'flex';
+    (document.querySelector('.catalog-products') as HTMLElement).innerHTML = `<p class="not-found">No products found <br> (ಥ﹏ಥ)</p>`;
+  } else {
+    (setting as Array<productsDataI>).forEach(elem => {
+      const card: string = `<div class="product-item">
     <div class="product-img"
       style="background-image: url('${elem.thumbnail}');"></div>
     <h3>${elem.title}</h3>
@@ -30,10 +30,13 @@ export function CreateProductCard(setting: Array<productsDataI>): void { // пр
       <div class="btn__description">Details</div>
     </div>
     </div>`;
-    currentProducts.push(card);
-  });
-  products = currentProducts.slice();
-  (document.querySelector('.catalog-products') as HTMLElement).innerHTML = currentProducts.join('');
+      currentProducts.push(card);
+    });
+    products = currentProducts.slice();
+    (document.querySelector('.catalog-products') as HTMLElement).style.display = 'grid';
+    (document.querySelector('.catalog-products') as HTMLElement).innerHTML = currentProducts.join('');
+  }
+  (document.querySelector('.found') as HTMLElement).innerHTML = `Found:${currentProducts.length}`;
 }
 
 export function loadProduct(quantity: number = 100) { // дефолтное значение стоит на 100 карточек, переопределеятся в вызове функции
