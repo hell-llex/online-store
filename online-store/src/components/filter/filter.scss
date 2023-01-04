@@ -38,7 +38,7 @@ $font-height-130: 130%;
   position: relative;
   // height: 100vh;
   width: 30vw;
-  background-color:cadetblue;
+  background-color: cadetblue;
   font-size: $font-n4;
   line-height: normal;
 
@@ -99,7 +99,13 @@ $font-height-130: 130%;
       }
 
       .stock-container,
-      .price-container {}
+      .price-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

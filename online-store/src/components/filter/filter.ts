@@ -2,6 +2,7 @@ import './filter.scss'
 import { productsDataI } from '../types'
 import { productsData, CreateProductCard } from '../cards/cards'
 import { SortProductCard } from '../sort/sort'
+import { slider } from './slider/slider'
 
 type sliderSelector = { min: number, max: number }
 type filterSelector = { arrFilter: string[], countFilter: number[] }
@@ -51,7 +52,7 @@ export function loadFilter(arrProd: Array<productsDataI>) {
   CreateFilter(filterBrand, 'brand')
   CreateFilter(filterStock, 'stock')
   CreateFilter(filterPrice, 'price')
-
+  slider()
 }
 
 function CreateFilter(setting: filterSelector | sliderSelector, location: string): void { // category, brand, stock, price
@@ -66,23 +67,13 @@ function CreateFilter(setting: filterSelector | sliderSelector, location: string
   } else if (location === 'stock' || location === 'price') {
     // log(setting)
     let value = setting as sliderSelector
-    dataDom.push(`<div class="range_container">
-      <div class="sliders_control">
-        <input id="fromSlider" type="range" value="${value.min}" min="${value.min}" max="${value.max}" />
-        <input id="toSlider" type="range" value="${value.max}" min="${value.min}" max="${value.max}" />
-      </div>
-      <div class="form_control">
-        <div class="form_control_container">
-          <div class="form_control_container__time"></div>
-          <input class="form_control_container__time__input" type="number" id="fromInput" value="${value.min}"
-            min="0" max="${value.max}" />
-        </div>
-        <div class="form_control_container">
-          <div class="form_control_container__time"></div>
-          <input class="form_control_container__time__input" type="number" id="toInput" value="${value.max}" min="0"
-            max="${value.max}" />
-        </div>
-      </div>
+    dataDom.push(`<div class="value-container">
+      <p class="${location}-from" data-from="${value.min}">${value.min}</p>
+      <p class="${location}-to" data-to="${value.max}">${value.max}</p>
+    </div>
+    <div class="multi-range">
+      <input type="range" min="${value.min}" max="${value.max}" value="${value.min}" class="${location}-lower">
+      <input type="range" min="${value.min}" max="${value.max}" value="${value.max}" class="${location}-upper">
     </div>`)
   }
   (document.querySelector(`.${location}-container`) as HTMLElement).innerHTML = dataDom.join('')
@@ -149,11 +140,6 @@ export function changeFilter(): void {
       // =========================================================================================================
       let result: Array<productsDataI> = []
 
-      // if (e.target.closest('.category-container')) {
-      //   result = productFilter.filter(item => checkboxCategory.includes(item.category));
-      // }
-
-      // if (result.length === 0) result = productFilter.slice();
       result = productFilter.filter(item => checkboxCategory.includes(item.category));
 
       if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
@@ -203,42 +189,11 @@ export function changeFilter(): void {
       // console.log('result :>> ', result);
 
       result.length === 0 ? CreateProductCard('not-found') : (CreateProductCard(result), SortProductCard('now'));
-
-
-
-
-
-      // if (result.length !== 0) {
-      //   CreateProductCard(result)
-
-
-      // } else {
-      //   document.querySelectorAll('.filters .checkbox:checked').length == 0 ? log('----') : CreateProductCard(productsData.products);
-      //   document.querySelectorAll('.container-item').forEach((elem, i) => {
-      //     elem.classList.remove('inactive')
-      //     document.querySelectorAll('.quantity span')[i].innerHTML = `${(document.querySelectorAll('.filters .checkbox')[i] as HTMLInputElement).dataset.count}`;
-      //   });
-      // }
-
     }
-
-    // if (e.target.closest('.brand-container')) {
-    //   let checkboxCategory: (string | undefined)[] = [];
-    //   (document.querySelectorAll('.brand-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
-    //     checkboxCategory.push(elem.dataset.brand);
-    //   });
-
-    //   let result = (productsData.products as Array<productsDataI>).filter(item => checkboxCategory.includes(item.brand));
-
-    //   result.length !== 0 ? CreateProductCard(result) : CreateProductCard(productsData.products);
-    // }
   }
 
 
   document.querySelector('.filters')?.addEventListener('click', (e) => {
     filtering(e);
   })
-  // let checkboxBrand
-  // checked
-  // (checkboxCategory[0] as HTMLElement).dataset.category
 }
