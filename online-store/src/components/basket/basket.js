@@ -4,11 +4,12 @@ import { renderTotalPrice } from './renderTotalPrice.js'
 import { renderProductHeader } from './renderProductHeader.js'
 import { renderCardsInBasket } from './renderCardsInBasket.js'
 import { handleClickPlusMinusDel } from './handleClickPlusMinusDel.js'
+
 const productCardContainer = document.querySelector('.products__card-container')
 const btnAddTest = document.querySelector('.btn-add-test')
 const summaryForm = document.querySelector('.summary__form')
 
-function renderBasket () {
+export function renderBasket () {
   renderProductHeader()
   renderCardsInBasket()
   renderTotalPrice()
@@ -29,6 +30,9 @@ btnAddTest.addEventListener('click', (e) => { // TODO прокидываешь �
   addCardBasket(Data[10])
   renderBasket()
   console.log('add')
+  document.addEventListener('*', (event) => {
+    console.log('event caught:', event.type)
+  })
 })
 
 function addCardBasket (product) {
