@@ -1,8 +1,8 @@
-import { itemInBasket } from '../../index'
+import { itemInBasket, productsDataI } from '../../index'
 import { renderBasket } from './basket'
-export function renderBuyForm () {
-  const buyForm = document.querySelector('.buy-form')
-  const shadowWrapper = document.querySelector('.shadow-wrapper')
+export function renderBuyForm ():void {
+  const buyForm = document.querySelector('.buy-form') as HTMLElement
+  const shadowWrapper = document.querySelector('.shadow-wrapper') as HTMLElement
   buyForm.classList.remove('hide')
   shadowWrapper.classList.remove('hide')
   buyForm.innerHTML = ''
@@ -96,29 +96,29 @@ export function renderBuyForm () {
 
   // Outside buyForm-close
   shadowWrapper.addEventListener('click', shadowWrapperCloser)
-  function shadowWrapperCloser () {
+  function shadowWrapperCloser ():void {
     shadowWrapper.classList.add('hide')
     buyForm.classList.add('hide')
   }
 
   // Form card-term validation
-  const inputCardNumber = document.querySelector('.js-input-card-number')
-  const inputCardTerm = document.querySelector('.js-input-card-term')
+  const inputCardNumber = document.querySelector('.js-input-card-number') as HTMLInputElement
+  const inputCardTerm = document.querySelector('.js-input-card-term') as HTMLInputElement
 
-  inputCardTerm.addEventListener('input', (e) => { validCardTerm(e) })
+  inputCardTerm.addEventListener('input', (e: Event) => { validCardTerm(e) })
 
-  function validCardTerm (e) {
+  function validCardTerm (e: Event):void {
     inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2')
   }
 
   // card image hendler
-  const imgVisa = document.querySelector('.inputBox__imgVisa')
-  const imgMaster = document.querySelector('.inputBox__imgMaster')
-  const imgUnion = document.querySelector('.inputBox__imgUnion')
+  const imgVisa = document.querySelector('.inputBox__imgVisa') as HTMLElement
+  const imgMaster = document.querySelector('.inputBox__imgMaster') as HTMLElement
+  const imgUnion = document.querySelector('.inputBox__imgUnion') as HTMLElement
 
   inputCardNumber.addEventListener('input', (e) => { choseCard(e) })
 
-  function choseCard (e) {
+  function choseCard (e: Event):void {
     if (inputCardNumber.value.match(/^4/)) {
       imgVisa.classList.add('activeBorder')
     } else
@@ -134,10 +134,10 @@ export function renderBuyForm () {
     }
   }
   // close buy form - order accepted
-  const buyBtn = document.querySelector('.submit-btn')
+  const buyBtn = document.querySelector('.submit-btn') as HTMLElement
   buyForm.addEventListener('submit', (e) => { e.preventDefault() })
   buyBtn.addEventListener('click', (e) => {
-    const orderAccepted = document.querySelector('.order-accepted')
+    const orderAccepted = document.querySelector('.order-accepted') as HTMLElement
     itemInBasket.length = 0
     renderBasket()
     buyForm.classList.add('hide')
