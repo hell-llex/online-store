@@ -100,8 +100,8 @@ li {
     height: 100%;
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: flex-start;
   }
 
   .page__basket {
@@ -210,7 +210,8 @@ li {
 .catalog {
   padding: 10px;
   // height: 100vh;
-  width: 100%;
+  // width: 110rem;
+  width: 63vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -219,7 +220,7 @@ li {
   border-radius: 25px;
 
   .catalog-sort {
-    width: 100%;
+    width: 63vw;
     padding: 1rem 1.5rem;
     display: flex;
     flex-direction: row;

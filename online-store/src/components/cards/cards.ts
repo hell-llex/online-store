@@ -9,10 +9,14 @@ export let productsData: productsData = { limit: 0, products: [], skip: 0, total
 export let products: string[] = []; // массив со всеми элементами в виде HTML строки
 
 export function CreateProductCard(setting: Array<productsDataI> | string): void { // принимает массив данных
+  console.log('setting :>> ', setting);
   const currentProducts: string[] = [];
-  if (typeof setting === 'string') {
+  if (typeof setting === 'string' || setting.length === 0) {
     (document.querySelector('.catalog-products') as HTMLElement).style.display = 'flex';
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML = `<p class="not-found">No products found <br> (ಥ﹏ಥ)</p>`;
+    (document.querySelector('.found') as HTMLElement).innerHTML = `Found:***`;
+    (document.querySelector('.found') as HTMLElement).dataset.found = `no`;
+
   } else {
     (setting as Array<productsDataI>).forEach(elem => {
       const card: string = `<div class="product-item">
@@ -35,9 +39,9 @@ export function CreateProductCard(setting: Array<productsDataI> | string): void 
     products = currentProducts.slice();
     (document.querySelector('.catalog-products') as HTMLElement).style.display = 'grid';
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML = currentProducts.join('');
+    (document.querySelector('.found') as HTMLElement).innerHTML = `Found:${currentProducts.length}`;
+    (document.querySelector('.found') as HTMLElement).dataset.found = `${currentProducts.length}`;
   }
-  (document.querySelector('.found') as HTMLElement).innerHTML = `Found:${currentProducts.length}`;
-  (document.querySelector('.found') as HTMLElement).dataset.found = `${currentProducts.length}`;
 }
 
 export function loadProduct(quantity: number = 100) { // дефолтное значение стоит на 100 карточек, переопределеятся в вызове функции

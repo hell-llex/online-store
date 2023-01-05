@@ -2,7 +2,7 @@ import '../index.html';
 import '../styles.scss';
 import './components/basket/basket'
 import Data from './products-v1.json'
-import { loadFilter, changeFilter } from './components/filter/filter';
+// import { loadFilter, changeFilter } from './components/filter/filter';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';
 import { addLocalStorage, getLocalStorage } from './components/basket/localStorage'
@@ -22,7 +22,7 @@ Button()
 
 SortProductCard('notNow')
 
-changeFilter()
+// changeFilter()
 
 export let itemInBasket: any
 itemInBasket = [Data[1], Data[5], Data[9], Data[11], Data[14], Data[15]] // global array of items in basket get value from localStarage

@@ -37,7 +37,7 @@ $font-height-130: 130%;
 .filters {
   position: relative;
   // height: 100vh;
-  width: 30vw;
+  width: 25vw;
   background-color: cadetblue;
   font-size: $font-n4;
   line-height: normal;
@@ -141,7 +141,7 @@ $font-height-130: 130%;
 .not-found {
   margin: 0 auto;
   padding: 0 0 10rem 0;
-  min-width: 70rem;
+  width: 110rem;
   min-height: 60rem;
   display: flex;
   justify-content: center;

@@ -9,12 +9,13 @@ $font-height-130: 130%;
 
 .catalog {
   .catalog-products {
-    display: flex;
-    // display: grid;
-    grid-template-rows: repeat(auto, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    // display: flex;
     width: 100%;
+    display: grid;
+    // grid-template-rows: repeat(auto, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
+    gap: 20px;
+    // width: 100%;
 
     p:nth-child(3) {
       grid-area: el3;
@@ -45,6 +46,7 @@ $font-height-130: 130%;
       position: relative;
       padding: 15px;
       width: 100%;
+      // width: 34rem;
       display: grid;
       grid-template-areas: 'el1 el1'
         'el2 el2'
