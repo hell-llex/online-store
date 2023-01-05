@@ -53,6 +53,7 @@ export function loadFilter(arrProd: Array<productsDataI>) {
   CreateFilter(filterStock, 'stock')
   CreateFilter(filterPrice, 'price')
   slider()
+  changeFilter()
 }
 
 function CreateFilter(setting: filterSelector | sliderSelector, location: string): void { // category, brand, stock, price
@@ -68,23 +69,28 @@ function CreateFilter(setting: filterSelector | sliderSelector, location: string
     // log(setting)
     let value = setting as sliderSelector
     dataDom.push(`<div class="value-container">
-      <p class="${location}-from" data-from="${value.min}">${value.min}</p>
-      <p class="${location}-to" data-to="${value.max}">${value.max}</p>
+      <p class="${location}-from _from" data-from="${value.min}">${value.min}</p>
+      <p class="${location}-to _to" data-to="${value.max}">${value.max}</p>
     </div>
     <div class="multi-range">
-      <input type="range" min="${value.min}" max="${value.max}" value="${value.min}" class="${location}-lower">
-      <input type="range" min="${value.min}" max="${value.max}" value="${value.max}" class="${location}-upper">
+      <input type="range" min="${value.min}" max="${value.max}" value="${value.min}" class="${location}-lower _lower">
+      <input type="range" min="${value.min}" max="${value.max}" value="${value.max}" class="${location}-upper _upper">
     </div>`)
   }
   (document.querySelector(`.${location}-container`) as HTMLElement).innerHTML = dataDom.join('')
 }
 
 export let resultData: Array<productsDataI> = [];
+let resultFilters: Array<productsDataI> = [];
+let resultCheck: Array<productsDataI> = [];
 
-export function changeFilter(): void {
+function changeFilter(): void {
 
   function filtering(e: any) {
     let productFilter: Array<productsDataI> = productsData.products.slice();
+    let result: Array<productsDataI> = []
+    let checkboxCategory: (string | undefined)[] = [];
+    let checkboxBrand: (string | undefined)[] = [];
     // if (e.target.closest('.category-container')) {
     //   let checkboxCategory: (string | undefined)[] = [];
     //   (document.querySelectorAll('.category-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
@@ -116,8 +122,6 @@ export function changeFilter(): void {
     // }
 
     if (e.target.closest('.category-container') || e.target.closest('.brand-container')) {
-      let checkboxCategory: (string | undefined)[] = [];
-      let checkboxBrand: (string | undefined)[] = [];
 
       (document.querySelectorAll('.category-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
         checkboxCategory.push(elem.dataset.category);
@@ -127,73 +131,136 @@ export function changeFilter(): void {
         checkboxBrand.push(elem.dataset.brand);
       });
 
-      // (document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement>).forEach((elem, i) => {
-      //   if (!elem.checked) {
-      //     document.querySelectorAll('.quantity span')[i].innerHTML = '0';
-      //     document.querySelectorAll('.container-item')[i].classList.add('inactive');
-      //   } else {
-      //     document.querySelectorAll('.quantity span')[i].innerHTML = `${elem.dataset.count}`;
-      //     document.querySelectorAll('.container-item')[i].classList.remove('inactive');
-      //   }
-      // });
-
       // =========================================================================================================
-      let result: Array<productsDataI> = []
 
-      result = productFilter.filter(item => checkboxCategory.includes(item.category));
+      result = productFilter.filter(item => {
+        return checkboxCategory.includes(item.category) || checkboxBrand.includes(item.brand)
+      });
 
+      // if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
+      //   result = result.filter(item => {
+      //     return checkboxCategory.includes(item.category) && checkboxBrand.includes(item.brand)
+      //   });
+      // }
       if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
-        result = result.filter(item => checkboxBrand.includes(item.brand));
-      } else if (checkboxCategory.length === 0) {
-        result = productFilter.filter(item => checkboxBrand.includes(item.brand));
+        result = result.filter(item => {
+          return checkboxCategory.includes(item.category) && checkboxBrand.includes(item.brand) && item.stock >= valuesFrom[0]
+            && item.stock <= valuesTo[0] && item.price >= valuesFrom[1] && item.price <= valuesTo[1]
+        });
       }
-
-      // else if (checkboxBrand.length === 0) {
-      //   result = productFilter.filter(item => checkboxCategory.includes(item.category));
+      // if (lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
+      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
+      //   log('---------------------')
+      //   result = resultCheck.filter(item => {
+      //     return checkboxCategory.includes(item.category)
+      //   });
+      // }
+      // if (lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
+      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
+      //   result = resultCheck.filter(item => {
+      //     return checkboxBrand.includes(item.brand)
+      //   });
       // }
 
-      // if (e.target.closest('.brand-container')) {
-      //   result = checkboxCategory.length === 0 ? productFilter.filter(item => checkboxBrand.includes(item.brand)) : result.filter(item => checkboxBrand.includes(item.brand));
+
+      // result = productFilter.filter(item => checkboxCategory.includes(item.category));
+
+      // if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
+      //   result = result.filter(item => checkboxBrand.includes(item.brand));
+      // } else if (checkboxCategory.length === 0) {
+      //   result = productFilter.filter(item => checkboxBrand.includes(item.brand));
+      // } else if (document.querySelectorAll('.filters .checkbox:checked').length !== 0 && lowerSliderAll[0].min !== lowerSliderAll[0].value && upperSliderAll[0].max !== upperSliderAll[0].value
+      //   && lowerSliderAll[1].min !== lowerSliderAll[1].value && upperSliderAll[1].max !== upperSliderAll[1].value) {
+      //   resultFilters = resultData
+      //   result = resultFilters.filter(item => checkboxBrand.includes(item.brand));
       // }
 
       // =========================================================================================================
 
-      // result = productFilter.filter(item => {
-      //   // return checkboxCategory.includes(item.category) && checkboxCategory.includes(item.brand)
-      //   return checkboxCategory.includes(item.category) || checkboxBrand.includes(item.brand)
-      // });
-
-      // if (result.length === 0) result = productFilter.slice();
-
-      // let currentArr = result.filter(item => {
-      //   // return checkboxCategory.includes(item.category) || checkboxCategory.includes(item.brand)
-      //   return checkboxCategory.includes(item.category) && checkboxBrand.includes(item.brand)
-      // });
-
-      // if (currentArr.length !== 0) result = currentArr.slice();
-
-
-
-      if (document.querySelectorAll('.filters .checkbox:checked').length === 0) {
-        result = productFilter.slice();
-        // document.querySelectorAll('.container-item').forEach((elem, i) => {
-        //   elem.classList.remove('inactive')
-        //   // document.querySelectorAll('.quantity span')[i].innerHTML = `${(document.querySelectorAll('.filters .checkbox')[i] as HTMLInputElement).dataset.count}`;
-        // });
+      if (document.querySelectorAll('.filters .checkbox:checked').length === 0 ) {
+        // result = productFilter.slice();
+        result = productFilter.filter(item => {
+          return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
+        });
       }
+      // else if (document.querySelectorAll('.filters .checkbox:checked').length === 0 && lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
+      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
+      //   result = productFilter.filter(item => {
+      //     return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
+      //   });
+      // }
 
       resultData = result.slice()
-
-      // console.log('checkboxCategory :>> ', checkboxCategory);
-      // console.log('checkboxBrand :>> ', checkboxBrand);
-      // console.log('result :>> ', result);
+      resultFilters = result.slice()
 
       result.length === 0 ? CreateProductCard('not-found') : (CreateProductCard(result), SortProductCard('now'));
     }
   }
 
-
   document.querySelector('.filters')?.addEventListener('click', (e) => {
     filtering(e);
   })
+
+  const lowerSliderAll = document.querySelectorAll('._lower') as NodeListOf<HTMLInputElement>
+  const upperSliderAll = document.querySelectorAll('._upper') as NodeListOf<HTMLInputElement>
+  const valuesLowerSliderAll = document.querySelectorAll('._from') as NodeListOf<HTMLElement>
+  const valuesUpperSliderAll = document.querySelectorAll('._to') as NodeListOf<HTMLElement>
+
+  let valuesTo: number[] = [] // [stock, price]
+  let valuesFrom: number[] = [] // [stock, price]
+
+  valuesTo = [+valuesUpperSliderAll[0].dataset.to!, +valuesUpperSliderAll[1].dataset.to!]
+  valuesFrom = [+valuesLowerSliderAll[0].dataset.from!, +valuesLowerSliderAll[1].dataset.from!]
+
+  function sliderSelector(a: number, b: string) {
+    let productFilter: Array<productsDataI> = productsData.products.slice();
+    let resultRange: Array<productsDataI> = [];
+
+    if (a === 0 && b === 'to') {
+      valuesTo[0] = +valuesUpperSliderAll[0].dataset.to!
+    } else if (a === 0 && b === 'from') {
+      valuesFrom[0] = +valuesLowerSliderAll[0].dataset.from!
+    } else if (a === 1 && b === 'to') {
+      valuesTo[1] = +valuesUpperSliderAll[1].dataset.to!
+    } else if (a === 1 && b === 'from') {
+      valuesFrom[1] = +valuesLowerSliderAll[1].dataset.from!
+    }
+
+    resultRange = productFilter.filter(item => {
+      return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
+    });
+
+    if (document.querySelectorAll('.filters .checkbox:checked').length !== 0) {
+      resultRange = resultFilters.filter(item => {
+        return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
+      });
+    }
+
+
+    if (document.querySelectorAll('.filters .checkbox:checked').length === 0 && lowerSliderAll[0].min === lowerSliderAll[0].value && upperSliderAll[0].max === upperSliderAll[0].value
+      && lowerSliderAll[1].min === lowerSliderAll[1].value && upperSliderAll[1].max === upperSliderAll[1].value) {
+      resultRange = productFilter.slice();
+    }
+
+    // console.log('resultRange :>> ', resultRange);
+
+    resultData = resultRange.slice()
+    resultCheck = resultRange.slice()
+    // console.log('resultData :>> ', resultData);
+    resultRange.length === 0 ? CreateProductCard('not-found') : (CreateProductCard(resultRange), SortProductCard('now'));
+    // result.length === 0 ? console.log('not-found') : console.log('result');
+  }
+
+  // ======================stock==========================
+
+  upperSliderAll[0].addEventListener('input', () => { sliderSelector(0, 'to') })
+  lowerSliderAll[0].addEventListener('input', () => { sliderSelector(0, 'from') })
+
+  // ======================price==========================
+
+  upperSliderAll[1].addEventListener('input', () => { sliderSelector(1, 'to') })
+  lowerSliderAll[1].addEventListener('input', () => { sliderSelector(1, 'from') })
+
+  // =====================================================
+
 }
