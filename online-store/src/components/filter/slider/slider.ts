@@ -11,7 +11,7 @@ export function slider() {
     let lowerVal: number
     let upperVal: number
 
-    upperSlider!.oninput = function () {
+    upperSlider.oninput = function () {
       lowerVal = parseInt(lowerSlider.value)
       upperVal = parseInt(upperSlider.value)
 
