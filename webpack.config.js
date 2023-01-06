@@ -21,6 +21,8 @@ const config = {
   devServer: {
     open: true,
     port: 8080,
+    hot: true,
+    compress: true,
     // devtool: 'inline-source-map',
     // static: path.resolve(__dirname, './dist'),
     historyApiFallback: true,
