@@ -1,8 +1,10 @@
-import { itemInBasket } from '../../index'
-const productHeader = document.querySelector('.products__header') as HTMLElement
+import { itemInBasket } from '../../index';
+const productHeader = document.querySelector(
+  '.products__header'
+) as HTMLElement;
 
-export function renderProductHeader (): void {
-  productHeader.innerHTML = ''
+export function renderProductHeader(): void {
+  productHeader.innerHTML = '';
 
   const productHeaderHTML = `
 Products in Cart
@@ -11,7 +13,7 @@ Products in Cart
   <button class="page__left" data-action="minusPage"> &#60; </button>
   <span class="page__count" data-counterPage>1</span>
   <button class="page__right" data-action="plusPage"> &#62; </button>
-</div>`
+</div>`;
 
-  productHeader.insertAdjacentHTML('afterbegin', productHeaderHTML)
+  productHeader.insertAdjacentHTML('afterbegin', productHeaderHTML);
 }

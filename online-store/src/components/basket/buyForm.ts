@@ -1,11 +1,13 @@
-import { itemInBasket, productsDataI } from '../../index'
-import { renderBasket } from './basket'
-export function renderBuyForm ():void {
-  const buyForm = document.querySelector('.buy-form') as HTMLElement
-  const shadowWrapper = document.querySelector('.shadow-wrapper') as HTMLElement
-  buyForm.classList.remove('hide')
-  shadowWrapper.classList.remove('hide')
-  buyForm.innerHTML = ''
+import { itemInBasket } from '../../index';
+import { renderBasket } from './basket';
+export function renderBuyForm(): void {
+  const buyForm = document.querySelector('.buy-form') as HTMLElement;
+  const shadowWrapper = document.querySelector(
+    '.shadow-wrapper'
+  ) as HTMLElement;
+  buyForm.classList.remove('hide');
+  shadowWrapper.classList.remove('hide');
+  buyForm.innerHTML = '';
 
   const buyFormHTML = `
         <form action="" class="js-form">
@@ -91,65 +93,77 @@ export function renderBuyForm ():void {
             </div>
             <input type="submit" value="buy" class="submit-btn">
         </form>
-  `
-  buyForm.insertAdjacentHTML('afterbegin', buyFormHTML)
+  `;
+  buyForm.insertAdjacentHTML('afterbegin', buyFormHTML);
 
   // Outside buyForm-close
-  shadowWrapper.addEventListener('click', shadowWrapperCloser)
-  function shadowWrapperCloser ():void {
-    shadowWrapper.classList.add('hide')
-    buyForm.classList.add('hide')
+  shadowWrapper.addEventListener('click', shadowWrapperCloser);
+  function shadowWrapperCloser(): void {
+    shadowWrapper.classList.add('hide');
+    buyForm.classList.add('hide');
   }
 
   // Form card-term validation
-  const inputCardNumber = document.querySelector('.js-input-card-number') as HTMLInputElement
-  const inputCardTerm = document.querySelector('.js-input-card-term') as HTMLInputElement
+  const inputCardNumber = document.querySelector(
+    '.js-input-card-number'
+  ) as HTMLInputElement;
+  const inputCardTerm = document.querySelector(
+    '.js-input-card-term'
+  ) as HTMLInputElement;
 
-  inputCardTerm.addEventListener('input', (e: Event) => { validCardTerm(e) })
+  inputCardTerm.addEventListener('input', (e: Event) => {
+    validCardTerm(e);
+  });
 
-  function validCardTerm (e: Event):void {
-    inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2')
+  function validCardTerm(e: Event): void {
+    inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2');
   }
 
   // card image hendler
-  const imgVisa = document.querySelector('.inputBox__imgVisa') as HTMLElement
-  const imgMaster = document.querySelector('.inputBox__imgMaster') as HTMLElement
-  const imgUnion = document.querySelector('.inputBox__imgUnion') as HTMLElement
+  const imgVisa = document.querySelector('.inputBox__imgVisa') as HTMLElement;
+  const imgMaster = document.querySelector(
+    '.inputBox__imgMaster'
+  ) as HTMLElement;
+  const imgUnion = document.querySelector('.inputBox__imgUnion') as HTMLElement;
 
-  inputCardNumber.addEventListener('input', (e) => { choseCard(e) })
+  inputCardNumber.addEventListener('input', (e) => {
+    choseCard(e);
+  });
 
-  function choseCard (e: Event):void {
+  function choseCard(e: Event): void {
     if (inputCardNumber.value.match(/^4/)) {
-      imgVisa.classList.add('activeBorder')
-    } else
-    if (inputCardNumber.value.match(/^5/)) {
-      imgMaster.classList.add('activeBorder')
-    } else
-    if (inputCardNumber.value.match(/^6/)) {
-      imgUnion.classList.add('activeBorder')
+      imgVisa.classList.add('activeBorder');
+    } else if (inputCardNumber.value.match(/^5/)) {
+      imgMaster.classList.add('activeBorder');
+    } else if (inputCardNumber.value.match(/^6/)) {
+      imgUnion.classList.add('activeBorder');
     } else {
-      imgVisa.classList.remove('activeBorder')
-      imgMaster.classList.remove('activeBorder')
-      imgUnion.classList.remove('activeBorder')
+      imgVisa.classList.remove('activeBorder');
+      imgMaster.classList.remove('activeBorder');
+      imgUnion.classList.remove('activeBorder');
     }
   }
   // close buy form - order accepted
-  const buyBtn = document.querySelector('.submit-btn') as HTMLElement
-  buyForm.addEventListener('submit', (e) => { e.preventDefault() })
+  const buyBtn = document.querySelector('.submit-btn') as HTMLElement;
+  buyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
   buyBtn.addEventListener('click', (e) => {
-    const orderAccepted = document.querySelector('.order-accepted') as HTMLElement
-    itemInBasket.length = 0
-    renderBasket()
-    buyForm.classList.add('hide')
-    orderAccepted.classList.remove('hide')
+    const orderAccepted = document.querySelector(
+      '.order-accepted'
+    ) as HTMLElement;
+    itemInBasket.length = 0;
+    renderBasket();
+    buyForm.classList.add('hide');
+    orderAccepted.classList.remove('hide');
 
-    shadowWrapper.removeEventListener('click', shadowWrapperCloser)
-    console.log('itemInBasket :>> ', itemInBasket)
+    shadowWrapper.removeEventListener('click', shadowWrapperCloser);
+    console.log('itemInBasket :>> ', itemInBasket);
 
     setTimeout(() => {
-      alert('добавить линк на стартовую страницу')
-      orderAccepted.classList.add('hide')
-      shadowWrapper.classList.add('hide')
-    }, 3000)
-  })
+      alert('добавить линк на стартовую страницу');
+      orderAccepted.classList.add('hide');
+      shadowWrapper.classList.add('hide');
+    }, 3000);
+  });
 }

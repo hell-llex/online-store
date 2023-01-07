@@ -6,7 +6,26 @@
   padding: 0;
   scroll-behavior: smooth;
   box-sizing: border-box;
-/*   outline: red dashed 1px; */
+}
+
+html {
+  font-size: 10px;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 0.5rem;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar {
+  width: 0.8rem;
+  height: 0.8rem;
+  border-radius: 1rem;
+  background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #000000;
 }
 
 $font-n2: 44px;
@@ -36,10 +55,9 @@ li {
 }
 
 .wrapper {
-  max-width: 100%;
+  width: 90vw;
   margin: 0px auto;
   height: 100%;
-  position: relative;
 }
 
 .header {
@@ -53,10 +71,50 @@ li {
   background-color: green;
 }
 
-.nav {
+.logo {
   height: 100%;
   width: 300px;
+  font-size: 32px;
+  text-align: center;
   background-color: red;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.01);
+    font-size: 31px;
+  }
+}
+
+.pages {
+  display: none;
+}
+
+.main {
+  height: 100%;
+  // width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .page__home {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .page__basket {
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
+
+  .page__product-description {
+    height: 100%;
+    width: 100%;
+    display: none;
+  }
 }
 
 .main-container {
@@ -68,10 +126,12 @@ li {
   margin: 50px 0px;
 }
 
-.cart {
+.icon-basket {
   position: relative;
+  display: block;
   width: 100px;
   height: 100px;
+  cursor: pointer;
 
   background: url('./assets/icons/cart.svg') no-repeat;
 
@@ -90,67 +150,68 @@ li {
   }
 }
 
-.filters {
-  position: relative;
-  // height: 100vh;
-  width: 30vw;
-  background-color: blue;
-  font-size: $font-n4;
-  line-height: normal;
+// .filters {
+//   position: relative;
+//   // height: 100vh;
+//   width: 30vw;
+//   background-color: blue;
+//   font-size: $font-n4;
+//   line-height: normal;
 
-  .filters-list {
-    width: 100%;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 10px;
+//   .filters-list {
+//     width: 100%;
+//     padding: 10px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     gap: 10px;
 
-    .filters-item {
-      padding: 10px;
-      width: 100%;
-      // height: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 5px;
-      border: 2px solid $color-dark;
+//     .filters-item {
+//       padding: 10px;
+//       width: 100%;
+//       // height: 100px;
+//       display: flex;
+//       flex-direction: column;
+//       justify-content: center;
+//       align-items: flex-start;
+//       gap: 5px;
+//       border: 2px solid $color-dark;
 
-      .item-label {
-        height: 30px;
-      }
+//       .item-label {
+//         height: 30px;
+//       }
 
-      .item-label,
-      .checkbox {
-        cursor: pointer;
-      }
+//       .item-label,
+//       .checkbox {
+//         cursor: pointer;
+//       }
 
-      .btn-reset {
-        margin: 0px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 260px;
-        height: 80px;
-        font-size: $font-n3;
-        border-radius: 25px;
-        background-color: purple;
-        color: #000000;
-        cursor: pointer;
+//       .btn-reset {
+//         margin: 0px auto;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         width: 260px;
+//         height: 80px;
+//         font-size: $font-n3;
+//         border-radius: 25px;
+//         background-color: purple;
+//         color: #000000;
+//         cursor: pointer;
 
-        &:active {
-          transform: translate(3px, 3px);
-        }
-      }
-    }
-  }
-}
+//         &:active {
+//           transform: translate(3px, 3px);
+//         }
+//       }
+//     }
+//   }
+// }
 
 .catalog {
   padding: 10px;
   // height: 100vh;
-  width: 100%;
+  // width: 110rem;
+  width: 63vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -159,13 +220,31 @@ li {
   border-radius: 25px;
 
   .catalog-sort {
-    margin: 10px;
+    width: 63vw;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 10px;
+    gap: 2rem;
     font-size: $font-n3;
+
+    .line {
+      height: 0.8rem;
+      width: 100%;
+      background-color: #000000;
+      border-radius: 1rem;
+    }
+
+    .search {
+      height: 4rem;
+      padding: 0 1rem;
+      font-size: 1.8rem;
+      min-width: 18rem;
+      border-radius: 1rem;
+      cursor: pointer;
+
+    }
 
     .btn-switch-view {
       padding: 5px;
@@ -211,201 +290,23 @@ li {
       }
     }
 
-    hr {
-      width: 500px;
-      border: 2px solid $color-dark;
-    }
-
     .btn-sort {
-      width: 300px;
-      height: 50px;
 
-      // border: 1px solid $color-dark;
+      height: 5rem;
+      font-size: 1.8rem;
+
       .sort-input {
-        width: 130px;
-        height: 40px;
+        min-width: 18rem;
+        height: 4rem;
+        border-radius: 1rem;
         cursor: pointer;
-      }
-    }
-  }
-
-  .catalog-products {
-    display: grid;
-    grid-template-rows: repeat(auto, 1fr);
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    width: 100%;
-
-    // border: 1px solid $color-dark;
-    .product-item {
-      position: relative;
-      padding: 15px;
-      width: 100%;
-      // height: 250px;
-      display: grid;
-      grid-template-rows: repeat(auto, 1fr);
-      grid-template-columns: repeat(1, 1fr);
-      gap: 5px;
-      // border: 1px solid $color-dark;
-      border-radius: 20px;
-      background-color: #FFFFFF;
-      font-size: $font-n4;
-      line-height: $font-height-130;
-      transition: all 500ms ease-in-out;
-      cursor: pointer;
-
-      span {
-        display: none;
-      }
-
-      &:hover {
-        background-color: #ffffff93;
-      }
-
-      &.active span {
-        position: absolute;
-        display: block;
-        top: 0px;
-        right: 0px;
-        height: 100px;
-        width: 100px;
-        background: url('./assets/icons/check.png');
-      }
-
-      .product-img {
-        height: 250px;
-      }
-
-      // ------------------------------------------------------------------------------------------------
-      .iphone-13-black {
-        background: url('./assets/images/iphone-13-black.jpeg') no-repeat;
-      }
-
-      .iphone-13-green {
-        background: url('./assets/images/iphone-13-green.jpeg') no-repeat;
-      }
-
-      .iphone-13-red {
-        background: url('./assets/images/iphone-13-red.jpeg') no-repeat;
-      }
-
-      .iphone-xr-yellow {
-        background: url('./assets/images/iphone-xr-yellow.jpeg') no-repeat;
-      }
-
-      .iphone-xr-white {
-        background: url('./assets/images/iphone-xr-white.jpeg') no-repeat;
-      }
-
-      .iphone-xr-red {
-        background: url('./assets/images/iphone-xr-red.jpeg') no-repeat;
-      }
-
-      .samsung-s22-black {
-        background: url('./assets/images/samsung-s22-black.jpeg') no-repeat;
-      }
-
-      .samsung-s22-green {
-        background: url('./assets/images/samsung-s22-green.jpeg') no-repeat;
-      }
-
-      .samsung-s22-pink {
-        background: url('./assets/images/samsung-s22-pink.jpeg') no-repeat;
-      }
-
-      .samsung-a32-black {
-        background: url('./assets/images/samsung-a32-black.jpeg') no-repeat;
-      }
-
-      .samsung-a32-white {
-        background: url('./assets/images/samsung-a32-white.jpeg') no-repeat;
-      }
-
-      .samsung-a32-purple {
-        background: url('./assets/images/samsung-a32-purple.jpeg') no-repeat;
-      }
-
-      .google-6-black {
-        background: url('./assets/images/google-6-black.jpeg') no-repeat;
-      }
-
-      .google-6-coral {
-        background: url('./assets/images/google-6-coral.jpeg') no-repeat;
-      }
-
-      .google-6-mint {
-        background: url('./assets/images/google-6-mint.jpeg') no-repeat;
-      }
-
-      .xiaomi-note-10s-black {
-        background: url('./assets/images/xiaomi-note-10s-black.jpeg') no-repeat;
-      }
-
-      .xiaomi-note-10s-white {
-        background: url('./assets/images/xiaomi-note-10s-white.jpeg') no-repeat;
-      }
-
-      .xiaomi-note-10s-blue {
-        background: url('./assets/images/xiaomi-note-10s-blue.jpeg') no-repeat;
-      }
-
-      .xiaomi-10c-black {
-        background: url('./assets/images/xiaomi-10c-black.jpeg') no-repeat;
-      }
-
-      .xiaomi-10c-blue {
-        background: url('./assets/images/xiaomi-10c-blue.jpeg') no-repeat;
-      }
-
-      .xiaomi-10c-mint {
-        background: url('./assets/images/xiaomi-10c-mint.jpeg') no-repeat;
-      }
-
-      // ------------------------------------------------------------------------------------------------
-    }
-
-    &.active {
-      display: grid;
-      grid-template-rows: repeat(auto, 1fr);
-      grid-template-columns: repeat(1, 1fr);
-      gap: 20px;
-      width: 100%;
-      // border: 1px solid $color-dark;
-      transition: all 500ms ease-in-out;
-
-      .product-item {
-        width: 100%;
-        // height: 250px;
-        display: grid;
-        grid-template-rows: repeat(4, 1fr);
-        grid-template-columns: repeat(3, 1fr);
-        align-items: center;
-        gap: 10px;
-        border: 1px solid $color-dark;
-        font-size: 30px;
-        line-height: $font-height-130;
-
-        .product-img {
-          margin: 10px auto;
-          height: 250px;
-          width: 180px;
-          grid-row-start: 1;
-          grid-row-end: 4;
-          background-size: contain;
-        }
-
-        h3 {
-          order: 8;
-          text-align: center;
-          grid-column-start: 1;
-          grid-column-end: 3;
-        }
       }
     }
   }
 }
 
-.slider-container {
+.stock-container,
+.price-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -424,30 +325,8 @@ li {
     height: 30px;
     font-weight: bold;
     text-align: center;
-
-    // background-color: #000000;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .footer {
   display: flex;
@@ -499,7 +378,9 @@ li {
 
 
 
-
+.hide {
+  display: none;
+}
 
 .page {
   display: grid;
@@ -535,6 +416,7 @@ li {
 .item-card__info {
   display: flex;
   width: 100%;
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -574,181 +456,15 @@ li {
 .summary__promo {
   line-height: 110%;
 }
+
 .summary__input {
-margin-bottom: 10px;
+  margin-bottom: 10px;
 }
+
 .correct {
   background: rgb(99, 185, 99);
 }
+
 .incorrect {
-  background:rgb(240, 131, 131);
-}
-
-.shadow-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(20, 20, 20, 0.7);
-  z-index: 100;
-}
-
-.buy-form {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  z-index: 102;
-}
-
-.buy-form form{
-  position: absolute;
-  padding:20px;
-  width:700px;
-  background: #fff;
-  box-shadow: 0 5px 10px rgba(0,0,0,.1);
-  font-size: 18px;
-  line-height: 100%;
-}
-
-.buy-form form .row{
-  display: flex;
-  flex-wrap: wrap;
-  gap:15px;
-}
-
-.buy-form form .row .col{
-  flex:1 1 250px;
-}
-
-.buy-form form .row .col .title{
-  font-size: 20px;
-  color:#333;
-  padding-bottom: 5px;
-  text-transform: uppercase;
-}
-
-.buy-form form .row .col .inputBox{
-  margin:15px 0;
-}
-
-.buy-form form .row .col .inputBox span{
-  margin-bottom: 10px;
-  display: block;
-}
-
-.input {
-  width: 100%;
-  border:1px solid #ccc;
-  padding:10px 15px;
-  font-size: 15px;
-  text-transform: none;
-}
-
-input:invalid {border-color: red;}
-input:valid {border-color: green;}
-input:invalid:not(:placeholder-shown) {border-color: red;}
-input:valid:not(:placeholder-shown) {border-color: green;}
-
-/* .input.error {
-  border:1px solid red;
-} */
-//del arrow in input type number
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.buy-form form .row .col .inputBox input:focus{
-  border:1px solid #000;
-}
-
-.buy-form form .row .col .flex{
-  display: flex;
-  gap:15px;
-}
-
-.buy-form form .row .col .flex .inputBox{
-  margin-top: 5px;
-}
-
-.buy-form form .row .col .inputBox img{
-  height: 34px;
-  margin-top: 5px;
-  filter: drop-shadow(0 0 1px #000);
-}
-.buy-form form .submit-btn{
-  width: 100%;
-  padding:12px;
-  font-size: 17px;
-  background: #27ae60;
-  color:#fff;
-  margin-top: 5px;
-  cursor: pointer;
-}
-
-.buy-form form .submit-btn:hover{
-  background: #2ecc71;
-}
-.imageBox{
-  display: flex;
-  justify-content: space-between;
-  width: 200px;
-}
-
-.inputBox__imgVisa{
-  background: url('./assets/icons/basket/visa.svg') no-repeat;
-  background-size: contain;
-  height: 50px;
-  width: 50px;
-}
-
-.inputBox__imgMaster{
-  background: url('./assets/icons/basket/masterCard.png') no-repeat;
-  background-size: contain;
-  height: 50px;
-  width: 50px;
-}
-.inputBox__imgUnion{
-  background: url('./assets/icons/basket/unionPay.png') no-repeat;
-  background-size: contain;
-  height: 50px;
-  width: 50px;
-}
-
-.activeBorder {
-  border: 3px solid green;
-}
-/* .imgMaster{
-  background: url('./assets/icons/basket/masterCard.png');
-} */
-
-.hide {
-  display: none;
-}
-
-.order-accepted{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 102;
-  background: #fff;
-  box-shadow: 0 5px 10px rgba(0,0,0,.1);
-  margin: 0 auto;
-  width: 500px;
-  height: 300px;
-}
-
-.title-accepted{
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  margin-left: 20px;
+  background: rgb(240, 131, 131);
 }
