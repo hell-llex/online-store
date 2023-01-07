@@ -4,10 +4,13 @@ import { renderTotalPrice } from './renderTotalPrice'
 import { renderProductHeader } from './renderProductHeader'
 import { renderCardsInBasket } from './renderCardsInBasket'
 import { handleClickPlusMinusDel } from './handleClickPlusMinusDel'
+import {renderDetails} from '../details/productCard'
 /* import {  getLocalStoragePage } from './localStorage' */
 
 const productCardContainer = document.querySelector('.products__card-container') as HTMLElement
 const btnAddTest = document.querySelector('.btn-add-test') as HTMLElement
+const pageBasket = document.querySelector('.page__basket') as HTMLElement
+const pageDetails = document.querySelector('.page__product-description') as HTMLElement
 
 export function renderBasket ():void {
   renderProductHeader()
@@ -28,6 +31,17 @@ productCardContainer.addEventListener('click', (e:Event) => {
   if ((e !== null && e.target instanceof HTMLElement) && ( e.target.dataset.action === 'plusPage' || e.target.dataset.action === 'minusPage')) {
   /*    renderCardsInBasket() */
     renderBasket()
+  }
+})
+
+//render details listener
+productCardContainer.addEventListener('click', (e:Event) => {
+  if ((e !== null && e.target instanceof HTMLElement) && ( e.target.closest('.item-card__info'))) {
+const cardForRender = e.target.closest('.products__item-card') as HTMLElement
+console.log('cardForRender.dataset.identifier :>> ', cardForRender.dataset.identifier);
+   pageBasket.classList.add('hide')
+    renderDetails(Number(cardForRender.dataset.identifier))
+    pageDetails.classList.remove('hide')
   }
 })
 

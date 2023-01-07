@@ -8,7 +8,7 @@ import CreateProductCard from './components/cards';
 import { addLocalStorageBasket, getLocalStorageBasket } from './components/basket/localStorage'
 // import * as noUiSlider from 'nouislider';
 // import 'nouislider/dist/nouislider.css';
-const log = console.log;
+
 
 export let itemInBasket:any
 itemInBasket =  [Data[1], Data[5],Data[9],Data[11],Data[14],Data[15], Data[16],Data[17],Data[18], Data[19],Data[20],Data[21], Data[22]] // global array of items in basket get value from localStarage

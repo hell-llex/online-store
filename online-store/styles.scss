@@ -500,7 +500,7 @@ li {
 
 
 
-
+//BASKET
 .page {
   display: grid;
   grid-template-columns: 3fr 1fr;
@@ -653,9 +653,6 @@ input:valid {border-color: green;}
 input:invalid:not(:placeholder-shown) {border-color: red;}
 input:valid:not(:placeholder-shown) {border-color: green;}
 
-/* .input.error {
-  border:1px solid red;
-} */
 //del arrow in input type number
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -723,9 +720,6 @@ input::-webkit-inner-spin-button {
 .activeBorder {
   border: 3px solid green;
 }
-/* .imgMaster{
-  background: url('./assets/icons/basket/masterCard.png');
-} */
 
 .hide {
   display: none;
@@ -751,4 +745,65 @@ input::-webkit-inner-spin-button {
   transform: translate(-50%, -50%);
   width: 500px;
   margin-left: 20px;
+}
+
+
+
+
+
+
+
+.page__product-description{
+  font-size: 18px;
+  min-height: calc(100vh - 10vh - 100px);
+}
+.details-container{
+  width: 80%;
+  margin: 0 auto;
+}
+
+.bread-crumbs {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 20px  auto;
+}
+.details__card {
+}
+
+.card__info{
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr;
+  align-items: center;
+  justify-items: center;
+  grid-gap: 1vw;
+}
+
+.cards__image{
+  display: flex;
+}
+.small__images > img {
+  width: 100px;
+  height: 100px;
+}
+.focus__img {
+  width: 200px;
+  height: 200px;
+}
+
+.card__description {
+  line-height: 130%;
+}
+.item-card__title {
+}
+.item-card__description {
+}
+.item-card__other {
+}
+.card__buy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card-price {
+  font-size: 24px;
 }
