@@ -25,10 +25,19 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     (document.querySelector('.found') as HTMLElement).dataset.found = 'no';
   } else {
     setting.forEach((elem) => {
+      const images: string[] = [];
+
+      elem.images.forEach((elem) => {
+        const image = `<li><div class="image" style="background-image: url('${elem}');"></div></li>`;
+        images.push(image);
+      });
+
       const card = `<div class="product-item" data-identifier="${elem.id}">
     <div class="product-img"
       style="background-image: url('${elem.thumbnail}');"></div>
     <h3>${elem.title}</h3>
+    <ul class="list-images">${images.join('')}</ul>
+    <p><b>Description: </b> ${elem.description}</p>
     <p><b>Category: </b> ${elem.category}</p>
     <p><b>Brand: </b> ${elem.brand}</p>
     <p><b>Price: €</b>${elem.price}</p>
@@ -37,9 +46,10 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     <p><b>Stock: </b> ${elem.stock}</p>
     <div class="product-btn">
       <div class="btn__addBasket">Add</div>
-      <div class="btn__description">Details</div>
-    </div>
-    </div>`;
+      <div class="btn__description">
+        <a href="#/products/${elem.id}">Details</a>
+      </div>
+    </div></div>`;
       currentProducts.push(card);
     });
     products = currentProducts.slice();

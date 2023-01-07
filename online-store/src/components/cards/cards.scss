@@ -17,28 +17,43 @@ $font-height-130: 130%;
     gap: 20px;
     // width: 100%;
 
-    p:nth-child(3) {
-      grid-area: el3;
+    // p:nth-child(3) {
+    //   grid-area: el3;
+    //   display: none;
+    // }
+
+    .list-images {
+      grid-area: el_3;
+      display: none;
     }
 
     p:nth-child(4) {
-      grid-area: el4;
+      grid-area: el_4;
+      display: none;
     }
 
     p:nth-child(5) {
-      grid-area: el5;
+      grid-area: el_5;
     }
 
     p:nth-child(6) {
-      grid-area: el6;
+      grid-area: el_6;
     }
 
     p:nth-child(7) {
-      grid-area: el7;
+      grid-area: el_7;
     }
 
     p:nth-child(8) {
-      grid-area: el8;
+      grid-area: el_8;
+    }
+
+    p:nth-child(9) {
+      grid-area: el_9;
+    }
+
+    p:nth-child(10) {
+      grid-area: el_10;
     }
 
     .product-item {
@@ -48,15 +63,17 @@ $font-height-130: 130%;
       width: 100%;
       // width: 34rem;
       display: grid;
-      grid-template-areas: 'el1 el1'
-        'el2 el2'
-        'el3 el3'
-        'el4 el4'
-        'el5 el5'
-        'el6 el6'
-        'el7 el7'
-        'el8 el8'
-        'el9 el9'
+      grid-template-areas: 'el_1 el_1'
+        'el_2 el_2'
+        // 'el_3 el_3'
+        // 'el_4 el_4'
+        'el_5 el_5'
+        'el_6 el_6'
+        'el_7 el_7'
+        'el_8 el_8'
+        'el_9 el_9'
+        'el_10 el_10'
+        'el_11 el_11'
       ;
       grid-template-rows: repeat(auto, 1fr);
       grid-template-columns: repeat(1, 1fr);
@@ -73,7 +90,7 @@ $font-height-130: 130%;
       }
 
       .product-img {
-        grid-area: el1;
+        grid-area: el_1;
         height: 250px;
         border-radius: 10px;
         background-repeat: no-repeat;
@@ -82,13 +99,13 @@ $font-height-130: 130%;
 
       h3 {
         margin: 10px 0;
-        grid-area: el2;
+        grid-area: el_2;
         justify-self: center;
         text-align: center;
       }
 
       .product-btn {
-        grid-area: el9;
+        grid-area: el_11;
         height: 50px;
         width: 100%;
         padding: 10px;
@@ -135,10 +152,10 @@ $font-height-130: 130%;
       .product-item {
         width: 100%;
         display: grid;
-        grid-template-areas: 'el1 el1 el3 el6'
-          'el1 el1 el4 el7'
-          'el1 el1 el5 el8'
-          'el2 el2 el9 el9';
+        grid-template-areas: 'el_1 el_1 el_5 el_8'
+          'el_1 el_1 el_6 el_9'
+          'el_1 el_1 el_7 el_10'
+          'el_2 el_2 el_11 el_11';
         grid-template-rows: repeat(4, 1fr);
         grid-template-columns: repeat(3, 1fr);
         align-items: center;
@@ -148,7 +165,7 @@ $font-height-130: 130%;
         line-height: $font-height-130;
 
         .product-img {
-          grid-area: el1;
+          grid-area: el_1;
           margin: 10px auto;
           height: 250px;
           width: 90%;
@@ -156,13 +173,13 @@ $font-height-130: 130%;
         }
 
         h3 {
-          grid-area: el2;
+          grid-area: el_2;
           margin: 10px 0;
           text-align: center;
         }
 
         .product-btn {
-          grid-area: el9;
+          grid-area: el_11;
           height: 50px;
           width: 100%;
           padding: 10px;
