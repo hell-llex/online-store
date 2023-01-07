@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { itemInBasket } from '../../index';
+import './basket.scss';
 import Data from '../../products-v1.json';
 import { renderTotalPrice } from './renderTotalPrice';
 import { renderProductHeader } from './renderProductHeader';
