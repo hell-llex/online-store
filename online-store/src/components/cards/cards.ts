@@ -25,7 +25,7 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     (document.querySelector('.found') as HTMLElement).dataset.found = 'no';
   } else {
     setting.forEach((elem) => {
-      const card = `<div class="product-item">
+      const card = `<div class="product-item" data-identifier="${elem.id}">
     <div class="product-img"
       style="background-image: url('${elem.thumbnail}');"></div>
     <h3>${elem.title}</h3>
