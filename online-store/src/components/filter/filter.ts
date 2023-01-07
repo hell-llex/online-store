@@ -1,73 +1,33 @@
-import './filter.scss'
-import { productsDataI } from '../types'
-import { productsData, CreateProductCard } from '../cards/cards'
-import { SortProductCard } from '../sort/sort'
-import { slider } from './slider/slider'
+import './filter.scss';
+import { filterSelector, productsArrayI, sliderSelector } from '../types';
+import { productsData, CreateProductCard } from '../cards/cards';
+import { SortProductCard } from '../sort/sort';
+import { slider } from './slider/slider';
 
-type sliderSelector = { min: number, max: number }
-type filterSelector = { arrFilter: string[], countFilter: number[] }
-// type CreateFilter = { arrFilter: string[], countFilter: number } | { min: number, max: number }
+// const log = console.log;
 
-// interface CreateFilter {
-//   setting?: string[] | { min: number, max: number } | undefined,
-// }
+const filterCategory: filterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
+const filterBrand: filterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
+const filterStock: sliderSelector = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
+const filterPrice: sliderSelector = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
 
-const log = (e: any) => console.log(`${e} ==>`, e)
-
-let filterCategory: filterSelector = { arrFilter: [], countFilter: [] } // категории по всему списку товаров
-let filterBrand: filterSelector = { arrFilter: [], countFilter: [] } // брэнды по всему списку товаров
-let filterStock: sliderSelector = { min: 0, max: 1 } // минимальное и максимальное кол-во товара по всему списку товаров
-let filterPrice: sliderSelector = { min: 0, max: 1 } // минимальная и максимальная стоимость товара по всему списку товаров
-
-export function loadFilter(arrProd: Array<productsDataI>) {
-  let stock: number[] = []
-  let price: number[] = []
-  arrProd.forEach(el => {
-    if (!filterCategory.arrFilter.includes(el.category)) {
-      filterCategory.arrFilter.push(el.category)
-      filterCategory.countFilter.push(1)
-    } else {
-      filterCategory.countFilter[filterCategory.arrFilter.indexOf(el.category)] += 1
-    }
-
-    if (!filterBrand.arrFilter.includes(el.brand)) {
-      filterBrand.arrFilter.push(el.brand)
-      filterBrand.countFilter.push(1)
-    } else {
-      filterBrand.countFilter[filterBrand.arrFilter.indexOf(el.brand)] += 1
-    }
-
-    stock.push(el.stock)
-    price.push(el.price)
-  })
-  filterStock.min = Math.min(...stock) //
-  filterStock.max = Math.max(...stock) //
-  filterPrice.min = Math.min(...price) //
-  filterPrice.max = Math.max(...price) //
-
-  // console.log('filterCategory :>> ', filterCategory);
-  // console.log('filterBrand :>> ', filterBrand);
-
-  CreateFilter(filterCategory, 'category')
-  CreateFilter(filterBrand, 'brand')
-  CreateFilter(filterStock, 'stock')
-  CreateFilter(filterPrice, 'price')
-  slider()
-  changeFilter()
-}
-
-function CreateFilter(setting: filterSelector | sliderSelector, location: string): void { // category, brand, stock, price
-  let dataDom: string[] = []
+function CreateFilter(
+  setting: filterSelector | sliderSelector,
+  location: string
+): void {
+  // значения строки category, brand, stock, price
+  const dataDom: string[] = [];
   if (location === 'category' || location === 'brand') {
     (setting as filterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
-        <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}" data-count="${(setting as filterSelector).countFilter[i]}">${elem}</label>
-        <p class="quantity"><span>${(setting as filterSelector).countFilter[i]}</span>/${(setting as filterSelector).countFilter[i]}</p>
-      </div>`)
-    })
+        <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}" data-count="${
+        (setting as filterSelector).countFilter[i]
+      }">${elem}</label><p class="quantity"><span>${
+        (setting as filterSelector).countFilter[i]
+      }</span>/${(setting as filterSelector).countFilter[i]}</p></div>`);
+    });
   } else if (location === 'stock' || location === 'price') {
-    // log(setting)
-    let value = setting as sliderSelector
+    const value = setting as sliderSelector;
     dataDom.push(`<div class="value-container">
       <p class="${location}-from _from" data-from="${value.min}">${value.min}</p>
       <p class="${location}-to _to" data-to="${value.max}">${value.max}</p>
@@ -75,192 +35,331 @@ function CreateFilter(setting: filterSelector | sliderSelector, location: string
     <div class="multi-range">
       <input type="range" min="${value.min}" max="${value.max}" value="${value.min}" class="${location}-lower _lower">
       <input type="range" min="${value.min}" max="${value.max}" value="${value.max}" class="${location}-upper _upper">
-    </div>`)
+    </div>`);
   }
-  (document.querySelector(`.${location}-container`) as HTMLElement).innerHTML = dataDom.join('')
+
+  (document.querySelector(`.${location}-container`) as HTMLElement).innerHTML =
+    dataDom.join(''); // создание фильтров
 }
 
-export let resultData: Array<productsDataI> = [];
-let resultFilters: Array<productsDataI> = [];
-let resultCheck: Array<productsDataI> = [];
+export function loadFilter(arrProd: productsArrayI[]): void {
+  const stock: number[] = [];
+  const price: number[] = [];
+
+  arrProd.forEach((el) => {
+    if (!filterCategory.arrFilter.includes(el.category)) {
+      filterCategory.arrFilter.push(el.category);
+      filterCategory.countFilter.push(1);
+    } else {
+      filterCategory.countFilter[
+        filterCategory.arrFilter.indexOf(el.category)
+      ] += 1;
+    }
+
+    if (!filterBrand.arrFilter.includes(el.brand)) {
+      filterBrand.arrFilter.push(el.brand);
+      filterBrand.countFilter.push(1);
+    } else {
+      filterBrand.countFilter[filterBrand.arrFilter.indexOf(el.brand)] += 1;
+    }
+
+    stock.push(el.stock);
+    price.push(el.price);
+  });
+
+  filterStock.min = Math.min(...stock); // получение минимального и максимального значения колличества
+  filterStock.max = Math.max(...stock); // получение минимального и максимального значения колличества
+  filterPrice.min = Math.min(...price); // получение минимального и максимального значения цены
+  filterPrice.max = Math.max(...price); // получение минимального и максимального значения цены
+
+  CreateFilter(filterCategory, 'category'); // вызов функции для заполнения фильтрации
+  CreateFilter(filterBrand, 'brand'); // вызов функции для заполнения фильтрации
+  CreateFilter(filterStock, 'stock'); // вызов функции для заполнения фильтрации
+  CreateFilter(filterPrice, 'price'); // вызов функции для заполнения фильтрации
+  slider(); // вызов функции для использования слайдера
+  changeFilter(); // вызов функции для использования всей фильтрации
+}
+
+export let resultData: productsArrayI[] = []; // массив с данным для сортировки во время фильтрации
 
 function changeFilter(): void {
+  function filtering(e: Event): void {
+    const productFilter: productsArrayI[] = productsData.products.slice();
+    const checkboxCategory: string[] = []; // массив с выбранными фильтрами
+    const checkboxBrand: string[] = []; // массив с выбранными фильтрами
+    let result: productsArrayI[] = [];
 
-  function filtering(e: any) {
-    let productFilter: Array<productsDataI> = productsData.products.slice();
-    let result: Array<productsDataI> = []
-    let checkboxCategory: (string | undefined)[] = [];
-    let checkboxBrand: (string | undefined)[] = [];
-    // if (e.target.closest('.category-container')) {
-    //   let checkboxCategory: (string | undefined)[] = [];
-    //   (document.querySelectorAll('.category-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
-    //     checkboxCategory.push(elem.dataset.category);
-    //   });
+    if (
+      (e.target! as HTMLElement).closest('.category-container .item-label') !=
+        null ||
+      (e.target! as HTMLElement).closest('.brand-container .item-label') != null
+    ) {
+      document
+        .querySelectorAll('.category-container .checkbox:checked')
+        .forEach((elem) => {
+          checkboxCategory.push((elem as HTMLInputElement).dataset.category!);
+        });
 
-    //   (document.querySelectorAll('.category-container .checkbox') as NodeListOf<HTMLInputElement>).forEach((elem, i) => {
-    //     if (!elem.checked) {
-    //       document.querySelectorAll('.quantity span')[i].innerHTML = '0';
-    //       document.querySelectorAll('.container-item')[i].classList.add('inactive');
-    //     } else {
-    //       document.querySelectorAll('.quantity span')[i].innerHTML = `${elem.dataset.count}`;
-    //       document.querySelectorAll('.container-item')[i].classList.remove('inactive');
-    //     }
-    //   });
+      document
+        .querySelectorAll('.brand-container .checkbox:checked')
+        .forEach((elem) => {
+          checkboxBrand.push((elem as HTMLInputElement).dataset.brand!);
+        });
 
-    //   let result = (productsData.products as Array<productsDataI>).filter(item => checkboxCategory.includes(item.category));
+      const stockRange = document.querySelector(
+        '.stock-container'
+      ) as HTMLElement;
+      const priceRange = document.querySelector(
+        '.price-container'
+      ) as HTMLElement;
 
-    //   if (result.length !== 0) {
-    //     CreateProductCard(result)
-    //   } else {
-    //     CreateProductCard(productsData.products);
-    //     document.querySelectorAll('.container-item').forEach((elem, i) => {
-    //       elem.classList.remove('inactive')
-    //       document.querySelectorAll('.quantity span')[i].innerHTML = `${(document.querySelectorAll('.category-container .checkbox')[i] as HTMLInputElement).dataset.count}`;
-    //     });
-    //   }
+      // =============================================блок проверок по массиву=============================================================
 
-    // }
+      result = productFilter.filter(
+        (item) =>
+          checkboxCategory.includes(item.category) ||
+          checkboxBrand.includes(item.brand)
+      );
 
-    if (e.target.closest('.category-container') || e.target.closest('.brand-container')) {
-
-      (document.querySelectorAll('.category-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
-        checkboxCategory.push(elem.dataset.category);
-      });
-
-      (document.querySelectorAll('.brand-container .checkbox:checked') as NodeListOf<HTMLInputElement>).forEach(elem => {
-        checkboxBrand.push(elem.dataset.brand);
-      });
-
-      // =========================================================================================================
-
-      result = productFilter.filter(item => {
-        return checkboxCategory.includes(item.category) || checkboxBrand.includes(item.brand)
-      });
-
-      // if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
-      //   result = result.filter(item => {
-      //     return checkboxCategory.includes(item.category) && checkboxBrand.includes(item.brand)
-      //   });
-      // }
-      if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
-        result = result.filter(item => {
-          return checkboxCategory.includes(item.category) && checkboxBrand.includes(item.brand) && item.stock >= valuesFrom[0]
-            && item.stock <= valuesTo[0] && item.price >= valuesFrom[1] && item.price <= valuesTo[1]
+      if (
+        stockRange.dataset.active === 'true' ||
+        priceRange.dataset.active === 'true'
+      ) {
+        result = productFilter.filter((item) => {
+          return (
+            (checkboxCategory.includes(item.category) ||
+              checkboxBrand.includes(item.brand)) &&
+            item.stock >= valuesFrom[0] &&
+            item.stock <= valuesTo[0] &&
+            item.price >= valuesFrom[1] &&
+            item.price <= valuesTo[1]
+          );
         });
       }
-      // if (lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
-      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
-      //   log('---------------------')
-      //   result = resultCheck.filter(item => {
-      //     return checkboxCategory.includes(item.category)
-      //   });
-      // }
-      // if (lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
-      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
-      //   result = resultCheck.filter(item => {
-      //     return checkboxBrand.includes(item.brand)
-      //   });
-      // }
+      if (
+        checkboxBrand.length !== 0 &&
+        checkboxCategory.length !== 0 &&
+        (stockRange.dataset.active === 'false' ||
+          priceRange.dataset.active === 'false')
+      ) {
+        result = productFilter.filter(
+          (item) =>
+            checkboxCategory.includes(item.category) &&
+            checkboxBrand.includes(item.brand)
+        );
+      }
 
-
-      // result = productFilter.filter(item => checkboxCategory.includes(item.category));
-
-      // if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
-      //   result = result.filter(item => checkboxBrand.includes(item.brand));
-      // } else if (checkboxCategory.length === 0) {
-      //   result = productFilter.filter(item => checkboxBrand.includes(item.brand));
-      // } else if (document.querySelectorAll('.filters .checkbox:checked').length !== 0 && lowerSliderAll[0].min !== lowerSliderAll[0].value && upperSliderAll[0].max !== upperSliderAll[0].value
-      //   && lowerSliderAll[1].min !== lowerSliderAll[1].value && upperSliderAll[1].max !== upperSliderAll[1].value) {
-      //   resultFilters = resultData
-      //   result = resultFilters.filter(item => checkboxBrand.includes(item.brand));
-      // }
-
-      // =========================================================================================================
-
-      if (document.querySelectorAll('.filters .checkbox:checked').length === 0 ) {
-        // result = productFilter.slice();
-        result = productFilter.filter(item => {
-          return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
+      if (
+        checkboxBrand.length !== 0 &&
+        checkboxCategory.length !== 0 &&
+        (stockRange.dataset.active === 'true' ||
+          priceRange.dataset.active === 'true')
+      ) {
+        result = productFilter.filter((item) => {
+          return (
+            checkboxCategory.includes(item.category) &&
+            checkboxBrand.includes(item.brand) &&
+            item.stock >= valuesFrom[0] &&
+            item.stock <= valuesTo[0] &&
+            item.price >= valuesFrom[1] &&
+            item.price <= valuesTo[1]
+          );
         });
       }
-      // else if (document.querySelectorAll('.filters .checkbox:checked').length === 0 && lowerSliderAll[0].min !== lowerSliderAll[0].value || upperSliderAll[0].max !== upperSliderAll[0].value
-      //   || lowerSliderAll[1].min !== lowerSliderAll[1].value || upperSliderAll[1].max !== upperSliderAll[1].value) {
-      //   result = productFilter.filter(item => {
-      //     return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
-      //   });
-      // }
 
-      resultData = result.slice()
-      resultFilters = result.slice()
+      if (
+        checkboxBrand.length === 0 &&
+        checkboxCategory.length === 0 &&
+        stockRange.dataset.active === 'false' &&
+        priceRange.dataset.active === 'false'
+      ) {
+        result = productFilter.slice();
+      }
 
-      result.length === 0 ? CreateProductCard('not-found') : (CreateProductCard(result), SortProductCard('now'));
+      if (
+        checkboxBrand.length === 0 &&
+        checkboxCategory.length === 0 &&
+        (stockRange.dataset.active === 'true' ||
+          priceRange.dataset.active === 'true')
+      ) {
+        result = productFilter.filter((item) => {
+          return (
+            item.stock >= valuesFrom[0] &&
+            item.stock <= valuesTo[0] &&
+            item.price >= valuesFrom[1] &&
+            item.price <= valuesTo[1]
+          );
+        });
+      }
+      // =======================================================================================================================================
+      resultData = result.slice();
+
+      result.length === 0
+        ? CreateProductCard('not-found')
+        : (CreateProductCard(result), SortProductCard('now'));
     }
+  }
+
+  const lowerSliderAll: NodeListOf<HTMLInputElement> =
+    document.querySelectorAll('._lower'); // нижние части слайдеров
+  const upperSliderAll: NodeListOf<HTMLInputElement> =
+    document.querySelectorAll('._upper'); // верхние части салйдеров
+  const valuesLowerSliderAll: NodeListOf<HTMLElement> =
+    document.querySelectorAll('._from'); // блок с данными слайдеров
+  const valuesUpperSliderAll: NodeListOf<HTMLElement> =
+    document.querySelectorAll('._to'); // блок с данными слайдеров
+
+  let valuesTo: number[] = []; // [stock, price]
+  let valuesFrom: number[] = []; // [stock, price]
+
+  valuesTo = [
+    +valuesUpperSliderAll[0].dataset.to!,
+    +valuesUpperSliderAll[1].dataset.to!,
+  ];
+  valuesFrom = [
+    +valuesLowerSliderAll[0].dataset.from!,
+    +valuesLowerSliderAll[1].dataset.from!,
+  ];
+
+  function sliderSelector(a: number, b: string): void {
+    // функция которая передается в обработчик событий input (stock = 0 или price = 1, to = нижний или from = верхний)
+
+    const productFilter: productsArrayI[] = productsData.products.slice();
+    let result: productsArrayI[] = [];
+
+    const stockRange = document.querySelector(
+      '.stock-container'
+    ) as HTMLElement; // блок слайдера stock
+    const priceRange = document.querySelector(
+      '.price-container'
+    ) as HTMLElement; // блок слайдера price
+
+    const checkboxCategory: string[] = []; // массив с выбранными фильтрами
+    const checkboxBrand: string[] = []; // массив с выбранными фильтрами
+
+    document
+      .querySelectorAll('.category-container .checkbox:checked')
+      .forEach((elem) =>
+        checkboxCategory.push((elem as HTMLInputElement).dataset.category!)
+      );
+
+    document
+      .querySelectorAll('.brand-container .checkbox:checked')
+      .forEach((elem) =>
+        checkboxBrand.push((elem as HTMLInputElement).dataset.brand!)
+      );
+
+    if (a === 0 && b === 'to') {
+      valuesTo[0] = +valuesUpperSliderAll[0].dataset.to!;
+    } else if (a === 0 && b === 'from') {
+      valuesFrom[0] = +valuesLowerSliderAll[0].dataset.from!;
+    } else if (a === 1 && b === 'to') {
+      valuesTo[1] = +valuesUpperSliderAll[1].dataset.to!;
+    } else if (a === 1 && b === 'from') {
+      valuesFrom[1] = +valuesLowerSliderAll[1].dataset.from!;
+    }
+
+    // =============================================блок проверки активности слайдеров======================================================
+
+    if (
+      lowerSliderAll[0].min !== lowerSliderAll[0].value ||
+      upperSliderAll[0].max !== upperSliderAll[0].value
+    ) {
+      stockRange.dataset.active = 'true';
+    } else if (
+      lowerSliderAll[0].min === lowerSliderAll[0].value &&
+      upperSliderAll[0].max === upperSliderAll[0].value
+    ) {
+      stockRange.dataset.active = 'false';
+    }
+
+    if (
+      lowerSliderAll[1].min !== lowerSliderAll[1].value ||
+      upperSliderAll[1].max !== upperSliderAll[1].value
+    ) {
+      priceRange.dataset.active = 'true';
+    } else if (
+      lowerSliderAll[1].min === lowerSliderAll[1].value &&
+      upperSliderAll[1].max === upperSliderAll[1].value
+    ) {
+      priceRange.dataset.active = 'false';
+    }
+
+    // =============================================блок проверок по массиву=============================================================
+
+    result = productFilter.filter((item) => {
+      return (
+        item.stock >= valuesFrom[0] &&
+        item.stock <= valuesTo[0] &&
+        item.price >= valuesFrom[1] &&
+        item.price <= valuesTo[1]
+      );
+    });
+
+    if (checkboxBrand.length !== 0 || checkboxCategory.length !== 0) {
+      result = productFilter.filter((item) => {
+        return (
+          (checkboxCategory.includes(item.category) ||
+            checkboxBrand.includes(item.brand)) &&
+          item.stock >= valuesFrom[0] &&
+          item.stock <= valuesTo[0] &&
+          item.price >= valuesFrom[1] &&
+          item.price <= valuesTo[1]
+        );
+      });
+    }
+
+    if (checkboxBrand.length !== 0 && checkboxCategory.length !== 0) {
+      result = productFilter.filter((item) => {
+        return (
+          checkboxCategory.includes(item.category) &&
+          checkboxBrand.includes(item.brand) &&
+          item.stock >= valuesFrom[0] &&
+          item.stock <= valuesTo[0] &&
+          item.price >= valuesFrom[1] &&
+          item.price <= valuesTo[1]
+        );
+      });
+    }
+
+    if (
+      document.querySelectorAll('.filters .checkbox:checked').length === 0 &&
+      stockRange.dataset.active === 'false' &&
+      priceRange.dataset.active === 'false'
+    ) {
+      result = productFilter.slice();
+    }
+
+    // =======================================================================================================================================
+
+    resultData = result.slice();
+
+    result.length === 0
+      ? CreateProductCard('not-found')
+      : (CreateProductCard(result), SortProductCard('now'));
   }
 
   document.querySelector('.filters')?.addEventListener('click', (e) => {
     filtering(e);
-  })
-
-  const lowerSliderAll = document.querySelectorAll('._lower') as NodeListOf<HTMLInputElement>
-  const upperSliderAll = document.querySelectorAll('._upper') as NodeListOf<HTMLInputElement>
-  const valuesLowerSliderAll = document.querySelectorAll('._from') as NodeListOf<HTMLElement>
-  const valuesUpperSliderAll = document.querySelectorAll('._to') as NodeListOf<HTMLElement>
-
-  let valuesTo: number[] = [] // [stock, price]
-  let valuesFrom: number[] = [] // [stock, price]
-
-  valuesTo = [+valuesUpperSliderAll[0].dataset.to!, +valuesUpperSliderAll[1].dataset.to!]
-  valuesFrom = [+valuesLowerSliderAll[0].dataset.from!, +valuesLowerSliderAll[1].dataset.from!]
-
-  function sliderSelector(a: number, b: string) {
-    let productFilter: Array<productsDataI> = productsData.products.slice();
-    let resultRange: Array<productsDataI> = [];
-
-    if (a === 0 && b === 'to') {
-      valuesTo[0] = +valuesUpperSliderAll[0].dataset.to!
-    } else if (a === 0 && b === 'from') {
-      valuesFrom[0] = +valuesLowerSliderAll[0].dataset.from!
-    } else if (a === 1 && b === 'to') {
-      valuesTo[1] = +valuesUpperSliderAll[1].dataset.to!
-    } else if (a === 1 && b === 'from') {
-      valuesFrom[1] = +valuesLowerSliderAll[1].dataset.from!
-    }
-
-    resultRange = productFilter.filter(item => {
-      return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
-    });
-
-    if (document.querySelectorAll('.filters .checkbox:checked').length !== 0) {
-      resultRange = resultFilters.filter(item => {
-        return (item.stock >= valuesFrom[0] && item.stock <= valuesTo[0]) && (item.price >= valuesFrom[1] && item.price <= valuesTo[1])
-      });
-    }
-
-
-    if (document.querySelectorAll('.filters .checkbox:checked').length === 0 && lowerSliderAll[0].min === lowerSliderAll[0].value && upperSliderAll[0].max === upperSliderAll[0].value
-      && lowerSliderAll[1].min === lowerSliderAll[1].value && upperSliderAll[1].max === upperSliderAll[1].value) {
-      resultRange = productFilter.slice();
-    }
-
-    // console.log('resultRange :>> ', resultRange);
-
-    resultData = resultRange.slice()
-    resultCheck = resultRange.slice()
-    // console.log('resultData :>> ', resultData);
-    resultRange.length === 0 ? CreateProductCard('not-found') : (CreateProductCard(resultRange), SortProductCard('now'));
-    // result.length === 0 ? console.log('not-found') : console.log('result');
-  }
+  });
 
   // ======================stock==========================
 
-  upperSliderAll[0].addEventListener('input', () => { sliderSelector(0, 'to') })
-  lowerSliderAll[0].addEventListener('input', () => { sliderSelector(0, 'from') })
+  upperSliderAll[0].addEventListener('input', () => {
+    sliderSelector(0, 'to');
+  });
+  lowerSliderAll[0].addEventListener('input', () => {
+    sliderSelector(0, 'from');
+  });
 
   // ======================price==========================
 
-  upperSliderAll[1].addEventListener('input', () => { sliderSelector(1, 'to') })
-  lowerSliderAll[1].addEventListener('input', () => { sliderSelector(1, 'from') })
+  upperSliderAll[1].addEventListener('input', () => {
+    sliderSelector(1, 'to');
+  });
+  lowerSliderAll[1].addEventListener('input', () => {
+    sliderSelector(1, 'from');
+  });
 
   // =====================================================
-
 }
