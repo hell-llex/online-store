@@ -1,40 +1,33 @@
 import '../index.html';
 import '../styles.scss';
-import './components/basket/basket'
-import Data from './products-v1.json'
-// import Filter from './components/filter';
-import Button from './components/button';
-import CreateProductCard from './components/cards';
-import { addLocalStorageBasket, getLocalStorageBasket } from './components/basket/localStorage'
-// import * as noUiSlider from 'nouislider';
-// import 'nouislider/dist/nouislider.css';
-const log = console.log;
+import './components/loader/loader.scss';
+import './components/basket/basket';
+import Data from './products-v1.json';
+// import { loadFilter, changeFilter } from './components/filter/filter';
+import { Button } from './components/button';
+import { loadProduct } from './components/cards/cards';
+import {
+  addLocalStorage,
+  getLocalStorage,
+} from './components/basket/localStorage';
+import { Routing } from './components/routing/routing';
+import { SortProductCard } from './components/sort/sort';
 
-export let itemInBasket:any
-itemInBasket =  [Data[1], Data[5],Data[9],Data[11],Data[14],Data[15], Data[16],Data[17],Data[18], Data[19],Data[20],Data[21], Data[22]] // global array of items in basket get value from localStarage
+loadProduct(30);
 
-window.addEventListener('beforeunload', addLocalStorageBasket)    //catch reload-page event
+Routing();
 
-window.addEventListener('load', getLocalStorageBasket)
+Button();
 
+SortProductCard('notNow');
 
+// changeFilter()
 
-const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
-CreateProductCard(catalogProducts, 21);
-// Filter();
-Button()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export let itemInBasket: any[];
+// eslint-disable-next-line prefer-const
+itemInBasket = [Data[1], Data[5], Data[9], Data[11], Data[14], Data[15]]; // global array of items in basket get value from localStarage
 
-export interface productsDataI {
-  id: number,
-  count: number,
-  title: string,
-  description: string,
-  price: number,
-  discountPercentage: number,
-  rating: number,
-  stock: number,
-  brand: string,
-  category: string,
-  thumbnail: string,
-  images: string[]
-}
+window.addEventListener('beforeunload', addLocalStorage); // catch reload-page event
+
+window.addEventListener('load', getLocalStorage);
