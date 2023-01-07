@@ -1,7 +1,7 @@
 import { itemInBasket } from '../../index'
-const productHeader = document.querySelector('.products__header')
+const productHeader = document.querySelector('.products__header') as HTMLElement
 
-export function renderProductHeader () {
+export function renderProductHeader (): void {
   productHeader.innerHTML = ''
 
   const productHeaderHTML = `

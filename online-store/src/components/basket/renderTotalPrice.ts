@@ -1,14 +1,15 @@
-import { itemInBasket } from '../../index'
-const summary = document.querySelector('.summary')
+import { itemInBasket, productsDataI } from '../../index'
+import { renderBuyForm } from './buyForm'
+const summary = document.querySelector('.summary') as HTMLElement
 
-export function renderTotalPrice () {
+export function renderTotalPrice ():void {
   summary.innerHTML = ''
   let priceTotal = 0
   let totalCountEl = 0
   const discount = 0.9
 
   // iterate array and get count and price for the total price
-  itemInBasket.forEach((el) => {
+  itemInBasket.forEach((el: productsDataI) => {
     priceTotal += el.count * el.price
     totalCountEl += el.count
   })
@@ -27,39 +28,36 @@ export function renderTotalPrice () {
     </form>
     <div class="summary__input-text">Промокод '123'</div>
     </div>
-    <button class="btn">BUY NOW!</button>
+    <button class="summary__buy-btn">BUY NOW!</button>
     <button class="btn-add-test">add</button>`
 
   summary.insertAdjacentHTML('afterbegin', summaryHTML)
-  const summaryInput = document.querySelector('input[type="text"]')
-  const summaryForm = document.querySelector('.summary__form')
-  const summaryTotal = document.querySelector('.summary__total')
-  const summaryDiscount = document.querySelector('.summary__discount')
-  const summaryDiscountText = document.querySelector('.summary__discount-text')
+  const summaryInput = document.querySelector('input[type="text"]') as HTMLInputElement
+  const summaryForm = document.querySelector('.summary__form') as HTMLElement
+  const summaryTotal = document.querySelector('.summary__total') as HTMLElement
+  const summaryDiscount = document.querySelector('.summary__discount') as HTMLElement
+  const summaryDiscountText = document.querySelector('.summary__discount-text') as HTMLElement
 
-  summaryForm.addEventListener('change', (e) => { addDiscount(e) }) // как обработать оба события тк submit срабатывает после change и дублирует надпись
+  summaryForm.addEventListener('input', (e) => { addDiscount(e) }) // как обработать оба события тк submit срабатывает после change и дублирует надпись
+
   summaryForm.addEventListener('submit', (e) => { e.preventDefault() })
 
-  function addDiscount (e) {
-    e.preventDefault() // cancel refresh page after event 'change'
-    if (summaryInput.value === '123') {
+  function addDiscount (e: Event):void {
+    if (summaryInput.value.match(/^123$/) || summaryInput.value.match(/^123\s/)) {
       summaryTotal.style.textDecoration = 'line-through solid red'
       summaryDiscount.classList.remove('hide')
       summaryDiscountText.classList.remove('hide')
       summaryInput.classList.add('correct')
       summaryInput.classList.remove('incorrect')
-    } else if (summaryInput.value === '') {
+    } else {
       summaryInput.classList.remove('correct')
       summaryInput.classList.remove('incorrect')
       summaryDiscount.classList.add('hide')
       summaryDiscountText.classList.add('hide')
       summaryTotal.style.textDecoration = 'none'
-    } else {
-      summaryTotal.style.textDecoration = 'none'
-      summaryInput.classList.add('incorrect')
-      summaryInput.classList.remove('correct')
-      summaryDiscount.classList.add('hide')
-      summaryDiscountText.classList.add('hide')
     }
   }
+
+  const buyButton = document.querySelector('.summary__buy-btn') as HTMLElement
+  buyButton.addEventListener('click', renderBuyForm)
 }
