@@ -236,6 +236,16 @@ li {
       border-radius: 1rem;
     }
 
+    .search {
+      height: 4rem;
+      padding: 0 1rem;
+      font-size: 1.8rem;
+      min-width: 18rem;
+      border-radius: 1rem;
+      cursor: pointer;
+
+    }
+
     .btn-switch-view {
       padding: 5px;
       display: grid;
