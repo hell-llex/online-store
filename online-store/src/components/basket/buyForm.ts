@@ -1,4 +1,5 @@
-import { itemInBasket, productsDataI } from '../../index'
+//TODO слетает скидка если применить промокод а потом поменять содержание корзины но может и пофиг
+import { itemInBasket } from '../../index'
 import { renderBasket } from './basket'
 export function renderBuyForm ():void {
   const buyForm = document.querySelector('.buy-form') as HTMLElement
@@ -105,9 +106,9 @@ export function renderBuyForm ():void {
   const inputCardNumber = document.querySelector('.js-input-card-number') as HTMLInputElement
   const inputCardTerm = document.querySelector('.js-input-card-term') as HTMLInputElement
 
-  inputCardTerm.addEventListener('input', (e: Event) => { validCardTerm(e) })
+  inputCardTerm.addEventListener('input', () => { validCardTerm() })
 
-  function validCardTerm (e: Event):void {
+  function validCardTerm ():void {
     inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2')
   }
 
@@ -116,9 +117,9 @@ export function renderBuyForm ():void {
   const imgMaster = document.querySelector('.inputBox__imgMaster') as HTMLElement
   const imgUnion = document.querySelector('.inputBox__imgUnion') as HTMLElement
 
-  inputCardNumber.addEventListener('input', (e) => { choseCard(e) })
+  inputCardNumber.addEventListener('input', () => { choseCard() })
 
-  function choseCard (e: Event):void {
+  function choseCard ():void {
     if (inputCardNumber.value.match(/^4/)) {
       imgVisa.classList.add('activeBorder')
     } else
@@ -136,7 +137,7 @@ export function renderBuyForm ():void {
   // close buy form - order accepted
   const buyBtn = document.querySelector('.submit-btn') as HTMLElement
   buyForm.addEventListener('submit', (e) => { e.preventDefault() })
-  buyBtn.addEventListener('click', (e) => {
+  buyBtn.addEventListener('click', () => {
     const orderAccepted = document.querySelector('.order-accepted') as HTMLElement
     itemInBasket.length = 0
     renderBasket()
@@ -144,7 +145,8 @@ export function renderBuyForm ():void {
     orderAccepted.classList.remove('hide')
 
     shadowWrapper.removeEventListener('click', shadowWrapperCloser)
-    console.log('itemInBasket :>> ', itemInBasket)
+
+    // TODO при покупке товара со страницы деталей а не корзины до переброса на мейн страницу кликнуть на шадоу то слой пропадет
 
     setTimeout(() => {
       alert('добавить линк на стартовую страницу')

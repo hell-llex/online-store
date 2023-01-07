@@ -38,11 +38,11 @@ export function renderTotalPrice ():void {
   const summaryDiscount = document.querySelector('.summary__discount') as HTMLElement
   const summaryDiscountText = document.querySelector('.summary__discount-text') as HTMLElement
 
-  summaryForm.addEventListener('input', (e) => { addDiscount(e) }) // как обработать оба события тк submit срабатывает после change и дублирует надпись
+  summaryForm.addEventListener('input', () => { addDiscount() }) // как обработать оба события тк submit срабатывает после change и дублирует надпись
 
   summaryForm.addEventListener('submit', (e) => { e.preventDefault() })
 
-  function addDiscount (e: Event):void {
+  function addDiscount ():void {
     if (summaryInput.value.match(/^123$/) || summaryInput.value.match(/^123\s/)) {
       summaryTotal.style.textDecoration = 'line-through solid red'
       summaryDiscount.classList.remove('hide')

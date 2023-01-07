@@ -767,12 +767,15 @@ input::-webkit-inner-spin-button {
   justify-content: space-evenly;
   margin: 20px  auto;
 }
-.details__card {
+
+.bread-crumbs > *:not(:last-child)::after {
+content:'>>';
+margin-left: 20px;
 }
 
 .card__info{
   display: grid;
-  grid-template-columns: 3fr 3fr 3fr;
+  grid-template-columns: 3fr 2fr 2fr;
   align-items: center;
   justify-items: center;
   grid-gap: 1vw;
@@ -780,6 +783,8 @@ input::-webkit-inner-spin-button {
 
 .cards__image{
   display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 .small__images > img {
   width: 100px;
@@ -788,22 +793,29 @@ input::-webkit-inner-spin-button {
 .focus__img {
   width: 200px;
   height: 200px;
+  margin-right: 40px;
 }
 
 .card__description {
+  width: 100%;
+  height: 100%;
   line-height: 130%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
-.item-card__title {
-}
-.item-card__description {
-}
-.item-card__other {
-}
+
 .card__buy {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
 }
 .card-price {
   font-size: 24px;
+  margin: 0 auto;
 }
+
+.details__buy-btn {
+  margin-top: 5px;
+}
+
