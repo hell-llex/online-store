@@ -1,4 +1,4 @@
-import { itemInBasket, productsDataI } from '../../index'
+import { itemInBasket } from '../../index'
 import Data from '../../products-v1.json'
 import { renderTotalPrice } from './renderTotalPrice'
 import { renderProductHeader } from './renderProductHeader'
@@ -33,7 +33,7 @@ productCardContainer.addEventListener('click', (e:Event) => {
 
 
 
-btnAddTest.addEventListener('click', (e) => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'
+btnAddTest.addEventListener('click', () => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'
   addCardBasket(Data[10])
   renderBasket()
 })
