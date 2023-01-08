@@ -4,8 +4,10 @@ import { renderBasket } from './basket'
 export function renderBuyForm ():void {
   const buyForm = document.querySelector('.buy-form') as HTMLElement
   const shadowWrapper = document.querySelector('.shadow-wrapper') as HTMLElement
+ const body = document.querySelector('.body') as HTMLElement
   buyForm.classList.remove('hide')
   shadowWrapper.classList.remove('hide')
+  body.classList.add('overflow-hidden');
   buyForm.innerHTML = ''
 
   const buyFormHTML = `
@@ -100,6 +102,7 @@ export function renderBuyForm ():void {
   function shadowWrapperCloser ():void {
     shadowWrapper.classList.add('hide')
     buyForm.classList.add('hide')
+    body.classList.remove('overflow-hidden');
   }
 
   // Form card-term validation
@@ -134,6 +137,7 @@ export function renderBuyForm ():void {
       imgUnion.classList.remove('activeBorder')
     }
   }
+
   // close buy form - order accepted
   const buyBtn = document.querySelector('.submit-btn') as HTMLElement
   buyForm.addEventListener('submit', (e) => { e.preventDefault() })
@@ -142,16 +146,13 @@ export function renderBuyForm ():void {
     itemInBasket.length = 0
     renderBasket()
     buyForm.classList.add('hide')
+   shadowWrapper.removeEventListener('click', shadowWrapperCloser)
     orderAccepted.classList.remove('hide')
-
-    shadowWrapper.removeEventListener('click', shadowWrapperCloser)
-
-    // TODO при покупке товара со страницы деталей а не корзины до переброса на мейн страницу кликнуть на шадоу то слой пропадет
 
     setTimeout(() => {
       alert('добавить линк на стартовую страницу')
       orderAccepted.classList.add('hide')
-      shadowWrapper.classList.add('hide')
+      shadowWrapperCloser()
     }, 3000)
   })
 }

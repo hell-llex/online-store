@@ -1,3 +1,4 @@
+//TODO п.19.4 кнопка добавления в корзину зависит от того был ли добавлен ранее
 import Data from '../../products-v1.json'
 import { renderBuyForm } from '../basket/buyForm'
 const detailsContainer = document.querySelector('.details-container') as HTMLElement
