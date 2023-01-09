@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Online Store</title>
+<link rel="icon" href="favicon.ico"><script defer src="index.js"></script><link href="main.4217ccc52671ffc42fa0.css" rel="stylesheet"></head>
+
+<body class="body">
+  <div class="wrapper">
+    <header class="header">
+      <div class="logo" class="logo">Online-Store</div>
+      <div class="icon-basket">
+        <p>0</p>
+      </div>
+      <!-- <a href="#/" data-href="#/" onclick="locationResolver(this.dataset.href)" class="logo">Online-Store</a>
+      <a href="#/basket/" data-href="#/basket/" onclick="locationResolver(this.dataset.href)" class="basket">
+        <p>0</p>
+      </a> -->
+      <!-- <a href="#/" data-href="#/" class="logo">Online-Store</a> -->
+      <!-- <a href="#/basket" data-href="#/basket/" class="icon-basket">
+        <p>0</p>
+      </a> -->
+    </header>
+    <main class="main">
+      <div class="page__home">
+        <div class="main-container">
+          <aside class="filters">
+            <ul class="filters-list">
+              <li class="filters-item">
+                <h3>Category</h3>
+                <div class="category-container" data-active="false">
+                  <div class="container-item">
+                    <label class="item-label"><input type="checkbox" name="Iphone" class="checkbox"
+                        data-category="smart">Iphone</label>
+                    <p class="quantity">5/5</p>
+                  </div>
+                </div>
+              </li>
+              <li class="filters-item">
+                <h3>Brand</h3>
+                <div class="brand-container" data-active="false">
+                  <div class="container-item">
+                    <label class="item-label"><input type="checkbox" name="Iphone" class="checkbox">Iphone</label>
+                    <p class="quantity">5/5</p>
+                  </div>
+                </div>
+              </li>
+              <li class="filters-item">
+                <h3>Quantity in stock</h3>
+                <div class="stock-container" data-active="false">
+                </div>
+              </li>
+              <li class="filters-item">
+                <h3>Price</h3>
+                <div class="price-container" data-active="false">
+                </div>
+              </li>
+              <li class="filters-item">
+                <div class="btn-container">
+                  <div class="btn-reset">
+                    <p>Reset</p>
+                  </div>
+                  <div class="btn-copy">
+                    <p>Copy</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </aside>
+          <div class="catalog">
+            <div class="catalog-sort">
+              <div class="btn-switch-view">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <span class="line"></span>
+              <p class="found" data-found="0">Found:***</p>
+              <span class="line"></span>
+              <input type="search" name="search" id="search" class="search" placeholder="Search here...">
+              <span class="line"></span>
+              <!-- <hr> -->
+              <div class="btn-sort">
+                <!-- <label for="sort">sort by</label> -->
+                <select name="sort" id="sort" class="sort-input">
+                  <option selected disabled>Select sorting</option>
+                  <option value="rating-highest">RATING ⇧</option>
+                  <option value="rating-lowest">RATING ⇩</option>
+                  <option value="price-highest">PRICE ⇧</option>
+                  <option value="price-lowest">PRICE ⇩</option>
+                </select>
+              </div>
+            </div>
+            <div class="catalog-products">
+              <div class="preloader">
+                <div class="centered">
+                  <div class="blob-1"></div>
+                  <div class="blob-2"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="page__basket">
+        <section class="basket wrapper">
+          <div class="page page2" data-page="page2">
+            <div class="products">
+              <div class="products__header">
+              </div>
+              <div class="products__card-container">
+              </div>
+            </div>
+
+            <div class="summary">
+              <h2 class="summary__title">Summary</h2>
+              <div class="summary__products">Products: 0
+              </div>
+              <div class="summary__total">Total: 0
+              </div>
+              <div class="summary__promo">
+                <input type="text" placeholder="Enter promo code" class="summary__input">
+                <div class="summary__input-text">Промокод '123'</div>
+              </div>
+              <button class="summary__buy-btn">BUY NOW!</button>
+              <button class="btn-add-test">add</button>
+            </div>
+        </section>
+
+        <div class="shadow-wrapper hide">
+        </div>
+        <div class="buy-form hide">
+        </div>
+        <div class="buy-form hide">
+        </div>
+        <div class="order-accepted hide">
+          <h3 class="title-accepted">Order accepted!</h3>
+        </div>
+      </div>
+
+      <div class="page__product-description"></div>
+
+      <div class="page__404">
+        <div class="_404-container">
+          <div class="code-area">
+            <span style="color: #777;font-style:italic;">
+              // 404 page not found.
+            </span>
+            <span>
+              <span style="color:#d65562;">
+                if
+              </span>
+              (<span style="color:#4ca8ef;">!</span><span style="font-style: italic;color:#bdbdbd;">found</span>)
+              {
+            </span>
+            <span>
+              <span style="padding-left: 15px;color:#2796ec">
+                <i style="width: 10px;display:inline-block"></i>throw
+              </span>
+              <span>
+                (<span style="color: #a6a61f">"(╯°□°)╯︵ ┻━┻"</span>);
+              </span>
+              <span style="display:block">}</span>
+              <span style="color: #777;font-style:italic;">
+                // <a href="#">Go home!</a>
+              </span>
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </main>
+    <footer class="footer">
+      <a href="https://github.com/hell-llex" class="my-logo"></a>
+      <p class="footer-link">© 2022 <br> hell_llex </p>
+      <a href="https://github.com/hell-llex" class="footer-link">GitHub</a>
+      <a href="https://rs.school/js/" class="rs-logo"></a>
+    </footer>
+  </div>
+
+
+  <!-- <script src="src/basket.js"></script> -->
+</body>
+
+
+
+</html>
