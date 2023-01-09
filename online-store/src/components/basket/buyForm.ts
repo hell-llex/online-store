@@ -1,14 +1,16 @@
 //TODO слетает скидка если применить промокод а потом поменять содержание корзины но может и пофиг
-import { itemInBasket } from '../../index'
-import { renderBasket } from './basket'
-export function renderBuyForm ():void {
-  const buyForm = document.querySelector('.buy-form') as HTMLElement
-  const shadowWrapper = document.querySelector('.shadow-wrapper') as HTMLElement
- const body = document.querySelector('.body') as HTMLElement
-  buyForm.classList.remove('hide')
-  shadowWrapper.classList.remove('hide')
+import { itemInBasket } from '../../index';
+import { renderBasket } from './basket';
+export function renderBuyForm(): void {
+  const buyForm = document.querySelector('.buy-form') as HTMLElement;
+  const shadowWrapper = document.querySelector(
+    '.shadow-wrapper'
+  ) as HTMLElement;
+  const body = document.querySelector('.body') as HTMLElement;
+  buyForm.classList.remove('hide');
+  shadowWrapper.classList.remove('hide');
   body.classList.add('overflow-hidden');
-  buyForm.innerHTML = ''
+  buyForm.innerHTML = '';
 
   const buyFormHTML = `
         <form action="" class="js-form">
@@ -98,10 +100,10 @@ export function renderBuyForm ():void {
   buyForm.insertAdjacentHTML('afterbegin', buyFormHTML);
 
   // Outside buyForm-close
-  shadowWrapper.addEventListener('click', shadowWrapperCloser)
-  function shadowWrapperCloser ():void {
-    shadowWrapper.classList.add('hide')
-    buyForm.classList.add('hide')
+  shadowWrapper.addEventListener('click', shadowWrapperCloser);
+  function shadowWrapperCloser(): void {
+    shadowWrapper.classList.add('hide');
+    buyForm.classList.add('hide');
     body.classList.remove('overflow-hidden');
   }
 
@@ -113,10 +115,12 @@ export function renderBuyForm ():void {
     '.js-input-card-term'
   ) as HTMLInputElement;
 
-  inputCardTerm.addEventListener('input', () => { validCardTerm() })
+  inputCardTerm.addEventListener('input', () => {
+    validCardTerm();
+  });
 
-  function validCardTerm ():void {
-    inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2')
+  function validCardTerm(): void {
+    inputCardTerm.value = inputCardTerm.value.replace(/^(\d{2})(\d)/, '$1/$2');
   }
 
   // card image hendler
@@ -126,9 +130,11 @@ export function renderBuyForm ():void {
   ) as HTMLElement;
   const imgUnion = document.querySelector('.inputBox__imgUnion') as HTMLElement;
 
-  inputCardNumber.addEventListener('input', () => { choseCard() })
+  inputCardNumber.addEventListener('input', () => {
+    choseCard();
+  });
 
-  function choseCard ():void {
+  function choseCard(): void {
     if (inputCardNumber.value.match(/^4/)) {
       imgVisa.classList.add('activeBorder');
     } else if (inputCardNumber.value.match(/^5/)) {
@@ -143,20 +149,24 @@ export function renderBuyForm ():void {
   }
 
   // close buy form - order accepted
-  const buyBtn = document.querySelector('.submit-btn') as HTMLElement
-  buyForm.addEventListener('submit', (e) => { e.preventDefault() })
+  const buyBtn = document.querySelector('.submit-btn') as HTMLElement;
+  buyForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
   buyBtn.addEventListener('click', () => {
-    const orderAccepted = document.querySelector('.order-accepted') as HTMLElement
-    itemInBasket.length = 0
-    renderBasket()
-    buyForm.classList.add('hide')
-   shadowWrapper.removeEventListener('click', shadowWrapperCloser)
-    orderAccepted.classList.remove('hide')
+    const orderAccepted = document.querySelector(
+      '.order-accepted'
+    ) as HTMLElement;
+    itemInBasket.length = 0;
+    renderBasket();
+    buyForm.classList.add('hide');
+    shadowWrapper.removeEventListener('click', shadowWrapperCloser);
+    orderAccepted.classList.remove('hide');
 
     setTimeout(() => {
-      alert('добавить линк на стартовую страницу')
-      orderAccepted.classList.add('hide')
-      shadowWrapperCloser()
-    }, 3000)
-  })
+      alert('добавить линк на стартовую страницу');
+      orderAccepted.classList.add('hide');
+      shadowWrapperCloser();
+    }, 3000);
+  });
 }
