@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { itemInBasket } from '../../index';
-import Data from '../../products-v1.json';
 import './basket.scss';
 import { renderTotalPrice } from './renderTotalPrice';
 import { renderProductHeader } from './renderProductHeader';
@@ -19,6 +18,9 @@ const pageDetails = document.querySelector(
 ) as HTMLElement;
 
 export function renderBasket(): void {
+  (
+    document.querySelector('.icon-basket p') as HTMLElement
+  ).innerHTML = `${itemInBasket.length}`;
   renderProductHeader();
   renderCardsInBasket();
   renderTotalPrice();
@@ -51,37 +53,7 @@ productCardContainer.addEventListener('click', (e: Event) => {
   }
 });
 
-//render details listener
-productCardContainer.addEventListener('click', (e: Event) => {
-  if (
-    e !== null &&
-    e.target instanceof HTMLElement &&
-    e.target.closest('.item-card__info')
-  ) {
-    const cardForRender = e.target.closest(
-      '.products__item-card'
-    ) as HTMLElement;
-    console.log(
-      'cardForRender.dataset.identifier :>> ',
-      cardForRender.dataset.identifier
-    );
-    pageBasket.classList.add('hide');
-    renderDetails(Number(cardForRender.dataset.identifier));
-    pageDetails.classList.remove('hide');
-  }
-});
 
-btnAddTest.addEventListener('click', (e) => {
-  // TODO прокидываешь мне товар по которому прожато 'добавить товар'
-  addCardBasket(Data[10]);
-  renderBasket();
-});
-
-btnAddTest.addEventListener('click', () => {
-  // TODO прокидываешь мне товар по которому прожато 'добавить товар'
-  addCardBasket(Data[10]);
-  renderBasket();
-});
 
 function addCardBasket(product: any) {
   // TODO fix mistake when product:productsDataI?
