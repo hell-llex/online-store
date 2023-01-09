@@ -1,4 +1,5 @@
 import Router from 'vanilla-router';
+import './404.scss';
 
 export function Routing() {
   const log = console.log;
@@ -249,6 +250,7 @@ export function Routing() {
       log('"/' + path + '" Page not found');
       (main[0] as HTMLElement).style.display = 'none';
       (main[1] as HTMLElement).style.display = 'none';
+      (main[3] as HTMLElement).style.display = 'flex';
     },
   });
 
@@ -256,13 +258,19 @@ export function Routing() {
     log('Home page');
     (main[0] as HTMLElement).style.display = 'flex';
     (main[1] as HTMLElement).style.display = 'none';
+    (main[3] as HTMLElement).style.display = 'none';
   });
 
   router.add('basket', function () {
     log('Basket page');
     (main[0] as HTMLElement).style.display = 'none';
     (main[1] as HTMLElement).style.display = 'flex';
+    (main[3] as HTMLElement).style.display = 'none';
   });
+
+  // router.add(/^hello\/(\w+)/i, function (name) {
+  //   log('xm, ' + name);
+  // });
 
   router.add('products/(:any)', function (name) {
     log('Products, ' + name);
@@ -270,13 +278,13 @@ export function Routing() {
 
   router.addUriListener();
 
-  router.navigateTo('');
+  router.navigateTo('#');
 
   logo?.addEventListener('click', () => {
     window.location.href = new URL('#', window.location.origin).href;
   });
 
   basket?.addEventListener('click', () => {
-    window.location.href = new URL('#/basket', window.location.origin).href;
+    window.location.href = new URL('#basket', window.location.origin).href;
   });
 }
