@@ -1,17 +1,16 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { itemInBasket } from '../../index';
-import './basket.scss';
-import Data from '../../products-v1.json';
-import { renderTotalPrice } from './renderTotalPrice';
-import { renderProductHeader } from './renderProductHeader';
-import { renderCardsInBasket } from './renderCardsInBasket';
-import { handleClickPlusMinusDel } from './handleClickPlusMinusDel';
+import { itemInBasket } from '../../index'
+import Data from '../../products-v1.json'
+import { renderTotalPrice } from './renderTotalPrice'
+import { renderProductHeader } from './renderProductHeader'
+import { renderCardsInBasket } from './renderCardsInBasket'
+import { handleClickPlusMinusDel } from './handleClickPlusMinusDel'
+import {renderDetails} from '../details/productCard'
 /* import {  getLocalStoragePage } from './localStorage' */
 
-const productCardContainer = document.querySelector(
-  '.products__card-container'
-) as HTMLElement;
-const btnAddTest = document.querySelector('.btn-add-test') as HTMLElement;
+const productCardContainer = document.querySelector('.products__card-container') as HTMLElement
+const btnAddTest = document.querySelector('.btn-add-test') as HTMLElement
+const pageBasket = document.querySelector('.page__basket') as HTMLElement
+const pageDetails = document.querySelector('.page__product-description') as HTMLElement
 
 export function renderBasket(): void {
   renderProductHeader();
@@ -44,7 +43,18 @@ productCardContainer.addEventListener('click', (e: Event) => {
     /*    renderCardsInBasket() */
     renderBasket();
   }
-});
+})
+
+//render details listener
+productCardContainer.addEventListener('click', (e:Event) => {
+  if ((e !== null && e.target instanceof HTMLElement) && ( e.target.closest('.item-card__info'))) {
+const cardForRender = e.target.closest('.products__item-card') as HTMLElement
+console.log('cardForRender.dataset.identifier :>> ', cardForRender.dataset.identifier);
+   pageBasket.classList.add('hide')
+    renderDetails(Number(cardForRender.dataset.identifier))
+    pageDetails.classList.remove('hide')
+  }
+})
 
 btnAddTest.addEventListener('click', (e) => {
   // TODO прокидываешь мне товар по которому прожато 'добавить товар'
@@ -52,9 +62,14 @@ btnAddTest.addEventListener('click', (e) => {
   renderBasket();
 });
 
-function addCardBasket(product: any) {
-  // TODO fix mistake when product:productsDataI?
-  itemInBasket.push(product);
+
+btnAddTest.addEventListener('click', () => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'
+  addCardBasket(Data[10])
+  renderBasket()
+})
+
+function addCardBasket (product: any) { // TODO fix mistake when product:productsDataI?
+  itemInBasket.push(product)
 }
 /*
 Функция удаления для стыковки с магазином
