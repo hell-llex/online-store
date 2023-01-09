@@ -4,6 +4,9 @@ const productHeader = document.querySelector(
 ) as HTMLElement;
 
 export function renderProductHeader(): void {
+  if (itemInBasket.length === 0) {
+    productHeader.innerHTML = '';
+  }
   productHeader.innerHTML = '';
 
   const productHeaderHTML = `

@@ -404,6 +404,11 @@ li {
 .products__card-container {
   height: 60vh;
 }
+.empty{
+  font-size: 24px;
+  margin: 112px 0px 0px 60px;
+  width: 230px;
+}
 
 .products__item-card {
   display: grid;
@@ -489,7 +494,9 @@ margin-bottom: 10px;
   .number-control{
     margin-right: 10px;
   }
-
+  .empty {
+    margin: -84px 0px 0px 143px;
+  }
 }
 
 //BUY FORM
@@ -788,10 +795,6 @@ margin-left: 20px;
   margin-top: 5px;
 }
 
-.hide {
-  display: none;
-}
-
 body.overflow-hidden {
   overflow: hidden;
 }
@@ -849,4 +852,12 @@ body.overflow-hidden {
   content: ">>";
   margin-left: 10px;
 }
+}
+
+.hide {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
 }

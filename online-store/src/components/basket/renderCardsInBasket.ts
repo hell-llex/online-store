@@ -24,7 +24,7 @@ export function renderCardsInBasket(): void {
   const rows = +limitEl.value;
   currentPage = getLocalStoragePage();
   if (postData.length === 0) {
-    productCardContainer.innerHTML = '';
+    productCardContainer.innerHTML = `<div class="empty">Basket is empty</div>`;
   } else {
     displayList(postData, rows, currentPage);
   }
