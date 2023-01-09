@@ -3,6 +3,7 @@ import { filterSelector, productsArrayI, sliderSelector } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { SortProductCard } from '../sort/sort';
 import { slider } from './slider/slider';
+import { searchProductCard, searchResult } from '../search/search';
 
 // const log = console.log;
 
@@ -20,11 +21,13 @@ function CreateFilter(
   if (location === 'category' || location === 'brand') {
     (setting as filterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
-        <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}" data-count="${
+        <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}"
+        data-count="${
+          (setting as filterSelector).countFilter[i]
+        }">${elem}</label><p class="quantity">
+        <span>${(setting as filterSelector).countFilter[i]}</span>/${
         (setting as filterSelector).countFilter[i]
-      }">${elem}</label><p class="quantity"><span>${
-        (setting as filterSelector).countFilter[i]
-      }</span>/${(setting as filterSelector).countFilter[i]}</p></div>`);
+      }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
     const value = setting as sliderSelector;
@@ -84,7 +87,10 @@ export let resultData: productsArrayI[] = []; // массив с данным д
 
 function changeFilter(): void {
   function filtering(e: Event): void {
-    const productFilter: productsArrayI[] = productsData.products.slice();
+    const productFilter: productsArrayI[] =
+      (document.querySelector('.search') as HTMLInputElement).value.length === 0
+        ? productsData.products.slice()
+        : searchResult.slice();
     const checkboxCategory: string[] = []; // массив с выбранными фильтрами
     const checkboxBrand: string[] = []; // массив с выбранными фильтрами
     let result: productsArrayI[] = [];
@@ -194,9 +200,11 @@ function changeFilter(): void {
       // =======================================================================================================================================
       resultData = result.slice();
 
+      result = SortProductCard('now', result)!;
+
       result.length === 0
         ? CreateProductCard('not-found')
-        : (CreateProductCard(result), SortProductCard('now'));
+        : CreateProductCard(result);
     }
   }
 
@@ -224,7 +232,10 @@ function changeFilter(): void {
   function sliderSelector(a: number, b: string): void {
     // функция которая передается в обработчик событий input (stock = 0 или price = 1, to = нижний или from = верхний)
 
-    const productFilter: productsArrayI[] = productsData.products.slice();
+    const productFilter: productsArrayI[] =
+      (document.querySelector('.search') as HTMLInputElement).value.length === 0
+        ? productsData.products.slice()
+        : searchResult.slice();
     let result: productsArrayI[] = [];
 
     const stockRange = document.querySelector(
@@ -334,9 +345,11 @@ function changeFilter(): void {
 
     resultData = result.slice();
 
+    result = SortProductCard('now', result)!;
+
     result.length === 0
       ? CreateProductCard('not-found')
-      : (CreateProductCard(result), SortProductCard('now'));
+      : CreateProductCard(result);
   }
 
   document.querySelector('.filters')?.addEventListener('click', (e) => {

@@ -1,8 +1,9 @@
 import './cards.scss';
 import { productsArrayI, productsDataI } from '../types';
 import { loadFilter } from '../filter/filter';
+import { searchProductCard } from '../search/search';
 
-// const log = console.log
+const log = console.log;
 
 export const productsData: productsDataI = {
   limit: 0,
@@ -22,7 +23,7 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML =
       '<p class="not-found">No products found <br> (ಥ﹏ಥ)</p>';
     (document.querySelector('.found') as HTMLElement).innerHTML = 'Found:0';
-    (document.querySelector('.found') as HTMLElement).dataset.found = 'no';
+    (document.querySelector('.found') as HTMLElement).dataset.found = '0';
   } else {
     setting.forEach((elem) => {
       const images: string[] = [];
@@ -74,5 +75,6 @@ export function loadProduct(quantity = 100): void {
       Object.assign(productsData, data); // копирует объект
       CreateProductCard(data.products); // передает массив в функцию CreateProductCard
       loadFilter(data.products);
+      searchProductCard('notNow');
     });
 }
