@@ -12,25 +12,36 @@ const btnAddTest = document.querySelector('.btn-add-test') as HTMLElement
 const pageBasket = document.querySelector('.page__basket') as HTMLElement
 const pageDetails = document.querySelector('.page__product-description') as HTMLElement
 
-export function renderBasket ():void {
-  renderProductHeader()
-  renderCardsInBasket()
-  renderTotalPrice()
-  console.log('renderBasket this: ', itemInBasket)
+export function renderBasket(): void {
+  renderProductHeader();
+  renderCardsInBasket();
+  renderTotalPrice();
+  console.log('renderBasket this: ', itemInBasket);
 }
 
 // handle clicking on + - Del
-productCardContainer.addEventListener('click', (e:Event) => {
-  if ((e !== null && e.target instanceof HTMLElement) && (e.target.dataset.action === 'plus' || e.target.dataset.action === 'minus' || e.target.dataset.action === 'del')) {
-    handleClickPlusMinusDel(e)
-    renderBasket()
+productCardContainer.addEventListener('click', (e: Event) => {
+  if (
+    e !== null &&
+    e.target instanceof HTMLElement &&
+    (e.target.dataset.action === 'plus' ||
+      e.target.dataset.action === 'minus' ||
+      e.target.dataset.action === 'del')
+  ) {
+    handleClickPlusMinusDel(e);
+    renderBasket();
   }
-})
+});
 
-productCardContainer.addEventListener('click', (e:Event) => {
-  if ((e !== null && e.target instanceof HTMLElement) && ( e.target.dataset.action === 'plusPage' || e.target.dataset.action === 'minusPage')) {
-  /*    renderCardsInBasket() */
-    renderBasket()
+productCardContainer.addEventListener('click', (e: Event) => {
+  if (
+    e !== null &&
+    e.target instanceof HTMLElement &&
+    (e.target.dataset.action === 'plusPage' ||
+      e.target.dataset.action === 'minusPage')
+  ) {
+    /*    renderCardsInBasket() */
+    renderBasket();
   }
 })
 
@@ -45,6 +56,11 @@ console.log('cardForRender.dataset.identifier :>> ', cardForRender.dataset.ident
   }
 })
 
+btnAddTest.addEventListener('click', (e) => {
+  // TODO прокидываешь мне товар по которому прожато 'добавить товар'
+  addCardBasket(Data[10]);
+  renderBasket();
+});
 
 
 btnAddTest.addEventListener('click', () => { // TODO прокидываешь мне товар по которому прожато 'добавить товар'

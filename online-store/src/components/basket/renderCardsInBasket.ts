@@ -1,62 +1,86 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 // TODO fix при удалении элемента на 2й сранице корзины рендорит первую страницу
-import { itemInBasket, productsDataI } from '../../index'
-import {  addLocalStoragePage, getLocalStoragePage } from './localStorage'
-const productCardContainer = document.querySelector('.products__card-container') as HTMLElement
-const productHeader = document.querySelector('.products__header') as HTMLElement
-export let currentPage:any = 1
-addLocalStoragePage()
-export function renderCardsInBasket ():void {
-  const postData = itemInBasket
-  const rows = 4
-  currentPage = getLocalStoragePage()
+import { itemInBasket } from '../../index';
+import { productsArrayI } from '../types';
+
+import { addLocalStoragePage, getLocalStoragePage } from './localStorage';
+const productCardContainer = document.querySelector(
+  '.products__card-container'
+) as HTMLElement;
+const productHeader = document.querySelector(
+  '.products__header'
+) as HTMLElement;
+export let currentPage: any = 1;
+addLocalStoragePage();
+export function renderCardsInBasket(): void {
+  const postData = itemInBasket;
+  const rows = 4;
+  currentPage = getLocalStoragePage();
   if (postData.length === 0) {
-    productCardContainer.innerHTML = ''
-  } else  { displayList(postData, rows, currentPage) }
+    productCardContainer.innerHTML = '';
+  } else {
+    displayList(postData, rows, currentPage);
+  }
 }
 
-productHeader.addEventListener('click', (e: Event) => { displayPagination(e) })
+productHeader.addEventListener('click', (e: Event) => {
+  displayPagination(e);
+});
 
-function displayPagination (event: Event) {
-  const postData = itemInBasket
-  const rows = 4
-  const PageCounter = document.querySelector('[data-counterPage]') as HTMLElement
+function displayPagination(event: Event) {
+  const postData = itemInBasket;
+  const rows = 4;
+  const PageCounter = document.querySelector(
+    '[data-counterPage]'
+  ) as HTMLElement;
 
-  if ((event !== null && event.target instanceof HTMLElement)) {
-    if (event.target.dataset.action === 'plusPage' && (currentPage < Math.ceil(itemInBasket.length / rows))) {
-      currentPage = currentPage + 1
+  if (event !== null && event.target instanceof HTMLElement) {
+    if (
+      event.target.dataset.action === 'plusPage' &&
+      currentPage < Math.ceil(itemInBasket.length / rows)
+    ) {
+      currentPage = currentPage + 1;
       PageCounter.innerText = currentPage.toString();
-      addLocalStoragePage()
-      displayList(postData, rows, currentPage)
+      addLocalStoragePage();
+      displayList(postData, rows, currentPage);
     }
     if (event.target.dataset.action === 'minusPage' && currentPage > 1) {
-      currentPage = currentPage - 1
+      currentPage = currentPage - 1;
       PageCounter.innerText = currentPage.toString();
-      addLocalStoragePage()
-      displayList(postData, rows, currentPage)
+      addLocalStoragePage();
+      displayList(postData, rows, currentPage);
     }
   }
 }
 
-
-function displayList (arrData: productsDataI[], rowPerPage: number, page: number):void {
-  const PageCounter = document.querySelector('[data-counterPage]') as HTMLElement
-    PageCounter.innerText = currentPage.toString();
-  productCardContainer.innerHTML = ''
-  page--
-  const start = rowPerPage * page
-  const end = start + rowPerPage
-  const paginatedData = arrData.slice(start, end)
+function displayList(
+  arrData: productsArrayI[],
+  rowPerPage: number,
+  page: number
+): void {
+  const PageCounter = document.querySelector(
+    '[data-counterPage]'
+  ) as HTMLElement;
+  PageCounter.innerText = currentPage.toString();
+  productCardContainer.innerHTML = '';
+  page--;
+  const start = rowPerPage * page;
+  const end = start + rowPerPage;
+  const paginatedData = arrData.slice(start, end);
 
   //уменьшает страницу пагинации на 1 если удалены все продукты на del или -
   if (paginatedData.length === 0) {
-    currentPage = currentPage - 1
-    addLocalStoragePage()
-    renderCardsInBasket()
+    currentPage = currentPage - 1;
+    addLocalStoragePage();
+    renderCardsInBasket();
   }
   paginatedData.forEach((el, index) => {
     const productCardHTML = `
     <div class="products__item-card" data-identifier="${el.id}">
-      <div class="products__position"> ${(page * rowPerPage) + index + 1} </div>
+      <div class="products__position"> ${page * rowPerPage + index + 1} </div>
       <div class="item-card__info">
         <img alt="${el.title}" src="${el.thumbnail}">
         <div class="item-card__detail">
@@ -80,8 +104,8 @@ function displayList (arrData: productsDataI[], rowPerPage: number, page: number
         <div class="amount-control">${el.price} €</div>
         <button class="btn-del-test" data-action="del">del</button>
       </div>
-    </div>`
+    </div>`;
 
-    productCardContainer.insertAdjacentHTML('beforeend', productCardHTML)
-  })
+    productCardContainer.insertAdjacentHTML('beforeend', productCardHTML);
+  });
 }
