@@ -2,7 +2,6 @@ import '../index.html';
 import '../styles.scss';
 import './components/loader/loader.scss';
 import './components/basket/basket';
-import Data from './products-v1.json';
 // import { loadFilter, changeFilter } from './components/filter/filter';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// TODO fix при удалении элемента на 2й сранице корзины рендорит первую страницу
 import { itemInBasket } from '../../index';
 import { productsArrayI } from '../types';
 
@@ -13,11 +12,16 @@ const productCardContainer = document.querySelector(
 const productHeader = document.querySelector(
   '.products__header'
 ) as HTMLElement;
+
 export let currentPage: any = 1;
 addLocalStoragePage();
+
 export function renderCardsInBasket(): void {
+  const limitEl = document.querySelector(
+    '.products__limit'
+  ) as HTMLInputElement;
   const postData = itemInBasket;
-  const rows = 4;
+  const rows = +limitEl.value;
   currentPage = getLocalStoragePage();
   if (postData.length === 0) {
     productCardContainer.innerHTML = '';
@@ -30,9 +34,19 @@ productHeader.addEventListener('click', (e: Event) => {
   displayPagination(e);
 });
 
+productHeader.addEventListener('change', (e: Event) => {
+  if (e !== null && e.target instanceof HTMLElement && e.target.dataset.limit)
+    console.log('change :>> ');
+  renderCardsInBasket();
+});
+
 function displayPagination(event: Event) {
+  const limitEl = document.querySelector(
+    '.products__limit'
+  ) as HTMLInputElement;
   const postData = itemInBasket;
-  const rows = 4;
+  const rows = +limitEl.value;
+  console.log('+limitEl.value :>> ', +limitEl.value);
   const PageCounter = document.querySelector(
     '[data-counterPage]'
   ) as HTMLElement;

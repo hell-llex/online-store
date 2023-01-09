@@ -388,9 +388,17 @@ li {
   display: flex;
   justify-content: space-evenly;
 }
+
+.products__count-items{
+  height: 30px;
+}
 .products {
   margin: 10px;
   height: 75vh;
+}
+
+.products__limit{
+  height: 30px;
 }
 
 .products__card-container {
@@ -559,11 +567,11 @@ input:invalid:not(:placeholder-shown) {border-color: red;}
 input:valid:not(:placeholder-shown) {border-color: green;}
 
 //del arrow in input type number
-input::-webkit-outer-spin-button,
+/* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 .buy-form form .row .col .inputBox input:focus{
   border:1px solid #000;

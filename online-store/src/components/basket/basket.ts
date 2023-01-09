@@ -5,16 +5,10 @@ import { renderTotalPrice } from './renderTotalPrice';
 import { renderProductHeader } from './renderProductHeader';
 import { renderCardsInBasket } from './renderCardsInBasket';
 import { handleClickPlusMinusDel } from './handleClickPlusMinusDel';
-import { renderDetails } from '../details/productCard';
 /* import {  getLocalStoragePage } from './localStorage' */
 
 const productCardContainer = document.querySelector(
   '.products__card-container'
-) as HTMLElement;
-const btnAddTest = document.querySelector('.btn-add-test') as HTMLElement;
-const pageBasket = document.querySelector('.page__basket') as HTMLElement;
-const pageDetails = document.querySelector(
-  '.page__product-description'
 ) as HTMLElement;
 
 export function renderBasket(): void {
@@ -48,17 +42,10 @@ productCardContainer.addEventListener('click', (e: Event) => {
     (e.target.dataset.action === 'plusPage' ||
       e.target.dataset.action === 'minusPage')
   ) {
-    /*    renderCardsInBasket() */
     renderBasket();
   }
 });
 
-
-
-function addCardBasket(product: any) {
-  // TODO fix mistake when product:productsDataI?
-  itemInBasket.push(product);
-}
 /*
 Функция удаления для стыковки с магазином
 контейнерПродуктовВМагазине.addEventListener('click', (event) => {
