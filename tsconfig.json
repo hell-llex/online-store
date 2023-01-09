@@ -19,5 +19,5 @@
     "resolveJsonModule": true,
   },
   "include": ["online-store/src/*"],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "webpack.config.js"],
 }
