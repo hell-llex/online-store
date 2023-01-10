@@ -2,6 +2,7 @@ import { productsArrayI } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { resultData } from '../filter/filter';
 import { searchResult } from '../search/search';
+import { searchParams } from '../routing/routing';
 
 export function SortProductCard(trigger: string, arraySort?: productsArrayI[]) {
   // 'now' для выпослнения сразу после фильтрации
@@ -31,18 +32,24 @@ export function SortProductCard(trigger: string, arraySort?: productsArrayI[]) {
       sortArrproducts = searchResult.slice();
     }
 
-    
-
-    if (sort.value === 'rating-highest')
+    if (sort.value === 'rating-highest') {
+      searchParams('set', 'sort', 'rating-highest');
       sortArrproducts.sort((a, b) => b.rating - a.rating); // проверка на значение сортировки
-    if (sort.value === 'rating-lowest')
+    }
+    if (sort.value === 'rating-lowest') {
+      searchParams('set', 'sort', 'rating-lowest');
       sortArrproducts.sort((a, b) => a.rating - b.rating); // проверка на значение сортировки
-    if (sort.value === 'price-highest')
+    }
+    if (sort.value === 'price-highest') {
+      searchParams('set', 'sort', 'price-highest');
       sortArrproducts.sort((a, b) => b.price - a.price); // проверка на значение сортировки
-    if (sort.value === 'price-lowest')
+    }
+    if (sort.value === 'price-lowest') {
+      searchParams('set', 'sort', 'price-lowest');
       sortArrproducts.sort((a, b) => a.price - b.price); // проверка на значение сортировки
+    }
 
-    // if (trigger === 'now') return sortArrproducts;
+    
 
     if (
       (document.querySelector('.found') as HTMLElement).dataset.found !== '0'
