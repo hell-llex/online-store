@@ -3,7 +3,7 @@ import { productsArrayI } from '../types';
 import { renderBuyForm } from './buyForm';
 const summary = document.querySelector('.summary') as HTMLElement;
 
-export function renderTotalPrice(): void {
+export function renderTotalPrice(): number {
   summary.innerHTML = '';
   let priceTotal = 0;
   let totalCountEl = 0;
@@ -76,4 +76,5 @@ export function renderTotalPrice(): void {
 
   const buyButton = document.querySelector('.summary__buy-btn') as HTMLElement;
   buyButton.addEventListener('click', renderBuyForm);
+  return priceTotal;
 }

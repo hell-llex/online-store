@@ -19,6 +19,10 @@ export function renderBasket(): void {
   (
     document.querySelector('.icon-basket p') as HTMLElement
   ).innerHTML = `${itemInBasket.length}`;
+  (
+    document.querySelector('.header-total') as HTMLElement
+  ).innerHTML = `${renderTotalPrice()} €`;
+
   renderProductHeader();
   renderCardsInBasket();
   renderTotalPrice();
