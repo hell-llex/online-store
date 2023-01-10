@@ -388,13 +388,26 @@ li {
   display: flex;
   justify-content: space-evenly;
 }
+
+.products__count-items{
+  height: 30px;
+}
 .products {
   margin: 10px;
   height: 75vh;
 }
 
+.products__limit{
+  height: 30px;
+}
+
 .products__card-container {
   height: 60vh;
+}
+.empty{
+  font-size: 24px;
+  margin: 112px 0px 0px 60px;
+  width: 230px;
 }
 
 .products__item-card {
@@ -418,7 +431,6 @@ li {
   width: 80px;
   height: 80px;
   margin-right: 10px;
-
 }
 
 .item-card__description,
@@ -442,6 +454,24 @@ li {
   margin: 5px auto 5px auto;
 }
 
+.btn-del {
+  width: 40px;
+  height: 40px;
+  border-radius: 40px;
+  border: 2px solid #000000;
+    opacity: 0.6;
+    background: #b6b6b6;
+    transform: scale(1);
+    transition: all 500ms ease-in-out;
+    cursor: pointer;
+}
+.btn-del:hover{
+  opacity: 1.1;
+  transform: scale(0.99);
+  transition: all 500ms ease-in-out;
+
+}
+
 
 //SUMMARY
 .summary {
@@ -462,6 +492,23 @@ margin-bottom: 10px;
 .incorrect {
   background:rgb(240, 131, 131);
 }
+.summary__buy-btn{
+  margin: 10px auto;
+ display: flex;
+justify-content: center;
+ align-items: center;
+ width: 227px;
+height: 42px;
+ font-size: $font-n3;
+ border-radius: 25px;
+ background-color: purple;
+color: #000000;
+ cursor: pointer;
+
+}
+
+.summary__buy-btn:active {
+  transform: translate(3px, 3px);}
 
 @media (max-width: 800px) {
   .page {
@@ -481,7 +528,9 @@ margin-bottom: 10px;
   .number-control{
     margin-right: 10px;
   }
-
+  .empty {
+    margin: -84px 0px 0px 143px;
+  }
 }
 
 //BUY FORM
@@ -559,11 +608,11 @@ input:invalid:not(:placeholder-shown) {border-color: red;}
 input:valid:not(:placeholder-shown) {border-color: green;}
 
 //del arrow in input type number
-input::-webkit-outer-spin-button,
+/* input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
+} */
 
 .buy-form form .row .col .inputBox input:focus{
   border:1px solid #000;
@@ -780,10 +829,6 @@ margin-left: 20px;
   margin-top: 5px;
 }
 
-.hide {
-  display: none;
-}
-
 body.overflow-hidden {
   overflow: hidden;
 }
@@ -800,12 +845,6 @@ body.overflow-hidden {
   }
   .card__buy{
     order: -1;
-  }
-  .bread-crumbs>a{
-    font-size: 14px;
-    white-space: nowrap;
-    line-height: 100%;
-    margin-bottom: 5px;
   }
 }
 
@@ -841,4 +880,12 @@ body.overflow-hidden {
   content: ">>";
   margin-left: 10px;
 }
+}
+
+.hide {
+  display: none;
+}
+
+.hidden {
+  visibility: hidden;
 }

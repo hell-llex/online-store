@@ -32,7 +32,7 @@ export function renderTotalPrice(): void {
     <div class="summary__input-text">Промокод '123'</div>
     </div>
     <button class="summary__buy-btn">BUY NOW!</button>
-    <button class="btn-add-test">add</button>`;
+          `;
 
   summary.insertAdjacentHTML('afterbegin', summaryHTML);
   const summaryInput = document.querySelector(

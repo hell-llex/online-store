@@ -27,7 +27,8 @@
     "@typescript-eslint/no-empty-function": "off",
 
     "prettier/prettier": [
-      "error",
+      // "error",
+      "warn",
       {
         "singleQuote": true,
         "endOfLine": "auto"

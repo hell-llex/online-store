@@ -2,6 +2,7 @@ import './cards.scss';
 import { productsArrayI, productsDataI } from '../types';
 import { loadFilter } from '../filter/filter';
 import { searchProductCard } from '../search/search';
+import { SortProductCard } from '../sort/sort';
 
 const log = console.log;
 
@@ -47,9 +48,7 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     <p><b>Stock: </b> ${elem.stock}</p>
     <div class="product-btn">
       <div class="btn__addBasket">Add</div>
-      <div class="btn__description">
-        <a href="#/products/${elem.id}">Details</a>
-      </div>
+      <div class="btn__description">Details</div>
     </div></div>`;
       currentProducts.push(card);
     });
@@ -72,9 +71,11 @@ export function loadProduct(quantity = 100): void {
   void fetch(`https://dummyjson.com/products?limit=${quantity}`)
     .then(async (data) => data.json())
     .then((data: productsDataI) => {
+      data.products.forEach((elem) => (elem.count = 1));
       Object.assign(productsData, data); // копирует объект
       CreateProductCard(data.products); // передает массив в функцию CreateProductCard
       loadFilter(data.products);
+      // SortProductCard('notNow');
       searchProductCard('notNow');
     });
 }
