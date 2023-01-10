@@ -11,7 +11,7 @@ import {
   addLocalStorageBasket,
   getLocalStorageBasket,
 } from './components/basket/localStorage';
-import { Routing } from './components/routing/routing';
+import { Routing, searchParams } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { productsArrayI } from './components/types';
 

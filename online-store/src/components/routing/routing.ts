@@ -1,3 +1,4 @@
+import { searchResult } from './../search/search';
 import Router from 'vanilla-router';
 import './404.scss';
 import { renderDetails } from '../details/productCard';
@@ -5,7 +6,7 @@ import { itemInBasket } from '../..';
 import { productsData } from '../cards/cards';
 import { renderBasket } from '../basket/basket';
 
-export function Routing() {
+export function Routing(): void {
   window.location.href = new URL(`#`, window.location.href).href;
   const log = console.log;
 
@@ -75,11 +76,17 @@ export function Routing() {
   router.navigateTo('#');
 
   logo?.addEventListener('click', () => {
-    window.location.href = new URL('#', window.location.href).href;
+    window.location.href = new URL(
+      '#',
+      window.location.origin + window.location.pathname
+    ).href;
   });
 
   basket?.addEventListener('click', () => {
-    window.location.href = new URL('#basket', window.location.href).href;
+    window.location.href = new URL(
+      '#basket',
+      window.location.origin + window.location.pathname
+    ).href;
   });
 
   function cardSelection(e: Event) {
@@ -95,7 +102,7 @@ export function Routing() {
     ) {
       window.location.href = new URL(
         `#products/${nCard}`,
-        window.location.href
+        window.location.origin + window.location.pathname
       ).href;
       renderDetails(nCard);
     }
@@ -121,4 +128,68 @@ export function Routing() {
       renderDetails(+cardForRender.dataset.identifier!);
     }
   });
+  // searchParams('add', 'sort', 'price-down');
+
+  // добавление
+
+  // const url = new URL(window.location.href);
+  // url.searchParams.set('q', 'test me!');
+}
+const params = new URLSearchParams();
+export function searchParams(
+  action: string,
+  key: string,
+  value?: string | string[]
+): void {
+  // add - добавление, set - замена, del - удаление
+  if (!value) {
+    params.delete(key);
+  } else if (typeof value === 'string') {
+    if (action === 'add') {
+      params.append(key, value);
+    } else if (action === 'set') {
+      params.set(key, value);
+    } else if (action === 'del') {
+      params.delete(key);
+    }
+  } else {
+    // console.log(value);
+
+    if (value!.length === 0) {
+      params.delete(key);
+    }
+    if (action === 'add') {
+      params.append(key, value!.join('+'));
+    } else if (action === 'set') {
+      params.set(key, value!.join('+'));
+    } else if (action === 'del') {
+      params.delete(key);
+    }
+  }
+
+  // if (params.has('sort')) {
+  //   console.log('true');
+  // }
+// console.log(params.toString().length);
+
+  window.location.hash = params.toString().length !== 0 ? '?' + params.toString() : params.toString();
+
+  // console.log(window.location);
+
+  // const url = new URL(window.location.hash);
+  // url.searchParams.set('q', 'test me!');
+  // // new URLSearchParams({ sort: 'price-down' });
+  // // добавление
+  // // params.append('sort', 'price-down');
+  // // console.log(params.toString());
+  // // 'count=10&size=lg'
+  // console.log(window.location);
+  // удаление
+  // params.delete('count');
+  // console.log(params.toString());
+  // 'size=lg'
+  // запись
+  // params.set('size', 'sm');
+  // console.log(params.toString());
+  // 'size=sm'
 }
