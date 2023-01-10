@@ -116,7 +116,7 @@ function displayList(
         <span class="item__count" data-counterItem>${el.count}</span>
         <button data-action="plus">+</button></div>
         <div class="amount-control">${el.price} €</div>
-        <button class="btn-del-test" data-action="del">del</button>
+        <button class="btn-del" data-action="del">del</button>
       </div>
     </div>`;
 
