@@ -3,8 +3,9 @@ import Router from 'vanilla-router';
 import './404.scss';
 import { renderDetails } from '../details/productCard';
 import { itemInBasket } from '../..';
-import { productsData } from '../cards/cards';
+import { CreateProductCard, productsData } from '../cards/cards';
 import { renderBasket } from '../basket/basket';
+import { productsArrayI } from '../types';
 
 export function Routing(): void {
   window.location.href = new URL(`#`, window.location.href).href;
@@ -80,6 +81,7 @@ export function Routing(): void {
       '#',
       window.location.origin + window.location.pathname
     ).href;
+    CreateProductCard(productsData.products); // добавил сюда перерендер карточек при возврате из корзины на главную
   });
 
   basket?.addEventListener('click', () => {
@@ -93,8 +95,36 @@ export function Routing(): void {
     const nCard = +(
       (e.target! as HTMLElement).closest('.product-item') as HTMLElement
     ).dataset.identifier!;
-    if ((e.target! as HTMLElement).closest('.btn__addBasket')) {
+
+    const currentAddBtn = (e.target! as HTMLElement).closest(
+      '.btn__addBasket'
+    ) as HTMLElement;
+
+    if (
+      //добавил этот if отслеживаем клик по Add добавляем в карзину, меняем указатели на кнопках
+      (e.target! as HTMLElement).closest('.btn__addBasket') &&
+      e !== null &&
+      e.target instanceof HTMLElement &&
+      e.target.dataset.action === 'Add'
+    ) {
       itemInBasket.push(productsData.products[nCard - 1]);
+      e.target.dataset.action = 'Drop item';
+      currentAddBtn.innerText = 'Drop item';
+      renderBasket();
+    } else if (
+      //добавил этот if отслеживаем клик по Drop  удаляем из карзины меняем указатели на кнопках
+      (e.target! as HTMLElement).closest('.btn__addBasket') &&
+      e !== null &&
+      e.target instanceof HTMLElement &&
+      e.target.dataset.action === 'Drop item'
+    ) {
+      itemInBasket.forEach((el: productsArrayI, index: number) => {
+        if (el.id === nCard) {
+          itemInBasket.splice(index, 1);
+        }
+      });
+      e.target.dataset.action = 'Add';
+      currentAddBtn.innerText = 'Add';
       renderBasket();
     } else if (
       (e.target! as HTMLElement).closest('.product-item') ||
@@ -170,9 +200,12 @@ export function searchParams(
   // if (params.has('sort')) {
   //   console.log('true');
   // }
-// console.log(params.toString().length);
+  // console.log(params.toString().length);
 
-  window.location.hash = params.toString().length !== 0 ? '?' + params.toString() : params.toString();
+  window.location.hash =
+    params.toString().length !== 0
+      ? '?' + params.toString()
+      : params.toString();
 
   // console.log(window.location);
 

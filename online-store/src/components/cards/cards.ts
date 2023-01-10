@@ -3,6 +3,7 @@ import { productsArrayI, productsDataI } from '../types';
 import { loadFilter } from '../filter/filter';
 import { searchProductCard } from '../search/search';
 import { SortProductCard } from '../sort/sort';
+import { itemInBasket } from '../..';
 
 const log = console.log;
 
@@ -34,6 +35,14 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
         images.push(image);
       });
 
+      //меняем кнопку и дата атрибут Add/Drop на кнопке товара
+      function addDropCard(): string {
+        for (const el of itemInBasket) {
+          if (el.id === elem.id) return 'Drop item';
+        }
+        return 'Add';
+      }
+
       const card = `<div class="product-item" data-identifier="${elem.id}">
     <div class="product-img"
       style="background-image: url('${elem.thumbnail}');"></div>
@@ -47,7 +56,7 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
     <p><b>Rating: </b> ${elem.rating}</p>
     <p><b>Stock: </b> ${elem.stock}</p>
     <div class="product-btn">
-      <div class="btn__addBasket">Add</div>
+      <div class="btn__addBasket" data-action="${addDropCard()}">${addDropCard()}</div>
       <div class="btn__description">Details</div>
     </div></div>`;
       currentProducts.push(card);
