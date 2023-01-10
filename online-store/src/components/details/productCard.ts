@@ -69,7 +69,9 @@ export function renderDetails(identifier: number): void {
 
   detailsContainer.insertAdjacentHTML('beforeend', detailsContainerHTML);
   const buyButton = document.querySelector('.details__buy-btn') as HTMLElement;
-  buyButton.addEventListener('click', renderBuyForm);
+  buyButton.addEventListener('click', (e: Event) => {
+    buyFromDescriptions(e);
+  });
 }
 
 detailsContainer.addEventListener('click', (e) => {
@@ -80,7 +82,6 @@ detailsContainer.addEventListener('click', (e) => {
   ) {
     const focusImg = document.querySelector('.focus__img') as HTMLImageElement;
     focusImg.setAttribute('src', e.target.src);
-    console.log('e.target :>> ', e.target);
   }
 });
 
@@ -114,3 +115,30 @@ detailsContainer.addEventListener('click', (e) => {
     renderBasket();
   }
 });
+
+function buyFromDescriptions(e: Event) {
+  const itemCard = (e.target! as HTMLElement)
+    .previousElementSibling as HTMLElement;
+  //если втовар в корзине сразу рисую форму покупки
+  if (
+    e !== null &&
+    e.target instanceof HTMLElement &&
+    itemCard!.dataset.action === 'Drop item'
+  ) {
+    renderBuyForm();
+  }
+  //если нету в корзине
+  //пушу в массив, меняю надписи редирект
+  else if (
+    e !== null &&
+    e.target instanceof HTMLElement &&
+    itemCard!.dataset.action === 'Add'
+  ) {
+    itemInBasket.push(productsData.products[+!e.target.dataset.identifier]);
+    e.target.dataset.action = 'Drop item';
+    itemCard.innerText = 'Drop item';
+    window.location.replace('#basket');
+    renderBasket();
+    renderBuyForm();
+  }
+}

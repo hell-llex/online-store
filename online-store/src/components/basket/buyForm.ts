@@ -158,16 +158,16 @@ export function renderBuyForm(): void {
     const orderAccepted = document.querySelector(
       '.order-accepted'
     ) as HTMLElement;
-    itemInBasket.length = 0;
-    renderBasket();
-    buyForm.classList.add('hide');
     shadowWrapper.removeEventListener('click', shadowWrapperCloser);
+    itemInBasket.length = 0;
+    buyForm.classList.add('hide');
     orderAccepted.classList.remove('hide');
+    renderBasket();
 
     setTimeout(() => {
       window.location.replace('/#');
       orderAccepted.classList.add('hide');
-      shadowWrapperCloser();
+      shadowWrapper.classList.add('hide');
     }, 3000);
   });
 }
