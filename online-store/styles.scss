@@ -903,3 +903,25 @@ body.overflow-hidden {
 .hidden {
   visibility: hidden;
 }
+
+.btn__addBasket {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: $font-n3;
+          line-height: $font-height-130;
+          border-radius: 10px;
+          border: 2px solid $color-dark;
+          opacity: 0.6;
+          background: #b6b6b6;
+          transform: scale(1);
+          transition: all 500ms ease-in-out;
+          cursor: pointer;
+}
+          .btn__addBasket:hover {
+            opacity: 1.1;
+            transform: scale(0.99);
+            transition: all 500ms ease-in-out;
+          }
