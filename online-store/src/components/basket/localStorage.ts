@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import { itemInBasket } from '../../index';
+import { productsArrayI } from '../types';
 import { currentPage } from './renderCardsInBasket';
-export function addLocalStorageBasket() {
+export function addLocalStorageBasket(): void {
   localStorage.setItem('storage', JSON.stringify(itemInBasket)); // сериализуем и записываем в локалстораж
 }
 
-export function getLocalStorageBasket() {
+export function getLocalStorageBasket(): productsArrayI[] {
   const storage = localStorage.getItem('storage');
-  return JSON.parse(storage ?? ''); // достаем из локала и парсим обратно
+  return JSON.parse(storage ?? '') as productsArrayI[]; // достаем из локала и парсим обратно
 }
 
 export function addLocalStoragePage() {

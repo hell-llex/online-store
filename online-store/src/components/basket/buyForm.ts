@@ -153,6 +153,7 @@ export function renderBuyForm(): void {
   buyForm.addEventListener('submit', (e) => {
     e.preventDefault();
   });
+
   buyBtn.addEventListener('click', () => {
     const orderAccepted = document.querySelector(
       '.order-accepted'
@@ -164,7 +165,7 @@ export function renderBuyForm(): void {
     orderAccepted.classList.remove('hide');
 
     setTimeout(() => {
-      alert('добавить линк на стартовую страницу');
+      window.location.replace('/#');
       orderAccepted.classList.add('hide');
       shadowWrapperCloser();
     }, 3000);
