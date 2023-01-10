@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Store</title>
-<link rel="icon" href="favicon.ico"><script defer src="index.js"></script><link href="main.4217ccc52671ffc42fa0.css" rel="stylesheet"></head>
+<link rel="icon" href="favicon.ico"><script defer src="index.js"></script><link href="main.d860fa50e5b0e94207e6.css" rel="stylesheet"></head>
 
 <body class="body">
   <div class="wrapper">
@@ -78,7 +78,7 @@
               <span class="line"></span>
               <p class="found" data-found="0">Found:***</p>
               <span class="line"></span>
-              <input type="search" name="search" id="search" class="search" placeholder="Search here...">
+              <input type="search" name="search" id="search" class="search" placeholder="Search here..." autocomplete="off">
               <span class="line"></span>
               <!-- <hr> -->
               <div class="btn-sort">
@@ -103,18 +103,13 @@
           </div>
         </div>
       </div>
+
       <div class="page__basket">
         <section class="basket wrapper">
           <div class="page page2" data-page="page2">
-            <div class="products">
-              <div class="products__header">
-              </div>
-              <div class="products__card-container">
-              </div>
-            </div>
 
             <div class="summary">
-              <h2 class="summary__title">Summary</h2>
+       <!--        <h2 class="summary__title">Summary</h2>
               <div class="summary__products">Products: 0
               </div>
               <div class="summary__total">Total: 0
@@ -123,23 +118,31 @@
                 <input type="text" placeholder="Enter promo code" class="summary__input">
                 <div class="summary__input-text">Промокод '123'</div>
               </div>
-              <button class="summary__buy-btn">BUY NOW!</button>
-              <button class="btn-add-test">add</button>
+              <button class="summary__buy-btn">BUY NOW!</button> -->
             </div>
-        </section>
 
-        <div class="shadow-wrapper hide">
-        </div>
-        <div class="buy-form hide">
-        </div>
-        <div class="buy-form hide">
-        </div>
-        <div class="order-accepted hide">
-          <h3 class="title-accepted">Order accepted!</h3>
-        </div>
+            <div class="products">
+
+              <div class="products__header">
+
+              </div>
+
+              <div class="products__card-container">
+                <div class="empty">Basket is empty</div>
+              </div>
+
+
+
+            </div>
+
+          </div>
+        </section>
       </div>
 
-      <div class="page__product-description"></div>
+      <div class="page__product-description">
+        <div class="details-container">
+        </div>
+      </div>
 
       <div class="page__404">
         <div class="_404-container">
@@ -168,13 +171,22 @@
             </span>
           </div>
         </div>
+      </div>
 
+
+      <div class="shadow-wrapper hide">
+      </div>
+      <span class="before"></span>
+      <div class="buy-form hide">
+      </div>
+      <div class="order-accepted hide">
+        <h3 class="title-accepted">Order accepted!</h3>
       </div>
     </main>
     <footer class="footer">
       <a href="https://github.com/hell-llex" class="my-logo"></a>
       <p class="footer-link">© 2022 <br> hell_llex </p>
-      <a href="https://github.com/hell-llex" class="footer-link">GitHub</a>
+      <a href="https://github.com/gru6" class="footer-link">GitHub</a>
       <a href="https://rs.school/js/" class="rs-logo"></a>
     </footer>
   </div>
