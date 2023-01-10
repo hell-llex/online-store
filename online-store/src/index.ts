@@ -14,6 +14,7 @@ import {
 import { Routing } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { productsArrayI } from './components/types';
+import { renderBasket } from './components/basket/basket';
 
 loadProduct(100);
 
@@ -23,13 +24,13 @@ Button();
 
 SortProductCard('notNow');
 
-export const itemInBasket: productsArrayI[] = []; //TODO сюда надо закинуть getLocalStorageBasket()
-
 window.addEventListener('beforeunload', addLocalStoragePage); // catch reload-page event
 window.addEventListener('load', getLocalStoragePage);
 window.addEventListener('beforeunload', addLocalStorageBasket);
+window.addEventListener('load', renderBasket);
 window.addEventListener('load', getLocalStorageBasket);
 
+export const itemInBasket: productsArrayI[] = getLocalStorageBasket(); //TODO сюда надо закинуть getLocalStorageBasket()
 alert(
   'Привет, немного не успели. Если есть возможность проверьте в конце кросс-чека. Если возникнуть вопросы просьба связаться в дискорд gril#2057 или hell-llex#1516'
 );
