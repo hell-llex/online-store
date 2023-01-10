@@ -2,7 +2,7 @@ import '../index.html';
 import '../styles.scss';
 import './components/loader/loader.scss';
 import './components/basket/basket';
-import Data from './products-v1.json';
+// import Data from './products-v1.json';
 // import { loadFilter, changeFilter } from './components/filter/filter';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';
@@ -10,7 +10,7 @@ import {
   addLocalStoragePage,
   getLocalStoragePage,
 } from './components/basket/localStorage';
-import { Routing } from './components/routing/routing';
+import { Routing, searchParams } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { productsArrayI } from './components/types';
 

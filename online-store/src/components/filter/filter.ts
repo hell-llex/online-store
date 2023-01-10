@@ -4,6 +4,7 @@ import { productsData, CreateProductCard } from '../cards/cards';
 import { SortProductCard } from '../sort/sort';
 import { slider } from './slider/slider';
 import { searchProductCard, searchResult } from '../search/search';
+import { searchParams } from '../routing/routing';
 
 // const log = console.log;
 
@@ -198,6 +199,8 @@ function changeFilter(): void {
         });
       }
       // =======================================================================================================================================
+      // searchParams('set', 'sort',);
+      // =======================================================================================================================================
       resultData = result.slice();
 
       result = SortProductCard('now', result)!;
@@ -219,6 +222,15 @@ function changeFilter(): void {
 
   let valuesTo: number[] = []; // [stock, price]
   let valuesFrom: number[] = []; // [stock, price]
+
+  let saveStock: string[] = [
+    `${valuesLowerSliderAll[0].dataset.from!}`,
+    `${valuesUpperSliderAll[0].dataset.to!}`,
+  ];
+  let savePrice: string[] = [
+    `${valuesLowerSliderAll[1].dataset.from!}`,
+    `${valuesUpperSliderAll[1].dataset.to!}`,
+  ];
 
   valuesTo = [
     +valuesUpperSliderAll[0].dataset.to!,
@@ -277,11 +289,15 @@ function changeFilter(): void {
       upperSliderAll[0].max !== upperSliderAll[0].value
     ) {
       stockRange.dataset.active = 'true';
+      saveStock = [`${lowerSliderAll[0].value}`, `${upperSliderAll[0].value}`];
+      searchParams('set', 'stock', saveStock);
     } else if (
       lowerSliderAll[0].min === lowerSliderAll[0].value &&
       upperSliderAll[0].max === upperSliderAll[0].value
     ) {
       stockRange.dataset.active = 'false';
+      saveStock = [`${lowerSliderAll[0].value}`, `${upperSliderAll[0].value}`];
+      searchParams('del', 'stock');
     }
 
     if (
@@ -289,12 +305,18 @@ function changeFilter(): void {
       upperSliderAll[1].max !== upperSliderAll[1].value
     ) {
       priceRange.dataset.active = 'true';
+      savePrice = [`${lowerSliderAll[1].value}`, `${upperSliderAll[1].value}`];
+      searchParams('set', 'price', savePrice);
     } else if (
       lowerSliderAll[1].min === lowerSliderAll[1].value &&
       upperSliderAll[1].max === upperSliderAll[1].value
     ) {
       priceRange.dataset.active = 'false';
+      savePrice = [`${lowerSliderAll[1].value}`, `${upperSliderAll[1].value}`];
+      searchParams('del', 'price');
     }
+
+    console.log('save :>> ', saveStock, savePrice);
 
     // =============================================блок проверок по массиву=============================================================
 

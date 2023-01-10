@@ -2,6 +2,7 @@ import { productsArrayI } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { resultData } from '../filter/filter';
 import { SortProductCard } from '../sort/sort';
+import { searchParams } from '../routing/routing';
 
 const log = console.log;
 
@@ -55,6 +56,12 @@ export function searchProductCard(trigger: string): void {
         );
       }
     );
+
+    if (value.length !== 0) {
+      searchParams('set', 'search', value);
+    } else {
+      searchParams('del', 'search');
+    }
 
     searchResult = searchArrProducts.slice();
 
