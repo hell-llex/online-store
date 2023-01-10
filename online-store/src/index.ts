@@ -29,3 +29,7 @@ window.addEventListener('beforeunload', addLocalStoragePage); // catch reload-pa
 window.addEventListener('load', getLocalStoragePage);
 window.addEventListener('beforeunload', addLocalStorageBasket);
 window.addEventListener('load', getLocalStorageBasket);
+
+alert(
+  'Привет, немного не успели. Если есть возможность проверьте в конце кросс-чека. Если возникнуть вопросы просьба связаться в дискорд gril#2057 или hell-llex#1516'
+);
