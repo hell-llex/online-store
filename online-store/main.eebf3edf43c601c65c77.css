@@ -699,7 +699,6 @@ li {
 
 .products {
   margin: 10px;
-  height: 75vh;
 }
 
 .products__limit {
@@ -707,7 +706,7 @@ li {
 }
 
 .products__card-container {
-  height: 60vh;
+  height: 100%;
 }
 
 .empty {
