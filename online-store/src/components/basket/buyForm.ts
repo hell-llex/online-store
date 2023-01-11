@@ -2,7 +2,7 @@
 import { itemInBasket } from '../../index';
 import { renderBasket } from './basket';
 export function renderBuyForm(): void {
-  const buyForm = document.querySelector('.buy-form') as HTMLElement;
+  const buyForm = document.querySelector('.buy-form') as HTMLFormElement;
   const shadowWrapper = document.querySelector(
     '.shadow-wrapper'
   ) as HTMLElement;
@@ -149,15 +149,12 @@ export function renderBuyForm(): void {
   }
 
   // close buy form - order accepted
-  const buyBtn = document.querySelector('.submit-btn') as HTMLElement;
-  /*   buyForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-  }); */
-
-  buyBtn.addEventListener('submit', () => {
+  buyForm.addEventListener('submit', (e) => {
     const orderAccepted = document.querySelector(
       '.order-accepted'
     ) as HTMLElement;
+    e.preventDefault();
+
     shadowWrapper.removeEventListener('click', shadowWrapperCloser);
     itemInBasket.length = 0;
     buyForm.classList.add('hide');
@@ -169,6 +166,7 @@ export function renderBuyForm(): void {
       orderAccepted.classList.add('hide');
       shadowWrapper.classList.add('hide');
       body.classList.remove('overflow-hidden');
+      buyForm.submit();
     }, 3000);
   });
 }
