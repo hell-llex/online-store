@@ -1,15 +1,76 @@
-import { searchResult } from './../search/search';
+import { searchProductCard } from './../search/search';
 import Router from 'vanilla-router';
 import './404.scss';
 import { renderDetails } from '../details/productCard';
 import { itemInBasket } from '../..';
-import { CreateProductCard, productsData } from '../cards/cards';
+import { productsData } from '../cards/cards';
 import { renderBasket } from '../basket/basket';
 import { productsArrayI } from '../types';
+import { changeFilter } from '../filter/filter';
+import { localStorageUrl } from '../basket/localStorage';
+
+export function recoveryValue(value: string) {
+  const stockLowerSlider = document.querySelector(
+    '.stock-lower'
+  ) as HTMLInputElement;
+  const stockUpperSlider = document.querySelector(
+    '.stock-upper'
+  ) as HTMLInputElement;
+
+  const priceLowerSlider = document.querySelector(
+    '.price-lower'
+  ) as HTMLInputElement;
+  const priceUpperSlider = document.querySelector(
+    '.price-upper'
+  ) as HTMLInputElement;
+
+  const searchDom = document.querySelector('.search') as HTMLInputElement;
+  const sortDom = document.querySelector('.sort-input') as HTMLInputElement;
+
+  value = value.slice(value.indexOf('#') + 2);
+  const params = new URLSearchParams(value);
+  const category = params.has('category')
+    ? params.get('category')?.split('+')
+    : [];
+  const brand = params.has('brand') ? params.get('brand')?.split('+') : [];
+  const sort = params.has('sort') ? params.get('sort') : 'select';
+  const search = params.has('search') ? params.get('search') : '';
+  const stock = params.has('stock')
+    ? params.get('stock')?.split('+')
+    : [stockLowerSlider.min, stockUpperSlider.max];
+  const price = params.has('price')
+    ? params.get('price')?.split('+')
+    : [priceLowerSlider.min, priceUpperSlider.max];
+
+  const filterCheck = document.querySelectorAll(
+    '.filters .checkbox'
+  ) as NodeListOf<HTMLInputElement>;
+  filterCheck.forEach((elem) => {
+    if (elem.dataset.category && category!.includes(elem.dataset.category)) {
+      elem.checked = true;
+    }
+    if (elem.dataset.brand && brand!.includes(elem.dataset.brand)) {
+      elem.checked = true;
+    }
+  });
+
+  stockLowerSlider.value = stock![0];
+  stockUpperSlider.value = stock![1];
+
+  priceLowerSlider.value = price![0];
+  priceUpperSlider.value = price![1];
+
+  searchDom.value = search!;
+
+  sortDom.value = sort!;
+
+  changeFilter('now');
+  searchProductCard('notNow');
+  searchProductCard('now');
+}
 
 export function Routing(): void {
-  window.location.href = new URL(`#`, window.location.href).href;
-  const log = console.log;
+  // window.location.href = window.location.hash.length === 0 ? new URL(`#`, window.location.href).href : window.location.href
 
   const basket = document.querySelector('.icon-basket');
   const logo = document.querySelector('.logo');
@@ -22,7 +83,6 @@ export function Routing(): void {
   const router = new Router({
     mode: 'hash',
     page404: function (path) {
-      log('"/' + path + '" Page not found');
       (main[0] as HTMLElement).style.display = 'none';
       (main[1] as HTMLElement).style.display = 'none';
       (main[2] as HTMLElement).style.display = 'none';
@@ -31,15 +91,16 @@ export function Routing(): void {
   });
 
   router.add('', function () {
-    log('Home page');
     (main[0] as HTMLElement).style.display = 'flex';
     (main[1] as HTMLElement).style.display = 'none';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
+    if (window.location.hash.length !== 0) {
+      recoveryValue(window.location.href.toString());
+    }
   });
 
   router.add('basket', function () {
-    log('Basket page');
     (main[0] as HTMLElement).style.display = 'none';
     (main[1] as HTMLElement).style.display = 'flex';
     (main[2] as HTMLElement).style.display = 'none';
@@ -47,7 +108,6 @@ export function Routing(): void {
   });
 
   router.add('products/(:any)', function (name) {
-    log('Products, ', name);
     if (typeof +name === 'number') {
       const nCard: number = +name;
       if (nCard <= 100 && nCard > 0) {
@@ -74,14 +134,13 @@ export function Routing(): void {
 
   router.addUriListener();
 
-  router.navigateTo('#');
+  router.navigateTo('');
 
   logo?.addEventListener('click', () => {
     window.location.href = new URL(
       '#',
       window.location.origin + window.location.pathname
     ).href;
-    CreateProductCard(productsData.products); // добавил сюда перерендер карточек при возврате из корзины на главную
   });
 
   basket?.addEventListener('click', () => {
@@ -158,13 +217,8 @@ export function Routing(): void {
       renderDetails(+cardForRender.dataset.identifier!);
     }
   });
-  // searchParams('add', 'sort', 'price-down');
-
-  // добавление
-
-  // const url = new URL(window.location.href);
-  // url.searchParams.set('q', 'test me!');
 }
+
 const params = new URLSearchParams();
 export function searchParams(
   action: string,
@@ -183,8 +237,6 @@ export function searchParams(
       params.delete(key);
     }
   } else {
-    // console.log(value);
-
     if (value!.length === 0) {
       params.delete(key);
     }
@@ -197,32 +249,9 @@ export function searchParams(
     }
   }
 
-  // if (params.has('sort')) {
-  //   console.log('true');
-  // }
-  // console.log(params.toString().length);
+  window.location.hash = params.toString().length !== 0
+    ? '?' + params.toString()
+    : params.toString();
 
-  window.location.hash =
-    params.toString().length !== 0
-      ? '?' + params.toString()
-      : params.toString();
-
-  // console.log(window.location);
-
-  // const url = new URL(window.location.hash);
-  // url.searchParams.set('q', 'test me!');
-  // // new URLSearchParams({ sort: 'price-down' });
-  // // добавление
-  // // params.append('sort', 'price-down');
-  // // console.log(params.toString());
-  // // 'count=10&size=lg'
-  // console.log(window.location);
-  // удаление
-  // params.delete('count');
-  // console.log(params.toString());
-  // 'size=lg'
-  // запись
-  // params.set('size', 'sm');
-  // console.log(params.toString());
-  // 'size=sm'
+  localStorageUrl('set');
 }

@@ -4,13 +4,11 @@ import { resultData } from '../filter/filter';
 import { SortProductCard } from '../sort/sort';
 import { searchParams } from '../routing/routing';
 
-const log = console.log;
-
 export let searchResult: Array<productsArrayI> = [];
 
 export function searchProductCard(trigger: string): void {
   const search = document.querySelector('.search') as HTMLInputElement;
-  let productFilter: productsArrayI[] = [];
+  let productFilter: productsArrayI[] = productsData.products.slice();
 
   let changeInput = search.value;
 
@@ -27,13 +25,9 @@ export function searchProductCard(trigger: string): void {
       productFilter = productsData.products.slice();
     }
 
-    if (search.value < changeInput) {
-      log('меньше');
-      // changeFilter('now')
-      // productFilter = resultData.slice();
+    if (search.value < changeInput) { // меньше
     }
-    if (search.value > changeInput) {
-      log('больше');
+    if (search.value > changeInput) { // больше
     }
 
     changeInput = search.value;

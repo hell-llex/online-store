@@ -2,10 +2,8 @@ import './cards.scss';
 import { productsArrayI, productsDataI } from '../types';
 import { loadFilter } from '../filter/filter';
 import { searchProductCard } from '../search/search';
-import { SortProductCard } from '../sort/sort';
 import { itemInBasket } from '../..';
-
-const log = console.log;
+import { localStorageUrl } from '../basket/localStorage';
 
 export const productsData: productsDataI = {
   limit: 0,
@@ -84,7 +82,7 @@ export function loadProduct(quantity = 100): void {
       Object.assign(productsData, data); // копирует объект
       CreateProductCard(data.products); // передает массив в функцию CreateProductCard
       loadFilter(data.products);
-      // SortProductCard('notNow');
       searchProductCard('notNow');
+      window.location.href = localStorageUrl('get') as string;
     });
 }

@@ -24,7 +24,6 @@ export function renderBasket(): void {
   renderProductHeader();
   renderCardsInBasket();
   renderTotalPrice();
-  console.log('renderBasket this: ', itemInBasket);
 
   if (itemInBasket.length === 0) {
     summary.classList.add('hidden');

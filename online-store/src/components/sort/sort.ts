@@ -49,8 +49,6 @@ export function SortProductCard(trigger: string, arraySort?: productsArrayI[]) {
       sortArrproducts.sort((a, b) => a.price - b.price); // проверка на значение сортировки
     }
 
-    
-
     if (
       (document.querySelector('.found') as HTMLElement).dataset.found !== '0'
     ) {
