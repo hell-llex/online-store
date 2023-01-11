@@ -6,8 +6,6 @@ import { slider } from './slider/slider';
 import { searchProductCard, searchResult } from '../search/search';
 import { searchParams } from '../routing/routing';
 
-// const log = console.log;
-
 const filterCategory: filterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
 const filterBrand: filterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
 const filterStock: sliderSelector = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
@@ -86,8 +84,8 @@ export function loadFilter(arrProd: productsArrayI[]): void {
 
 export let resultData: productsArrayI[] = []; // массив с данным для сортировки во время фильтрации
 
-function changeFilter(): void {
-  function filtering(e: Event): void {
+export function changeFilter(trigger?: string): void {
+  function filtering(e?: Event): void {
     const productFilter: productsArrayI[] =
       (document.querySelector('.search') as HTMLInputElement).value.length === 0
         ? productsData.products.slice()
@@ -97,9 +95,33 @@ function changeFilter(): void {
     let result: productsArrayI[] = [];
 
     if (
-      (e.target! as HTMLElement).closest('.category-container .item-label') !=
+      document.querySelectorAll('.category-container .checkbox:checked')
+        .length !== 0
+    ) {
+      (
+        document.querySelector('.category-container') as HTMLElement
+      ).dataset.active = 'true';
+    } else
+      (
+        document.querySelector('.category-container') as HTMLElement
+      ).dataset.active = 'false';
+    if (
+      document.querySelectorAll('.brand-container .checkbox:checked').length !==
+      0
+    ) {
+      (
+        document.querySelector('.brand-container') as HTMLElement
+      ).dataset.active = 'true';
+    } else
+      (
+        document.querySelector('.brand-container') as HTMLElement
+      ).dataset.active = 'false';
+
+    if (
+      trigger ||
+      (e!.target! as HTMLElement).closest('.category-container .checkbox') !=
         null ||
-      (e.target! as HTMLElement).closest('.brand-container .item-label') != null
+      (e!.target! as HTMLElement).closest('.brand-container .checkbox') != null
     ) {
       document
         .querySelectorAll('.category-container .checkbox:checked')
@@ -199,7 +221,8 @@ function changeFilter(): void {
         });
       }
       // =======================================================================================================================================
-      // searchParams('set', 'sort',);
+      checkboxCategory.length !== 0 ? searchParams('set', 'category', checkboxCategory) : searchParams('del', 'category');
+      checkboxBrand.length !== 0 ? searchParams('set', 'brand', checkboxBrand) : searchParams('del', 'brand');
       // =======================================================================================================================================
       resultData = result.slice();
 
@@ -316,8 +339,6 @@ function changeFilter(): void {
       searchParams('del', 'price');
     }
 
-    console.log('save :>> ', saveStock, savePrice);
-
     // =============================================блок проверок по массиву=============================================================
 
     result = productFilter.filter((item) => {
@@ -374,8 +395,20 @@ function changeFilter(): void {
       : CreateProductCard(result);
   }
 
-  document.querySelector('.filters')?.addEventListener('click', (e) => {
-    filtering(e);
+  // ======================category / brand==========================
+
+  if (trigger === 'now') {
+    filtering();
+    sliderSelector(0, 'to');
+    sliderSelector(0, 'from');
+    sliderSelector(1, 'to');
+    sliderSelector(1, 'from');
+  }
+
+  document.querySelectorAll('.filters .checkbox')?.forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+      filtering(e);
+    });
   });
 
   // ======================stock==========================

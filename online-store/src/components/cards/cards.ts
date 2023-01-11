@@ -83,5 +83,6 @@ export function loadProduct(quantity = 100): void {
       CreateProductCard(data.products); // передает массив в функцию CreateProductCard
       loadFilter(data.products);
       searchProductCard('notNow');
+      window.location.href = localStorageUrl('get') as string;
     });
 }
