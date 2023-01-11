@@ -85,34 +85,34 @@ detailsContainer.addEventListener('click', (e) => {
   }
 });
 
-detailsContainer.addEventListener('click', (e) => {
-  const currentAddBtn = (e.target! as HTMLElement).closest(
-    '.btn__addBasket'
-  ) as HTMLElement;
-
+detailsContainer.addEventListener('click', (e: Event) => {
   if (
     (e.target! as HTMLElement).classList.contains('btn__addBasket') &&
     e.target instanceof HTMLElement &&
     e.target.dataset.action === 'Add'
   ) {
-    itemInBasket.push(productsData.products[+!e.target.dataset.identifier]);
+    const closestCard = e.target.closest('.details__card') as HTMLElement;
+    const identifier = closestCard.dataset.identifier;
+    itemInBasket.push(Data[+identifier! - 1]);
     e.target.dataset.action = 'Drop item';
-    currentAddBtn.innerText = 'Drop item';
+    e.target.innerText = 'Drop item';
     renderBasket();
   } else if (
     (e.target! as HTMLElement).classList.contains('btn__addBasket') &&
     e.target instanceof HTMLElement &&
     e.target.dataset.action === 'Drop item'
   ) {
-    const currID = +!e.target.dataset.identifier;
+    const closestCard = e.target.closest('.details__card') as HTMLElement;
+    const identifier = closestCard.dataset.identifier;
     itemInBasket.forEach((el: productsArrayI, index: number) => {
-      if (el.id === currID + 1) {
+      if (el.id === +identifier!) {
         itemInBasket.splice(index, 1);
       }
     });
     e.target.dataset.action = 'Add';
-    currentAddBtn.innerText = 'Add';
+    e.target.innerText = 'Add';
     renderBasket();
+    renderDetails(+identifier!);
   }
 });
 

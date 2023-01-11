@@ -99,7 +99,7 @@ export function Routing(): void {
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
     if (window.location.hash.length !== 0) {
-      recoveryValue(window.location.href.toString());
+      /* recoveryValue(window.location.href.toString()); */
     }
   });
 
