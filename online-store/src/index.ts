@@ -30,7 +30,9 @@ window.addEventListener('beforeunload', addLocalStorageBasket);
 window.addEventListener('load', getLocalStorageBasket);
 window.addEventListener('load', renderBasket);
 
-export const itemInBasket: productsArrayI[] = getLocalStorageBasket() ?? []; //TODO сюда надо закинуть getLocalStorageBasket()
+export const itemInBasket: productsArrayI[] = getLocalStorageBasket()
+  ? getLocalStorageBasket()
+  : []; //TODO сюда надо закинуть getLocalStorageBasket()
 alert(
   'Привет, немного не успели. Если есть возможность проверьте в конце кросс-чека. Если возникнуть вопросы просьба связаться в дискорд gril#2057 или hell-llex#1516. Саооценка для удобства расписана в PR'
 );

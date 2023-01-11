@@ -1,5 +1,5 @@
-//TODO слетает скидка если применить промокод а потом поменять содержание корзины но может и пофиг
 import { itemInBasket } from '../../index';
+import { CreateProductCard, productsData } from '../cards/cards';
 import { renderBasket } from './basket';
 export function renderBuyForm(): void {
   const buyForm = document.querySelector('.buy-form') as HTMLFormElement;
@@ -160,12 +160,14 @@ export function renderBuyForm(): void {
     buyForm.classList.add('hide');
     orderAccepted.classList.remove('hide');
     renderBasket();
+    CreateProductCard(productsData.products);
 
     setTimeout(() => {
       window.location.replace('/#');
       orderAccepted.classList.add('hide');
       shadowWrapper.classList.add('hide');
       body.classList.remove('overflow-hidden');
+      localStorage.clear();
       buyForm.submit();
     }, 3000);
   });
