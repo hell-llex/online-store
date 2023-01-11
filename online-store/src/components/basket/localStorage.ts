@@ -8,7 +8,7 @@ export function addLocalStorageBasket(): void {
 
 export function getLocalStorageBasket(): productsArrayI[] {
   const storage = localStorage.getItem('storage');
-  return JSON.parse(storage ?? '') as productsArrayI[]; // достаем из локала и парсим обратно
+  return JSON.parse(storage ?? '[]') as productsArrayI[]; // достаем из локала и парсим обратно
 }
 
 export function addLocalStoragePage() {

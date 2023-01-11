@@ -150,11 +150,11 @@ export function renderBuyForm(): void {
 
   // close buy form - order accepted
   const buyBtn = document.querySelector('.submit-btn') as HTMLElement;
-  buyForm.addEventListener('submit', (e) => {
+  /*   buyForm.addEventListener('submit', (e) => {
     e.preventDefault();
-  });
+  }); */
 
-  buyBtn.addEventListener('click', () => {
+  buyBtn.addEventListener('submit', () => {
     const orderAccepted = document.querySelector(
       '.order-accepted'
     ) as HTMLElement;
