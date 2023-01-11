@@ -168,6 +168,7 @@ export function renderBuyForm(): void {
       window.location.replace('/#');
       orderAccepted.classList.add('hide');
       shadowWrapper.classList.add('hide');
+      body.classList.remove('overflow-hidden');
     }, 3000);
   });
 }

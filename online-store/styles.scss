@@ -243,6 +243,11 @@ li {
     gap: 2rem;
     font-size: $font-n3;
 
+    @media (max-width: 1100px) {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
     .line {
       height: 0.8rem;
       width: 100%;
@@ -319,6 +324,7 @@ li {
   }
 }
 
+
 .stock-container,
 .price-container {
   display: flex;
@@ -364,9 +370,11 @@ li {
 }
 
 .rs-logo {
-  height: 100px;
-  min-width: 250px;
+  height: 80px;
+  min-width: 150px;
   border-radius: 0px 0px 20px 0px;
+  margin-top: 20px;
+  margin-right: 10px;
   background: url('./assets/icons/rs-school.svg') no-repeat;
   background-size: contain;
 }
@@ -375,9 +383,9 @@ li {
   display: flex;
   align-items: flex-end;
   height: 100px;
-  padding: 0px 0px 10px 0px;
+  padding: 10px;
   font-family: 'Roboto Mono', monospace;
-  font-size: 40px;
+  font-size: 24px;
   font-weight: 700;
   line-height: 110%;
 }
@@ -388,6 +396,14 @@ li {
   height: 100vh;
   background-color: #000000b4;
 }
+
+@media (max-width: 800px) {
+.footer {
+  flex-wrap: wrap;
+  height: 220px;
+  }
+}
+
 
 
 //BASKET
@@ -429,7 +445,7 @@ li {
   grid-template-columns: 0.5fr 7fr 3fr 0.2fr;
   align-items: center;
   justify-items: center;
-  height: 15vh;
+  height: 20vh;
   border: 0.1em solid;
   border-radius: 30px;
   margin: 5px;
@@ -492,6 +508,7 @@ li {
   margin-top: 10px;
   margin-left: 10px;
   height: 320px;
+  line-height: 250%;
 }
 
 .summary__promo {
@@ -778,6 +795,7 @@ input::-webkit-inner-spin-button {
   display: flex;
   justify-content: space-evenly;
   margin: 20px  auto;
+  white-space: nowrap;
 }
 
 .bread-crumbs > *:not(:last-child)::after {
@@ -839,8 +857,51 @@ margin-left: 20px;
   margin: 0 auto;
 }
 
+.btn__addBasket {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: $font-n3;
+  line-height: $font-height-130;
+  border-radius: 10px;
+  border: 2px solid $color-dark;
+  opacity: 0.6;
+  background: #b6b6b6;
+  transform: scale(1);
+  transition: all 500ms ease-in-out;
+  cursor: pointer;
+}
+.btn__addBasket:hover {
+  opacity: 1.1;
+  transform: scale(0.99);
+  transition: all 500ms ease-in-out;
+}
+
+
 .details__buy-btn {
   margin-top: 5px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    line-height: 130%;
+    border-radius: 10px;
+    border: 2px solid #000000;
+    opacity: 0.6;
+    background: #b6b6b6;
+    transform: scale(1);
+    transition: all 500ms ease-in-out;
+    cursor: pointer;
+}
+
+.details__buy-btn:hover {
+  opacity: 1.1;
+  transform: scale(0.99);
+  transition: all 500ms ease-in-out;
 }
 
 body.overflow-hidden {
@@ -903,25 +964,3 @@ body.overflow-hidden {
 .hidden {
   visibility: hidden;
 }
-
-.btn__addBasket {
-          width: 100%;
-          height: 100%;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          font-size: $font-n3;
-          line-height: $font-height-130;
-          border-radius: 10px;
-          border: 2px solid $color-dark;
-          opacity: 0.6;
-          background: #b6b6b6;
-          transform: scale(1);
-          transition: all 500ms ease-in-out;
-          cursor: pointer;
-}
-          .btn__addBasket:hover {
-            opacity: 1.1;
-            transform: scale(0.99);
-            transition: all 500ms ease-in-out;
-          }
