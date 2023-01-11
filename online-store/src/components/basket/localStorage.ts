@@ -6,9 +6,12 @@ export function addLocalStorageBasket(): void {
   localStorage.setItem('storage', JSON.stringify(itemInBasket)); // сериализуем и записываем в локалстораж
 }
 
-export function getLocalStorageBasket(): productsArrayI[] {
-  const storage = localStorage.getItem('storage');
-  return JSON.parse(storage ?? '') as productsArrayI[]; // достаем из локала и парсим обратно
+export function getLocalStorageBasket(): productsArrayI[] | void {
+  if (localStorage.storage) {
+    return JSON.parse(localStorage.storage) as productsArrayI[];
+  } else {
+    console.error('Not found Array Basket');
+  }
 }
 
 export function addLocalStoragePage() {
