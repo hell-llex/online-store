@@ -26,8 +26,8 @@ SortProductCard('notNow');
 window.addEventListener('beforeunload', addLocalStoragePage); // catch reload-page event
 window.addEventListener('load', getLocalStoragePage);
 window.addEventListener('beforeunload', addLocalStorageBasket);
-window.addEventListener('load', renderBasket);
 window.addEventListener('load', getLocalStorageBasket);
+window.addEventListener('load', renderBasket);
 
 export const itemInBasket: productsArrayI[] = getLocalStorageBasket() ?? []; //TODO сюда надо закинуть getLocalStorageBasket()
 /* alert(

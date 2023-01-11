@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-plus-operands */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { itemInBasket } from '../../index';
 import { productsArrayI } from '../types';
 
@@ -13,7 +9,7 @@ const productHeader = document.querySelector(
   '.products__header'
 ) as HTMLElement;
 
-export let currentPage: any = 1;
+export let currentPage = 1;
 addLocalStoragePage();
 
 export function renderCardsInBasket(): void {
@@ -22,7 +18,7 @@ export function renderCardsInBasket(): void {
   ) as HTMLInputElement;
   const postData = itemInBasket;
   const rows = +limitEl.value;
-  currentPage = getLocalStoragePage();
+  currentPage = +getLocalStoragePage();
   if (postData.length === 0) {
     productCardContainer.innerHTML = `<div class="empty">Basket is empty</div>`;
   } else {
@@ -35,9 +31,12 @@ productHeader.addEventListener('click', (e: Event) => {
 });
 
 productHeader.addEventListener('change', (e: Event) => {
-  if (e !== null && e.target instanceof HTMLElement && e.target.dataset.limit)
-    console.log('change :>> ');
-  renderCardsInBasket();
+  if (
+    e !== null &&
+    e.target instanceof HTMLElement &&
+    e.target.classList.contains('products__limit')
+  )
+    renderCardsInBasket();
 });
 
 function displayPagination(event: Event) {
@@ -46,7 +45,6 @@ function displayPagination(event: Event) {
   ) as HTMLInputElement;
   const postData = itemInBasket;
   const rows = +limitEl.value;
-  console.log('+limitEl.value :>> ', +limitEl.value);
   const PageCounter = document.querySelector(
     '[data-counterPage]'
   ) as HTMLElement;

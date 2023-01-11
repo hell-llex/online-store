@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { itemInBasket } from '../../index';
 import './basket.scss';
 import { renderTotalPrice } from './renderTotalPrice';
@@ -59,14 +58,3 @@ productCardContainer.addEventListener('click', (e: Event) => {
     renderBasket();
   }
 });
-
-/*
-Функция удаления для стыковки с магазином
-контейнерПродуктовВМагазине.addEventListener('click', (event) => {
-  const itemCard = event.target.closest('.products__item-card')
-  const itemID = itemCard.getAttribute('data-identifier')
-  if (event.target.dataset.action === 'del') {                         // TODO прокидываешь мне товар по которому прожато 'удалить товар'
-    delCardBasket(Data[itemID - 1])
-    console.log('del')
-  }
-}) */
