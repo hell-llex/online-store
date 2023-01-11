@@ -14,7 +14,7 @@ export function getLocalStorageBasket(): productsArrayI[] | void {
   }
 }
 
-export function addLocalStoragePage() {
+export function addLocalStoragePage(): void {
   localStorage.setItem('page', JSON.stringify(currentPage)); // сериализуем и записываем в локалстораж
 }
 

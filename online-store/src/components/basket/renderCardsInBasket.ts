@@ -10,7 +10,6 @@ const productHeader = document.querySelector(
 ) as HTMLElement;
 
 export let currentPage = 1;
-addLocalStoragePage();
 
 export function renderCardsInBasket(): void {
   const limitEl = document.querySelector(

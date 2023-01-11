@@ -70,7 +70,10 @@ export function recoveryValue(value: string) {
 }
 
 export function Routing(): void {
-  // window.location.href = window.location.hash.length === 0 ? new URL(`#`, window.location.href).href : window.location.href
+  window.location.href =
+    window.location.hash.length === 0
+      ? new URL(`#`, window.location.href).href
+      : window.location.href;
 
   const basket = document.querySelector('.icon-basket');
   const logo = document.querySelector('.logo');
@@ -249,9 +252,10 @@ export function searchParams(
     }
   }
 
-  window.location.hash = params.toString().length !== 0
-    ? '?' + params.toString()
-    : params.toString();
+  window.location.hash =
+    params.toString().length !== 0
+      ? '?' + params.toString()
+      : params.toString();
 
   localStorageUrl('set');
 }
