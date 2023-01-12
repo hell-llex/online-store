@@ -1,6 +1,6 @@
 import { productsArrayI } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
-import { resultData } from '../filter/filter';
+import { countView, resultData } from '../filter/filter';
 import { SortProductCard } from '../sort/sort';
 import { searchParams } from '../routing/routing';
 
@@ -84,6 +84,7 @@ export function searchProductCard(
 
     if (trigger !== 'now') {
       searchArrProducts.length === 0 ? CreateProductCard('not-found') : CreateProductCard(searchArrProducts);
+      countView(searchArrProducts);
     }
     if (trigger === 'now') return searchArrProducts;
   }

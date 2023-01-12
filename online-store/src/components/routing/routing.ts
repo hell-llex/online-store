@@ -108,10 +108,10 @@ export function Routing(): void {
     (main[1] as HTMLElement).style.display = 'none';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
-    // if (window.location.hash) {
-    //   // recoveryValue(window.location.href.toString());
-    //   // console.log('window.location.hash :>> ', window.location.hash);
-    // }
+    if (window.location.hash) {
+      recoveryValue(window.location.href.toString());
+      console.log('window.location.hash :>> ', window.location.hash);
+    }
   });
 
   router.add('basket', function () {

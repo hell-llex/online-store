@@ -78,27 +78,120 @@ export function loadFilter(arrProd: productsArrayI[]): void {
   CreateFilter(filterPrice, 'price'); // вызов функции для заполнения фильтрации
   slider(); // вызов функции для использования слайдера
   changeFilter(); // вызов функции для использования всей фильтрации
-  (document.querySelector('.filters') as HTMLInputElement).addEventListener(
-    'DOMContentLoaded',
-    () => {
-      recoveryValue(window.location.href.toString());
-      console.log('object :>> ', window.location.hash);
+  // (document.querySelector('.filters') as HTMLInputElement).addEventListener(
+  //   'DOMContentLoaded',
+  //   () => {
+  //     recoveryValue(window.location.href.toString());
+  //   }
+  // );
+}
+
+export function countView(arrProd: productsArrayI[] | string): void {
+  // console.log('arrProd :>> ', arrProd);
+  const containerItem = document.querySelectorAll('.filters .container-item') as NodeListOf<HTMLElement>;
+  const containerItemValue = document.querySelectorAll('.filters .quantity span') as NodeListOf<HTMLElement>;
+  const containerCheckbox = document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement>;
+
+  const stockLowerSlider = document.querySelector(`.stock-lower`) as HTMLInputElement;
+  const stockUpperSlider = document.querySelector(`.stock-upper`) as HTMLInputElement;
+
+  const priceLowerSlider = document.querySelector(`.price-lower`) as HTMLInputElement;
+  const priceUpperSlider = document.querySelector(`.price-upper`) as HTMLInputElement;
+
+  const stockLowerValues = document.querySelector(`.stock-from`) as HTMLElement;
+  const stockUpperValues = document.querySelector(`.stock-to`) as HTMLElement;
+
+  const priceLowerValues = document.querySelector(`.price-from`) as HTMLElement;
+  const priceUpperValues = document.querySelector(`.price-to`) as HTMLElement;
+
+  const viewCategory: string[] = [];
+  const viewBrand: string[] = [];
+  const viewStock: number[] = [];
+  const viewPrice: number[] = [];
+
+  if (typeof arrProd !== 'string') {
+    (arrProd as productsArrayI[]).forEach((elem) => {
+      viewCategory.push(elem.category);
+      viewBrand.push(elem.brand);
+      viewStock.push(elem.stock);
+      viewPrice.push(elem.price);
+    });
+
+    viewStock.sort((a, b) => a - b);
+    viewPrice.sort((a, b) => a - b);
+
+    containerCheckbox.forEach((elem, i) => {
+      if ((elem as HTMLInputElement).dataset.category) {
+        const countCategory = viewCategory.filter(
+          (item) => item === (elem as HTMLInputElement).dataset.category
+        );
+        if (countCategory.length !== 0) {
+          containerItem[i].classList.remove('inactive');
+        } else {
+          containerItem[i].classList.add('inactive');
+        }
+        if (containerItemValue[i]) containerItemValue[i].innerText = `${countCategory.length}`;
+      }
+      if ((elem as HTMLInputElement).dataset.brand) {
+        const countBrand = viewBrand.filter(
+          (item) => item === (elem as HTMLInputElement).dataset.brand
+        );
+        if (countBrand.length !== 0) {
+          containerItem[i].classList.remove('inactive');
+        } else {
+          containerItem[i].classList.add('inactive');
+        }
+        if (containerItemValue[i]) containerItemValue[i].innerText = `${countBrand.length}`;
+      }
+    });
+
+    if (stockLowerValues && stockUpperValues && priceLowerValues && priceLowerValues) {
+      stockLowerValues.innerHTML = stockLowerValues.dataset.from = `${viewStock[0]}`
+      // stockLowerSlider.value = `${viewStock[0]}`
+      stockUpperValues.innerHTML = stockUpperValues.dataset.to = `${viewStock[viewStock.length - 1]}`
+      // stockUpperSlider.value = `${viewStock[viewStock.length - 1]}`
+
+      priceLowerValues.innerHTML = priceLowerValues.dataset.from = `${viewPrice[0]}`
+      // priceLowerSlider.value = `${viewPrice[0]}`
+      priceUpperValues.innerHTML = priceLowerValues.dataset.to = `${viewPrice[viewStock.length - 1]}`
+      // priceUpperSlider.value = `${viewPrice[viewStock.length - 1]}`
+
     }
-  );
+
+
+
+
+
+  } else {
+    if ((document.querySelector('.found') as HTMLElement).dataset.found === '0') {
+      containerItem.forEach((elem, i) => {
+
+        elem.classList.add('inactive');
+        if (containerItemValue[i]) containerItemValue[i].innerText = `0`;
+      })
+    }
+  }
 }
 
 export let resultData: productsArrayI[] = []; // массив с данным для сортировки во время фильтрации
 
 export function changeFilter(trigger?: string): void {
   function filtering(e?: Event): void {
-    let productFilter: productsArrayI[] = productsData.products.slice()
-    if ((document.querySelector('.search') as HTMLInputElement).value.length === 0 &&
-      (document.querySelector('.category-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.brand-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.stock-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.price-container') as HTMLElement).dataset.active === 'false') {
+    let productFilter: productsArrayI[] = productsData.products.slice();
+    if (
+      ((document.querySelector('.search') as HTMLInputElement).value.length ===
+        0 &&
+        (document.querySelector('.category-container') as HTMLElement).dataset
+          .active === 'false') ||
+      (document.querySelector('.brand-container') as HTMLElement).dataset
+        .active === 'false' ||
+      (document.querySelector('.stock-container') as HTMLElement).dataset
+        .active === 'false' ||
+      (document.querySelector('.price-container') as HTMLElement).dataset
+        .active === 'false'
+    ) {
       productFilter = searchProductCard('now', productsData.products)!;
-      console.log(searchProductCard('now', productsData.products)!);
+      // console.log(searchProductCard('now', productsData.products)!);
     }
     const checkboxCategory: string[] = []; // массив с выбранными фильтрами
     const checkboxBrand: string[] = []; // массив с выбранными фильтрами
@@ -245,6 +338,7 @@ export function changeFilter(trigger?: string): void {
       result.length === 0
         ? CreateProductCard('not-found')
         : CreateProductCard(result);
+      countView(result);
     }
   }
 
@@ -287,13 +381,20 @@ export function changeFilter(trigger?: string): void {
     //     : searchResult.slice();
 
     let productFilter: productsArrayI[] = productsData.products.slice();
-    if ((document.querySelector('.search') as HTMLInputElement).value.length === 0 &&
-      (document.querySelector('.category-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.brand-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.stock-container') as HTMLElement).dataset.active === 'false' ||
-      (document.querySelector('.price-container') as HTMLElement).dataset.active === 'false') {
+    if (
+      ((document.querySelector('.search') as HTMLInputElement).value.length ===
+        0 &&
+        (document.querySelector('.category-container') as HTMLElement).dataset
+          .active === 'false') ||
+      (document.querySelector('.brand-container') as HTMLElement).dataset
+        .active === 'false' ||
+      (document.querySelector('.stock-container') as HTMLElement).dataset
+        .active === 'false' ||
+      (document.querySelector('.price-container') as HTMLElement).dataset
+        .active === 'false'
+    ) {
       productFilter = searchProductCard('now', productsData.products)!;
-      console.log(searchProductCard('now', productsData.products)!);
+      // console.log(searchProductCard('now', productsData.products)!);
     }
     let result: productsArrayI[] = [];
 
@@ -417,6 +518,13 @@ export function changeFilter(trigger?: string): void {
     result.length === 0
       ? CreateProductCard('not-found')
       : CreateProductCard(result);
+    countView(result);
+
+    if ((document.querySelector(`.stock-from`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.stock-from`) as HTMLElement).innerHTML = 'none';
+    if ((document.querySelector(`.stock-to`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.stock-to`) as HTMLElement).innerHTML = 'none';
+    if ((document.querySelector(`.price-from`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.price-from`) as HTMLElement).innerHTML = 'none';
+    if ((document.querySelector(`.price-to`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.price-to`) as HTMLElement).innerHTML = 'none';
+
   }
 
   // ======================category / brand==========================

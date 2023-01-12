@@ -15,7 +15,7 @@ import { SortProductCard } from './components/sort/sort';
 import { productsArrayI } from './components/types';
 import { renderBasket } from './components/basket/basket';
 
-loadProduct(100);
+loadProduct(50);
 
 Routing();
 

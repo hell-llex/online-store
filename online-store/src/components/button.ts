@@ -27,6 +27,10 @@ export function Button() {
       (e.target! as HTMLElement).closest('.btn-reset') ||
       (e.target! as HTMLElement).closest('.logo')
     ) {
+
+      const containerItem = document.querySelectorAll('.filters .container-item') as NodeListOf<HTMLElement>;
+      const containerItemValue = document.querySelectorAll('.filters .quantity') as NodeListOf<HTMLElement>;
+
       const categoryCheck = document.querySelectorAll('.category-container .checkbox') as NodeListOf<HTMLInputElement>;
       const brandCheck = document.querySelectorAll('.brand-container .checkbox') as NodeListOf<HTMLInputElement>;
 
@@ -62,6 +66,14 @@ export function Button() {
 
       window.location.hash = '#';
       localStorageUrl('set');
+
+      containerItem.forEach((elem, i) => {
+        elem.classList.remove('inactive');
+        if (containerItemValue[i]) {
+          const x = (containerItemValue[i].children[0].parentNode as HTMLElement)?.innerText[2];
+          (document.querySelectorAll('.filters .quantity span') as NodeListOf<HTMLElement>)[i].innerHTML = x;
+        }
+      })
 
       CreateProductCard(productsData.products);
     } else if ((e.target! as HTMLElement).closest('.btn-copy')) {
