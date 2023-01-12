@@ -10,22 +10,24 @@ import { changeFilter } from '../filter/filter';
 import { localStorageUrl } from '../basket/localStorage';
 
 export function recoveryValue(value: string) {
-  const stockLowerSlider = document.querySelector(
-    '.stock-lower'
-  ) as HTMLInputElement;
-  const stockUpperSlider = document.querySelector(
-    '.stock-upper'
-  ) as HTMLInputElement;
+  const stockLowerSlider = document.querySelector('.stock-lower') as HTMLInputElement;
+  const stockUpperSlider = document.querySelector('.stock-upper') as HTMLInputElement;
 
-  const priceLowerSlider = document.querySelector(
-    '.price-lower'
-  ) as HTMLInputElement;
-  const priceUpperSlider = document.querySelector(
-    '.price-upper'
-  ) as HTMLInputElement;
+  const priceLowerSlider = document.querySelector('.price-lower') as HTMLInputElement;
+  const priceUpperSlider = document.querySelector('.price-upper') as HTMLInputElement;
+
+  const stockLowerValue = document.querySelector('.stock-from') as HTMLInputElement;
+  const stockUpperValue = document.querySelector('.stock-to') as HTMLInputElement;
+
+  const priceLowerValue = document.querySelector('.price-from') as HTMLInputElement;
+  const priceUpperValue = document.querySelector('.price-to') as HTMLInputElement;
 
   const searchDom = document.querySelector('.search') as HTMLInputElement;
   const sortDom = document.querySelector('.sort-input') as HTMLInputElement;
+  const filterCheck = document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement>;
+
+  const btnView = document.querySelector('.btn-switch-view') as HTMLElement;
+  const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
 
   value = value.slice(value.indexOf('#') + 2);
   const params = new URLSearchParams(value);
@@ -41,10 +43,10 @@ export function recoveryValue(value: string) {
   const price = params.has('price')
     ? params.get('price')?.split('+')
     : [priceLowerSlider.min, priceUpperSlider.max];
+  const view = params.has('view') ? params.get('view') : 'inactive';
 
-  const filterCheck = document.querySelectorAll(
-    '.filters .checkbox'
-  ) as NodeListOf<HTMLInputElement>;
+  console.log(category, brand, stock, price, sort, search, view);
+
   filterCheck.forEach((elem) => {
     if (elem.dataset.category && category!.includes(elem.dataset.category)) {
       elem.checked = true;
@@ -54,18 +56,26 @@ export function recoveryValue(value: string) {
     }
   });
 
-  stockLowerSlider.value = stock![0];
-  stockUpperSlider.value = stock![1];
+  stockLowerValue.innerHTML = stockLowerValue.dataset.from = stockLowerSlider.value = stock![0];
+  stockUpperValue.innerHTML = stockUpperValue.dataset.to = stockUpperSlider.value = stock![1];
 
-  priceLowerSlider.value = price![0];
-  priceUpperSlider.value = price![1];
+  priceLowerValue.innerHTML = priceLowerValue.dataset.from = priceLowerSlider.value = price![0];
+  priceUpperValue.innerHTML = priceUpperValue.dataset.to = priceUpperSlider.value = price![1];
 
   searchDom.value = search!;
 
   sortDom.value = sort!;
 
+  if (view === 'active') {
+    btnView.classList.add('active');
+    catalogProducts.classList.add('active');
+  } else {
+    btnView.classList.remove('active');
+    catalogProducts.classList.remove('active');
+  }
+
   changeFilter('now');
-  searchProductCard('notNow');
+  // searchProductCard('notNow');
   searchProductCard('now');
 }
 
@@ -98,9 +108,10 @@ export function Routing(): void {
     (main[1] as HTMLElement).style.display = 'none';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
-    if (window.location.hash.length !== 0) {
-      recoveryValue(window.location.href.toString());
-    }
+    // if (window.location.hash) {
+    //   // recoveryValue(window.location.href.toString());
+    //   // console.log('window.location.hash :>> ', window.location.hash);
+    // }
   });
 
   router.add('basket', function () {
@@ -137,7 +148,7 @@ export function Routing(): void {
 
   router.addUriListener();
 
-  router.navigateTo('');
+  router.navigateTo('#');
 
   logo?.addEventListener('click', () => {
     window.location.href = new URL(

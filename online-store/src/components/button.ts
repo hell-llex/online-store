@@ -1,4 +1,6 @@
+import { localStorageUrl } from './basket/localStorage';
 import { CreateProductCard, productsData } from './cards/cards';
+import { searchParams } from './routing/routing';
 
 export function Button() {
   const btnView = document.querySelector('.btn-switch-view') as HTMLElement;
@@ -6,53 +8,40 @@ export function Button() {
   const logo = document.querySelector('.logo') as HTMLElement;
 
   const btnContainer = document.querySelector('.btn-container') as HTMLElement;
-  const catalogProducts = document.querySelector(
-    '.catalog-products'
-  ) as HTMLElement;
+  const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
   const search = document.querySelector('.search') as HTMLInputElement;
 
   const sort = document.querySelector('.sort-input') as HTMLInputElement;
 
   btnView.addEventListener('click', () => {
     btnView.classList.toggle('active');
+    if ((document.querySelector('.btn-switch-view') as HTMLElement).classList.contains('active')) {
+      searchParams('set', 'view', 'active');
+    } else searchParams('del', 'view');
+
     catalogProducts.classList.toggle('active');
   });
 
   function btnFilter(e: Event) {
-    const categoryCheck = document.querySelectorAll(
-      '.category-container .checkbox'
-    ) as NodeListOf<HTMLInputElement>;
-    const brandCheck = document.querySelectorAll(
-      '.brand-container .checkbox'
-    ) as NodeListOf<HTMLInputElement>;
-
-    const stockLowerSlider = document.querySelector(
-      `.stock-lower`
-    ) as HTMLInputElement;
-    const stockUpperSlider = document.querySelector(
-      `.stock-upper`
-    ) as HTMLInputElement;
-
-    const priceLowerSlider = document.querySelector(
-      `.price-lower`
-    ) as HTMLInputElement;
-    const priceUpperSlider = document.querySelector(
-      `.price-upper`
-    ) as HTMLInputElement;
-    const stockLowerValues = document.querySelector(
-      `.stock-from`
-    ) as HTMLElement;
-    const stockUpperValues = document.querySelector(`.stock-to`) as HTMLElement;
-
-    const priceLowerValues = document.querySelector(
-      `.stock-from`
-    ) as HTMLElement;
-    const priceUpperValues = document.querySelector(`.stock-to`) as HTMLElement;
-
     if (
       (e.target! as HTMLElement).closest('.btn-reset') ||
       (e.target! as HTMLElement).closest('.logo')
     ) {
+      const categoryCheck = document.querySelectorAll('.category-container .checkbox') as NodeListOf<HTMLInputElement>;
+      const brandCheck = document.querySelectorAll('.brand-container .checkbox') as NodeListOf<HTMLInputElement>;
+
+      const stockLowerSlider = document.querySelector(`.stock-lower`) as HTMLInputElement;
+      const stockUpperSlider = document.querySelector(`.stock-upper`) as HTMLInputElement;
+
+      const priceLowerSlider = document.querySelector(`.price-lower`) as HTMLInputElement;
+      const priceUpperSlider = document.querySelector(`.price-upper`) as HTMLInputElement;
+
+      const stockLowerValues = document.querySelector(`.stock-from`) as HTMLElement;
+      const stockUpperValues = document.querySelector(`.stock-to`) as HTMLElement;
+
+      const priceLowerValues = document.querySelector(`.price-from`) as HTMLElement;
+      const priceUpperValues = document.querySelector(`.price-to`) as HTMLElement;
+
       categoryCheck.forEach((elem) => {
         (elem as HTMLInputElement).checked = false;
       });
@@ -61,21 +50,18 @@ export function Button() {
         (elem as HTMLInputElement).checked = false;
       });
 
-      stockLowerValues.innerHTML = stockLowerSlider.value =
-        stockLowerSlider.min;
-      stockUpperValues.innerHTML = stockUpperSlider.value =
-        stockUpperSlider.max;
+      stockLowerValues.innerHTML = stockLowerValues.dataset.from = stockLowerSlider.value = stockLowerSlider.min;
+      stockUpperValues.innerHTML = stockUpperValues.dataset.to = stockUpperSlider.value = stockUpperSlider.max;
 
-      priceLowerValues.innerHTML = priceLowerSlider.value =
-        priceLowerSlider.min;
-      priceUpperValues.innerHTML = priceUpperSlider.value =
-        priceUpperSlider.max;
+      priceLowerValues.innerHTML = priceLowerValues.dataset.from = priceLowerSlider.value = priceLowerSlider.min;
+      priceUpperValues.innerHTML = priceLowerValues.dataset.to = priceUpperSlider.value = priceUpperSlider.max;
 
       search.value = '';
 
       sort.value = 'select';
 
       window.location.hash = '#';
+      localStorageUrl('set');
 
       CreateProductCard(productsData.products);
     } else if ((e.target! as HTMLElement).closest('.btn-copy')) {

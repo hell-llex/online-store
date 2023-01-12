@@ -4,7 +4,7 @@ import { productsData, CreateProductCard } from '../cards/cards';
 import { SortProductCard } from '../sort/sort';
 import { slider } from './slider/slider';
 import { searchProductCard, searchResult } from '../search/search';
-import { searchParams } from '../routing/routing';
+import { recoveryValue, searchParams } from '../routing/routing';
 
 const filterCategory: filterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
 const filterBrand: filterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
@@ -21,12 +21,10 @@ function CreateFilter(
     (setting as filterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
         <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}"
-        data-count="${
-          (setting as filterSelector).countFilter[i]
+        data-count="${(setting as filterSelector).countFilter[i]
         }">${elem}</label><p class="quantity">
-        <span>${(setting as filterSelector).countFilter[i]}</span>/${
-        (setting as filterSelector).countFilter[i]
-      }</p></div>`);
+        <span>${(setting as filterSelector).countFilter[i]}</span>/${(setting as filterSelector).countFilter[i]
+        }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
     const value = setting as sliderSelector;
@@ -80,16 +78,28 @@ export function loadFilter(arrProd: productsArrayI[]): void {
   CreateFilter(filterPrice, 'price'); // вызов функции для заполнения фильтрации
   slider(); // вызов функции для использования слайдера
   changeFilter(); // вызов функции для использования всей фильтрации
+  (document.querySelector('.filters') as HTMLInputElement).addEventListener(
+    'DOMContentLoaded',
+    () => {
+      recoveryValue(window.location.href.toString());
+      console.log('object :>> ', window.location.hash);
+    }
+  );
 }
 
 export let resultData: productsArrayI[] = []; // массив с данным для сортировки во время фильтрации
 
 export function changeFilter(trigger?: string): void {
   function filtering(e?: Event): void {
-    const productFilter: productsArrayI[] =
-      (document.querySelector('.search') as HTMLInputElement).value.length === 0
-        ? productsData.products.slice()
-        : searchResult.slice();
+    let productFilter: productsArrayI[] = productsData.products.slice()
+    if ((document.querySelector('.search') as HTMLInputElement).value.length === 0 &&
+      (document.querySelector('.category-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.brand-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.stock-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.price-container') as HTMLElement).dataset.active === 'false') {
+      productFilter = searchProductCard('now', productsData.products)!;
+      console.log(searchProductCard('now', productsData.products)!);
+    }
     const checkboxCategory: string[] = []; // массив с выбранными фильтрами
     const checkboxBrand: string[] = []; // массив с выбранными фильтрами
     let result: productsArrayI[] = [];
@@ -120,7 +130,7 @@ export function changeFilter(trigger?: string): void {
     if (
       trigger ||
       (e!.target! as HTMLElement).closest('.category-container .checkbox') !=
-        null ||
+      null ||
       (e!.target! as HTMLElement).closest('.brand-container .checkbox') != null
     ) {
       document
@@ -221,11 +231,15 @@ export function changeFilter(trigger?: string): void {
         });
       }
       // =======================================================================================================================================
-      checkboxCategory.length !== 0 ? searchParams('set', 'category', checkboxCategory) : searchParams('del', 'category');
-      checkboxBrand.length !== 0 ? searchParams('set', 'brand', checkboxBrand) : searchParams('del', 'brand');
+      checkboxCategory.length !== 0
+        ? searchParams('set', 'category', checkboxCategory)
+        : searchParams('del', 'category');
+      checkboxBrand.length !== 0
+        ? searchParams('set', 'brand', checkboxBrand)
+        : searchParams('del', 'brand');
       // =======================================================================================================================================
       resultData = result.slice();
-
+      // if ((document.querySelector('.search') as HTMLInputElement).value.length == 0) searchProductCard('now');
       result = SortProductCard('now', result)!;
 
       result.length === 0
@@ -267,10 +281,20 @@ export function changeFilter(trigger?: string): void {
   function sliderSelector(a: number, b: string): void {
     // функция которая передается в обработчик событий input (stock = 0 или price = 1, to = нижний или from = верхний)
 
-    const productFilter: productsArrayI[] =
-      (document.querySelector('.search') as HTMLInputElement).value.length === 0
-        ? productsData.products.slice()
-        : searchResult.slice();
+    // const productFilter: productsArrayI[] =
+    //   (document.querySelector('.search') as HTMLInputElement).value.length === 0
+    //     ? productsData.products.slice()
+    //     : searchResult.slice();
+
+    let productFilter: productsArrayI[] = productsData.products.slice();
+    if ((document.querySelector('.search') as HTMLInputElement).value.length === 0 &&
+      (document.querySelector('.category-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.brand-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.stock-container') as HTMLElement).dataset.active === 'false' ||
+      (document.querySelector('.price-container') as HTMLElement).dataset.active === 'false') {
+      productFilter = searchProductCard('now', productsData.products)!;
+      console.log(searchProductCard('now', productsData.products)!);
+    }
     let result: productsArrayI[] = [];
 
     const stockRange = document.querySelector(
@@ -387,7 +411,7 @@ export function changeFilter(trigger?: string): void {
     // =======================================================================================================================================
 
     resultData = result.slice();
-
+    // searchProductCard('now');
     result = SortProductCard('now', result)!;
 
     result.length === 0
@@ -396,14 +420,7 @@ export function changeFilter(trigger?: string): void {
   }
 
   // ======================category / brand==========================
-
-  if (trigger === 'now') {
-    filtering();
-    sliderSelector(0, 'to');
-    sliderSelector(0, 'from');
-    sliderSelector(1, 'to');
-    sliderSelector(1, 'from');
-  }
+  searchProductCard('notNow');
 
   document.querySelectorAll('.filters .checkbox')?.forEach((elem) => {
     elem.addEventListener('click', (e) => {
@@ -429,5 +446,13 @@ export function changeFilter(trigger?: string): void {
     sliderSelector(1, 'from');
   });
 
+  if (trigger === 'now') {
+    // searchProductCard('now');
+    filtering();
+    sliderSelector(0, 'to');
+    sliderSelector(0, 'from');
+    sliderSelector(1, 'to');
+    sliderSelector(1, 'from');
+  }
   // =====================================================
 }

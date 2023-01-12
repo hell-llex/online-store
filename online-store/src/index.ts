@@ -10,7 +10,7 @@ import {
   addLocalStorageBasket,
   getLocalStorageBasket,
 } from './components/basket/localStorage';
-import { Routing } from './components/routing/routing';
+import { Routing, recoveryValue } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { productsArrayI } from './components/types';
 import { renderBasket } from './components/basket/basket';
@@ -22,6 +22,22 @@ Routing();
 Button();
 
 SortProductCard('notNow');
+
+const intervalId = setInterval(function () {
+  if (document.querySelector('.stock-lower') as HTMLInputElement &&
+      document.querySelector('.stock-upper') as HTMLInputElement &&
+      document.querySelector('.price-lower') as HTMLInputElement &&
+      document.querySelector('.price-upper') as HTMLInputElement &&
+      document.querySelector('.search') as HTMLInputElement &&
+      document.querySelector('.sort-input') as HTMLInputElement &&
+    document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement> &&
+    document.querySelector('.btn-container') as HTMLElement &&
+    document.querySelector('.catalog-products') as HTMLElement) {
+
+    clearInterval(intervalId);
+    recoveryValue(window.location.href.toString());
+  }
+}, 1000);
 
 window.addEventListener('beforeunload', addLocalStoragePage); // catch reload-page event
 window.addEventListener('load', getLocalStoragePage);
