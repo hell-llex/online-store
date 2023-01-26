@@ -10,6 +10,7 @@ export function getLocalStorageBasket(): productsArrayI[] | void {
   if (localStorage.storage) {
     return JSON.parse(localStorage.storage) as productsArrayI[];
   } else {
+    // eslint-disable-next-line no-console
     console.error('Not found Array Basket');
   }
 }

@@ -3,8 +3,8 @@ import { filterSelector, productsArrayI, sliderSelector } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { SortProductCard } from '../sort/sort';
 import { slider } from './slider/slider';
-import { searchProductCard, searchResult } from '../search/search';
-import { recoveryValue, searchParams } from '../routing/routing';
+import { searchProductCard } from '../search/search';
+import { searchParams } from '../routing/routing';
 
 const filterCategory: filterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
 const filterBrand: filterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
@@ -21,10 +21,12 @@ function CreateFilter(
     (setting as filterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
         <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}"
-        data-count="${(setting as filterSelector).countFilter[i]
+        data-count="${
+          (setting as filterSelector).countFilter[i]
         }">${elem}</label><p class="quantity">
-        <span>${(setting as filterSelector).countFilter[i]}</span>/${(setting as filterSelector).countFilter[i]
-        }</p></div>`);
+        <span>${(setting as filterSelector).countFilter[i]}</span>/${
+        (setting as filterSelector).countFilter[i]
+      }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
     const value = setting as sliderSelector;
@@ -88,15 +90,15 @@ export function loadFilter(arrProd: productsArrayI[]): void {
 
 export function countView(arrProd: productsArrayI[] | string): void {
   // console.log('arrProd :>> ', arrProd);
-  const containerItem = document.querySelectorAll('.filters .container-item') as NodeListOf<HTMLElement>;
-  const containerItemValue = document.querySelectorAll('.filters .quantity span') as NodeListOf<HTMLElement>;
-  const containerCheckbox = document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement>;
-
-  const stockLowerSlider = document.querySelector(`.stock-lower`) as HTMLInputElement;
-  const stockUpperSlider = document.querySelector(`.stock-upper`) as HTMLInputElement;
-
-  const priceLowerSlider = document.querySelector(`.price-lower`) as HTMLInputElement;
-  const priceUpperSlider = document.querySelector(`.price-upper`) as HTMLInputElement;
+  const containerItem = document.querySelectorAll(
+    '.filters .container-item'
+  ) as NodeListOf<HTMLElement>;
+  const containerItemValue = document.querySelectorAll(
+    '.filters .quantity span'
+  ) as NodeListOf<HTMLElement>;
+  const containerCheckbox = document.querySelectorAll(
+    '.filters .checkbox'
+  ) as NodeListOf<HTMLInputElement>;
 
   const stockLowerValues = document.querySelector(`.stock-from`) as HTMLElement;
   const stockUpperValues = document.querySelector(`.stock-to`) as HTMLElement;
@@ -130,7 +132,8 @@ export function countView(arrProd: productsArrayI[] | string): void {
         } else {
           containerItem[i].classList.add('inactive');
         }
-        if (containerItemValue[i]) containerItemValue[i].innerText = `${countCategory.length}`;
+        if (containerItemValue[i])
+          containerItemValue[i].innerText = `${countCategory.length}`;
       }
       if ((elem as HTMLInputElement).dataset.brand) {
         const countBrand = viewBrand.filter(
@@ -141,34 +144,41 @@ export function countView(arrProd: productsArrayI[] | string): void {
         } else {
           containerItem[i].classList.add('inactive');
         }
-        if (containerItemValue[i]) containerItemValue[i].innerText = `${countBrand.length}`;
+        if (containerItemValue[i])
+          containerItemValue[i].innerText = `${countBrand.length}`;
       }
     });
 
-    if (stockLowerValues && stockUpperValues && priceLowerValues && priceLowerValues) {
-      stockLowerValues.innerHTML = stockLowerValues.dataset.from = `${viewStock[0]}`
+    if (
+      stockLowerValues &&
+      stockUpperValues &&
+      priceLowerValues &&
+      priceLowerValues
+    ) {
+      stockLowerValues.innerHTML =
+        stockLowerValues.dataset.from = `${viewStock[0]}`;
       // stockLowerSlider.value = `${viewStock[0]}`
-      stockUpperValues.innerHTML = stockUpperValues.dataset.to = `${viewStock[viewStock.length - 1]}`
+      stockUpperValues.innerHTML = stockUpperValues.dataset.to = `${
+        viewStock[viewStock.length - 1]
+      }`;
       // stockUpperSlider.value = `${viewStock[viewStock.length - 1]}`
 
-      priceLowerValues.innerHTML = priceLowerValues.dataset.from = `${viewPrice[0]}`
+      priceLowerValues.innerHTML =
+        priceLowerValues.dataset.from = `${viewPrice[0]}`;
       // priceLowerSlider.value = `${viewPrice[0]}`
-      priceUpperValues.innerHTML = priceLowerValues.dataset.to = `${viewPrice[viewStock.length - 1]}`
+      priceUpperValues.innerHTML = priceLowerValues.dataset.to = `${
+        viewPrice[viewStock.length - 1]
+      }`;
       // priceUpperSlider.value = `${viewPrice[viewStock.length - 1]}`
-
     }
-
-
-
-
-
   } else {
-    if ((document.querySelector('.found') as HTMLElement).dataset.found === '0') {
+    if (
+      (document.querySelector('.found') as HTMLElement).dataset.found === '0'
+    ) {
       containerItem.forEach((elem, i) => {
-
         elem.classList.add('inactive');
         if (containerItemValue[i]) containerItemValue[i].innerText = `0`;
-      })
+      });
     }
   }
 }
@@ -223,7 +233,7 @@ export function changeFilter(trigger?: string): void {
     if (
       trigger ||
       (e!.target! as HTMLElement).closest('.category-container .checkbox') !=
-      null ||
+        null ||
       (e!.target! as HTMLElement).closest('.brand-container .checkbox') != null
     ) {
       document
@@ -520,11 +530,26 @@ export function changeFilter(trigger?: string): void {
       : CreateProductCard(result);
     countView(result);
 
-    if ((document.querySelector(`.stock-from`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.stock-from`) as HTMLElement).innerHTML = 'none';
-    if ((document.querySelector(`.stock-to`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.stock-to`) as HTMLElement).innerHTML = 'none';
-    if ((document.querySelector(`.price-from`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.price-from`) as HTMLElement).innerHTML = 'none';
-    if ((document.querySelector(`.price-to`) as HTMLElement).innerHTML === 'undefined') (document.querySelector(`.price-to`) as HTMLElement).innerHTML = 'none';
-
+    if (
+      (document.querySelector(`.stock-from`) as HTMLElement).innerHTML ===
+      'undefined'
+    )
+      (document.querySelector(`.stock-from`) as HTMLElement).innerHTML = 'none';
+    if (
+      (document.querySelector(`.stock-to`) as HTMLElement).innerHTML ===
+      'undefined'
+    )
+      (document.querySelector(`.stock-to`) as HTMLElement).innerHTML = 'none';
+    if (
+      (document.querySelector(`.price-from`) as HTMLElement).innerHTML ===
+      'undefined'
+    )
+      (document.querySelector(`.price-from`) as HTMLElement).innerHTML = 'none';
+    if (
+      (document.querySelector(`.price-to`) as HTMLElement).innerHTML ===
+      'undefined'
+    )
+      (document.querySelector(`.price-to`) as HTMLElement).innerHTML = 'none';
   }
 
   // ======================category / brand==========================

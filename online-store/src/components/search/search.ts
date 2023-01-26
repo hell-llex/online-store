@@ -13,16 +13,27 @@ export function searchProductCard(
   let searchArrProducts: productsArrayI[] = productsData.products.slice();
 
   function update() {
-
     const search = document.querySelector('.search') as HTMLInputElement;
-    let changeInput = search.value;
-    const categoryContainer = document.querySelector('.category-container') as HTMLElement; // блок слайдера stock
-    const brandContainer = document.querySelector('.brand-container') as HTMLElement; // блок слайдера price
-    const stockContainer = document.querySelector('.stock-container') as HTMLElement; // блок слайдера stock
-    const priceContainer = document.querySelector('.price-container') as HTMLElement; // блок слайдера price
+    // let changeInput = search.value;
+    const categoryContainer = document.querySelector(
+      '.category-container'
+    ) as HTMLElement; // блок слайдера stock
+    const brandContainer = document.querySelector(
+      '.brand-container'
+    ) as HTMLElement; // блок слайдера price
+    const stockContainer = document.querySelector(
+      '.stock-container'
+    ) as HTMLElement; // блок слайдера stock
+    const priceContainer = document.querySelector(
+      '.price-container'
+    ) as HTMLElement; // блок слайдера price
 
-    if (categoryContainer.dataset.active === 'true' || brandContainer.dataset.active === 'true' ||
-      stockContainer.dataset.active === 'true' || priceContainer.dataset.active === 'true') {
+    if (
+      categoryContainer.dataset.active === 'true' ||
+      brandContainer.dataset.active === 'true' ||
+      stockContainer.dataset.active === 'true' ||
+      priceContainer.dataset.active === 'true'
+    ) {
       searchArrProducts = resultData.slice();
     }
     // if (categoryContainer.dataset.active === 'false' && brandContainer.dataset.active === 'false' &&
@@ -32,8 +43,12 @@ export function searchProductCard(
 
     if (trigger === 'now') {
       searchArrProducts = arraySearch!.slice();
-    } else if (categoryContainer.dataset.active === 'false' && brandContainer.dataset.active === 'false' &&
-    stockContainer.dataset.active === 'false' && priceContainer.dataset.active === 'false') {
+    } else if (
+      categoryContainer.dataset.active === 'false' &&
+      brandContainer.dataset.active === 'false' &&
+      stockContainer.dataset.active === 'false' &&
+      priceContainer.dataset.active === 'false'
+    ) {
       searchArrProducts = productsData.products.slice();
     } else if (
       resultData.length !== 0 &&
@@ -50,26 +65,24 @@ export function searchProductCard(
     // if (search.value > changeInput) { // больше
     // }
 
-    changeInput = search.value;
+    // changeInput = search.value;
 
     const value = `${search.value.trim().toLowerCase()}`;
 
-    searchArrProducts = searchArrProducts.filter(
-      (item) => {
-        return (
-          ~`${item.id}`.trim().toLowerCase().indexOf(value) ||
-          ~`${item.count}`.trim().toLowerCase().indexOf(value) ||
-          ~item.title.trim().toLowerCase().indexOf(value) ||
-          ~item.description.trim().toLowerCase().indexOf(value) ||
-          ~`${item.price}`.trim().toLowerCase().indexOf(value) ||
-          ~`${item.discountPercentage}`.trim().toLowerCase().indexOf(value) ||
-          ~`${item.rating}`.trim().toLowerCase().indexOf(value) ||
-          ~`${item.stock}`.trim().toLowerCase().indexOf(value) ||
-          ~item.brand.trim().toLowerCase().indexOf(value) ||
-          ~item.category.trim().toLowerCase().indexOf(value)
-        );
-      }
-    );
+    searchArrProducts = searchArrProducts.filter((item) => {
+      return (
+        ~`${item.id}`.trim().toLowerCase().indexOf(value) ||
+        ~`${item.count}`.trim().toLowerCase().indexOf(value) ||
+        ~item.title.trim().toLowerCase().indexOf(value) ||
+        ~item.description.trim().toLowerCase().indexOf(value) ||
+        ~`${item.price}`.trim().toLowerCase().indexOf(value) ||
+        ~`${item.discountPercentage}`.trim().toLowerCase().indexOf(value) ||
+        ~`${item.rating}`.trim().toLowerCase().indexOf(value) ||
+        ~`${item.stock}`.trim().toLowerCase().indexOf(value) ||
+        ~item.brand.trim().toLowerCase().indexOf(value) ||
+        ~item.category.trim().toLowerCase().indexOf(value)
+      );
+    });
     // console.log('searchArrProducts :>> ', searchArrProducts);
 
     if (value.length !== 0) {
@@ -83,14 +96,19 @@ export function searchProductCard(
     searchArrProducts = SortProductCard('now', searchArrProducts)!;
 
     if (trigger !== 'now') {
-      searchArrProducts.length === 0 ? CreateProductCard('not-found') : CreateProductCard(searchArrProducts);
+      searchArrProducts.length === 0
+        ? CreateProductCard('not-found')
+        : CreateProductCard(searchArrProducts);
       countView(searchArrProducts);
     }
     if (trigger === 'now') return searchArrProducts;
   }
 
-
-  if (trigger !== 'now') (document.querySelector('.search') as HTMLInputElement).addEventListener('input', update);
+  if (trigger !== 'now')
+    (document.querySelector('.search') as HTMLInputElement).addEventListener(
+      'input',
+      update
+    );
   if (trigger === 'now') {
     return update();
     // return searchArrProducts;
