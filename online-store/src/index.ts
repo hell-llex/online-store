@@ -24,16 +24,19 @@ Button();
 SortProductCard('notNow');
 
 const intervalId = setInterval(function () {
-  if (document.querySelector('.stock-lower') as HTMLInputElement &&
-      document.querySelector('.stock-upper') as HTMLInputElement &&
-      document.querySelector('.price-lower') as HTMLInputElement &&
-      document.querySelector('.price-upper') as HTMLInputElement &&
-      document.querySelector('.search') as HTMLInputElement &&
-      document.querySelector('.sort-input') as HTMLInputElement &&
-    document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement> &&
-    document.querySelector('.btn-container') as HTMLElement &&
-    document.querySelector('.catalog-products') as HTMLElement) {
-
+  if (
+    (document.querySelector('.stock-lower') as HTMLInputElement) &&
+    (document.querySelector('.stock-upper') as HTMLInputElement) &&
+    (document.querySelector('.price-lower') as HTMLInputElement) &&
+    (document.querySelector('.price-upper') as HTMLInputElement) &&
+    (document.querySelector('.search') as HTMLInputElement) &&
+    (document.querySelector('.sort-input') as HTMLInputElement) &&
+    (document.querySelectorAll(
+      '.filters .checkbox'
+    ) as NodeListOf<HTMLInputElement>) &&
+    (document.querySelector('.btn-container') as HTMLElement) &&
+    (document.querySelector('.catalog-products') as HTMLElement)
+  ) {
     clearInterval(intervalId);
     recoveryValue(window.location.href.toString());
   }
@@ -45,7 +48,4 @@ window.addEventListener('beforeunload', addLocalStorageBasket);
 window.addEventListener('load', getLocalStorageBasket);
 window.addEventListener('load', renderBasket);
 
-export const itemInBasket: productsArrayI[] = getLocalStorageBasket() ?? []; //TODO сюда надо закинуть getLocalStorageBasket()
-/* alert(
-  'Привет, немного не успели. Если есть возможность проверьте в конце кросс-чека. Если возникнуть вопросы просьба связаться в дискорд gril#2057 или hell-llex#1516'
-); */
+export const itemInBasket: productsArrayI[] = getLocalStorageBasket() ?? [];

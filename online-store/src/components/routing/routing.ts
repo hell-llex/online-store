@@ -10,24 +10,44 @@ import { changeFilter } from '../filter/filter';
 import { localStorageUrl } from '../basket/localStorage';
 
 export function recoveryValue(value: string) {
-  const stockLowerSlider = document.querySelector('.stock-lower') as HTMLInputElement;
-  const stockUpperSlider = document.querySelector('.stock-upper') as HTMLInputElement;
+  const stockLowerSlider = document.querySelector(
+    '.stock-lower'
+  ) as HTMLInputElement;
+  const stockUpperSlider = document.querySelector(
+    '.stock-upper'
+  ) as HTMLInputElement;
 
-  const priceLowerSlider = document.querySelector('.price-lower') as HTMLInputElement;
-  const priceUpperSlider = document.querySelector('.price-upper') as HTMLInputElement;
+  const priceLowerSlider = document.querySelector(
+    '.price-lower'
+  ) as HTMLInputElement;
+  const priceUpperSlider = document.querySelector(
+    '.price-upper'
+  ) as HTMLInputElement;
 
-  const stockLowerValue = document.querySelector('.stock-from') as HTMLInputElement;
-  const stockUpperValue = document.querySelector('.stock-to') as HTMLInputElement;
+  const stockLowerValue = document.querySelector(
+    '.stock-from'
+  ) as HTMLInputElement;
+  const stockUpperValue = document.querySelector(
+    '.stock-to'
+  ) as HTMLInputElement;
 
-  const priceLowerValue = document.querySelector('.price-from') as HTMLInputElement;
-  const priceUpperValue = document.querySelector('.price-to') as HTMLInputElement;
+  const priceLowerValue = document.querySelector(
+    '.price-from'
+  ) as HTMLInputElement;
+  const priceUpperValue = document.querySelector(
+    '.price-to'
+  ) as HTMLInputElement;
 
   const searchDom = document.querySelector('.search') as HTMLInputElement;
   const sortDom = document.querySelector('.sort-input') as HTMLInputElement;
-  const filterCheck = document.querySelectorAll('.filters .checkbox') as NodeListOf<HTMLInputElement>;
+  const filterCheck = document.querySelectorAll(
+    '.filters .checkbox'
+  ) as NodeListOf<HTMLInputElement>;
 
   const btnView = document.querySelector('.btn-switch-view') as HTMLElement;
-  const catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
+  const catalogProducts = document.querySelector(
+    '.catalog-products'
+  ) as HTMLElement;
 
   value = value.slice(value.indexOf('#') + 2);
   const params = new URLSearchParams(value);
@@ -45,8 +65,6 @@ export function recoveryValue(value: string) {
     : [priceLowerSlider.min, priceUpperSlider.max];
   const view = params.has('view') ? params.get('view') : 'inactive';
 
-  console.log(category, brand, stock, price, sort, search, view);
-
   filterCheck.forEach((elem) => {
     if (elem.dataset.category && category!.includes(elem.dataset.category)) {
       elem.checked = true;
@@ -56,11 +74,23 @@ export function recoveryValue(value: string) {
     }
   });
 
-  stockLowerValue.innerHTML = stockLowerValue.dataset.from = stockLowerSlider.value = stock![0];
-  stockUpperValue.innerHTML = stockUpperValue.dataset.to = stockUpperSlider.value = stock![1];
+  stockLowerValue.innerHTML =
+    stockLowerValue.dataset.from =
+    stockLowerSlider.value =
+      stock![0];
+  stockUpperValue.innerHTML =
+    stockUpperValue.dataset.to =
+    stockUpperSlider.value =
+      stock![1];
 
-  priceLowerValue.innerHTML = priceLowerValue.dataset.from = priceLowerSlider.value = price![0];
-  priceUpperValue.innerHTML = priceUpperValue.dataset.to = priceUpperSlider.value = price![1];
+  priceLowerValue.innerHTML =
+    priceLowerValue.dataset.from =
+    priceLowerSlider.value =
+      price![0];
+  priceUpperValue.innerHTML =
+    priceUpperValue.dataset.to =
+    priceUpperSlider.value =
+      price![1];
 
   searchDom.value = search!;
 
@@ -75,7 +105,6 @@ export function recoveryValue(value: string) {
   }
 
   changeFilter('now');
-  // searchProductCard('notNow');
   searchProductCard('now');
 }
 
@@ -95,7 +124,7 @@ export function Routing(): void {
 
   const router = new Router({
     mode: 'hash',
-    page404: function (path) {
+    page404: function (/* path */) {
       (main[0] as HTMLElement).style.display = 'none';
       (main[1] as HTMLElement).style.display = 'none';
       (main[2] as HTMLElement).style.display = 'none';
@@ -110,7 +139,6 @@ export function Routing(): void {
     (main[3] as HTMLElement).style.display = 'none';
     if (window.location.hash) {
       recoveryValue(window.location.href.toString());
-      console.log('window.location.hash :>> ', window.location.hash);
     }
   });
 

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import { itemInBasket } from '../../index';
 import { productsArrayI } from '../types';
 import { currentPage } from './renderCardsInBasket';
 export function addLocalStorageBasket(): void {
-  localStorage.setItem('storage', JSON.stringify(itemInBasket)); // сериализуем и записываем в локалстораж
+  localStorage.setItem('storage', JSON.stringify(itemInBasket)); // serialize and write to the localstorage
 }
 
 export function getLocalStorageBasket(): productsArrayI[] | void {
@@ -15,12 +14,16 @@ export function getLocalStorageBasket(): productsArrayI[] | void {
 }
 
 export function addLocalStoragePage(): void {
-  localStorage.setItem('page', JSON.stringify(currentPage)); // сериализуем и записываем в локалстораж
+  localStorage.setItem('page', JSON.stringify(currentPage)); // serialize and write to the localstorage
 }
 
-export function getLocalStoragePage() {
+export function getLocalStoragePage(): number {
   const page = localStorage.getItem('page');
-  return JSON.parse(page ?? '1'); // достаем из локала и парсим обратно
+  const parsedPage = +JSON.parse(page ?? '1');
+  if (!parsedPage) {
+    throw new Error('Invalid page number');
+  }
+  return parsedPage; // we take it out of the locale and parse it back
 }
 
 export function localStorageUrl(trigger: string): void | string {

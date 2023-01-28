@@ -1,9 +1,8 @@
-/* eslint-disable no-template-curly-in-string */
 import './slider.scss';
 
 export function slider() {
   function dualRange(location: string) {
-    // 2 значения или stock или price
+    // 2 values  stock or price
     const lowerSlider = document.querySelector(
       `.${location}-lower`
     ) as HTMLInputElement;

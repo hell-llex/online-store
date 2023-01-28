@@ -88,7 +88,7 @@ export function renderTotalPrice(): number {
         .querySelector('.summary')
         ?.addEventListener('click', (e: Event) => {
           if (
-            //если клик по RSS коду - Add код
+            //if click on 'RSS' code - add code
             e !== null &&
             e.target instanceof HTMLElement &&
             e.target.classList.contains('add-code1-btn')
@@ -108,7 +108,7 @@ export function renderTotalPrice(): number {
             ).value = '';
           }
           if (
-            //клик по RSS - Drop code
+            //if click on 'RSS' code - drop code
             e !== null &&
             e.target instanceof HTMLElement &&
             e.target.classList.contains('drop-code1-btn')
@@ -158,7 +158,7 @@ export function renderTotalPrice(): number {
         .querySelector('.summary')
         ?.addEventListener('click', (e: Event) => {
           if (
-            //если клик по EPM коду - Add код
+            //if click on 'EPM' code - add code
             e !== null &&
             e.target instanceof HTMLElement &&
             e.target.classList.contains('add-code2-btn')
@@ -176,7 +176,7 @@ export function renderTotalPrice(): number {
             ).value = '';
           }
           if (
-            //клик по EPM - Drop code
+            //if click on 'epm' - Drop code
             e !== null &&
             e.target instanceof HTMLElement &&
             e.target.classList.contains('drop-code2-btn')

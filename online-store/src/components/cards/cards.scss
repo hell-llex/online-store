@@ -9,18 +9,10 @@ $font-height-130: 130%;
 
 .catalog {
   .catalog-products {
-    // display: flex;
     width: 100%;
     display: grid;
-    // grid-template-rows: repeat(auto, 1fr);
     grid-template-columns: repeat(auto-fit, minmax(34rem, 1fr));
     gap: 20px;
-    // width: 100%;
-
-    // p:nth-child(3) {
-    //   grid-area: el3;
-    //   display: none;
-    // }
 
     .list-images {
       grid-area: el_3;
@@ -61,12 +53,10 @@ $font-height-130: 130%;
       position: relative;
       padding: 15px;
       width: 100%;
-      // width: 34rem;
+
       display: grid;
       grid-template-areas: 'el_1 el_1'
         'el_2 el_2'
-        // 'el_3 el_3'
-        // 'el_4 el_4'
         'el_5 el_5'
         'el_6 el_6'
         'el_7 el_7'

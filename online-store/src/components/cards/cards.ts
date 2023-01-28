@@ -10,12 +10,12 @@ export const productsData: productsDataI = {
   products: [],
   skip: 0,
   total: 0,
-}; // полный получаемый объект
+}; // get full object
 
-export let products: string[] = []; // массив со всеми элементами в виде HTML строки
+export let products: string[] = []; // array with all elements like HTML code
 
 export function CreateProductCard(setting: productsArrayI[] | string): void {
-  // принимает массив данных
+  // accepts an array of data
   const currentProducts: string[] = [];
   if (typeof setting === 'string' || setting.length === 0) {
     (document.querySelector('.catalog-products') as HTMLElement).style.display =
@@ -33,7 +33,7 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
         images.push(image);
       });
 
-      //меняем кнопку и дата атрибут Add/Drop на кнопке товара
+      //we change the button and the date attribute Add/Drop on the product button
       function addDropCard(): string {
         for (const el of itemInBasket) {
           if (el.id === elem.id) return 'Drop item';
@@ -74,13 +74,13 @@ export function CreateProductCard(setting: productsArrayI[] | string): void {
 }
 
 export function loadProduct(quantity = 100): void {
-  // дефолтное значение стоит на 100 карточек, переопределеятся в вызове функции
+  // the default value is 100 cards, redefined in the function call
   void fetch(`https://dummyjson.com/products?limit=${quantity}`)
     .then(async (data) => data.json())
     .then((data: productsDataI) => {
       data.products.forEach((elem) => (elem.count = 1));
-      Object.assign(productsData, data); // копирует объект
-      CreateProductCard(data.products); // передает массив в функцию CreateProductCard
+      Object.assign(productsData, data); // clone object
+      CreateProductCard(data.products); // passes an array to a function CreateProductCard
       loadFilter(data.products);
       searchProductCard('notNow');
       window.location.href = localStorageUrl('get') as string;

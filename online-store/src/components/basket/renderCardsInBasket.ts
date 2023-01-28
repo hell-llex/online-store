@@ -17,7 +17,7 @@ export function renderCardsInBasket(): void {
   ) as HTMLInputElement;
   const postData = itemInBasket;
   const rows = +limitEl.value;
-  currentPage = +getLocalStoragePage();
+  currentPage = getLocalStoragePage();
   if (postData.length === 0) {
     productCardContainer.innerHTML = `<div class="empty">Basket is empty</div>`;
   } else {
@@ -82,7 +82,7 @@ function displayList(
   const end = start + rowPerPage;
   const paginatedData = arrData.slice(start, end);
 
-  //уменьшает страницу пагинации на 1 если удалены все продукты на del или -
+  //decriment pagination on 1 if no more products and click del or -
   if (paginatedData.length === 0) {
     currentPage = currentPage - 1;
     addLocalStoragePage();

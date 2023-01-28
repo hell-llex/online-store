@@ -91,7 +91,6 @@ li {
 
 .main {
   height: 100%;
-  // width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,67 +163,8 @@ li {
 
 }
 
-// .filters {
-//   position: relative;
-//   // height: 100vh;
-//   width: 30vw;
-//   background-color: blue;
-//   font-size: $font-n4;
-//   line-height: normal;
-
-//   .filters-list {
-//     width: 100%;
-//     padding: 10px;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//     gap: 10px;
-
-//     .filters-item {
-//       padding: 10px;
-//       width: 100%;
-//       // height: 100px;
-//       display: flex;
-//       flex-direction: column;
-//       justify-content: center;
-//       align-items: flex-start;
-//       gap: 5px;
-//       border: 2px solid $color-dark;
-
-//       .item-label {
-//         height: 30px;
-//       }
-
-//       .item-label,
-//       .checkbox {
-//         cursor: pointer;
-//       }
-
-//       .btn-reset {
-//         margin: 0px auto;
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//         width: 260px;
-//         height: 80px;
-//         font-size: $font-n3;
-//         border-radius: 25px;
-//         background-color: purple;
-//         color: #000000;
-//         cursor: pointer;
-
-//         &:active {
-//           transform: translate(3px, 3px);
-//         }
-//       }
-//     }
-//   }
-// }
-
 .catalog {
   padding: 10px;
-  // height: 100vh;
-  // width: 110rem;
   width: 63vw;
   display: flex;
   flex-direction: column;
@@ -404,8 +344,6 @@ li {
   }
 }
 
-
-
 //BASKET
 .page {
   display: grid;
@@ -414,6 +352,11 @@ li {
   font-size: 14px;
   min-height: calc(100vh - 10vh - 100px);
 }
+
+.page2 {
+  display: flex;
+}
+
 .products__header {
   display: flex;
   justify-content: space-evenly;
@@ -500,7 +443,6 @@ li {
   transition: all 500ms ease-in-out;
 
 }
-
 
 //SUMMARY
 .summary {
@@ -637,13 +579,6 @@ input:valid {border-color: green;}
 input:invalid:not(:placeholder-shown) {border-color: red;}
 input:valid:not(:placeholder-shown) {border-color: green;}
 
-//del arrow in input type number
-/* input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-} */
-
 .buy-form form .row .col .inputBox input:focus{
   border:1px solid #000;
 }
@@ -778,7 +713,6 @@ input::-webkit-inner-spin-button {
   }
 
 }
-
 
 //PRODUCT DETAILS
 .page__product-description{

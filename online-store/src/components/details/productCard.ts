@@ -119,7 +119,7 @@ detailsContainer.addEventListener('click', (e: Event) => {
 function buyFromDescriptions(e: Event) {
   const itemCard = (e.target! as HTMLElement)
     .previousElementSibling as HTMLElement;
-  //если втовар в корзине сразу рисую форму покупки
+  //if product in basket render bye form
   if (
     e !== null &&
     e.target instanceof HTMLElement &&
@@ -127,8 +127,7 @@ function buyFromDescriptions(e: Event) {
   ) {
     renderBuyForm();
   }
-  //если нету в корзине
-  //пушу в массив, меняю надписи редирект
+  //if no one in basket push in array, change btn text and redirect
   else if (
     e !== null &&
     e.target instanceof HTMLElement &&
