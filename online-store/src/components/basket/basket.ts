@@ -1,5 +1,4 @@
 import { itemInBasket } from '../../index';
-import './basket.scss';
 import { renderTotalPrice } from './renderTotalPrice';
 import { renderProductHeader } from './renderProductHeader';
 import { renderCardsInBasket } from './renderCardsInBasket';
