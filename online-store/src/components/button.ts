@@ -239,7 +239,7 @@ export class Button {
       this.sort.value = 'select';
 
       window.location.hash = '#';
-      localStorageUrl('set');
+      localStorageUrl('set') as string;
 
       containerItem.forEach((elem, i) => {
         elem.classList.remove('inactive');
