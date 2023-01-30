@@ -18,8 +18,8 @@ import { renderBasket } from './components/basket/basket';
 loadProduct(50);
 
 Routing();
-
-Button();
+const buttons = new Button();
+buttons.listeners();
 
 SortProductCard('notNow');
 
