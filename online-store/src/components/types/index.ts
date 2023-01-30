@@ -21,9 +21,9 @@ export interface IProductsData {
   total: number;
 }
 
-export interface ISliderSelector {
-  min: number;
-  max: number;
+export interface ISliderSelector<T> {
+  min: T;
+  max: T;
 }
 
 export interface IFilterSelector {

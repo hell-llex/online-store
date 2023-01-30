@@ -8,11 +8,11 @@ import { searchParams } from '../routing/routing';
 
 const filterCategory: IFilterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
 const filterBrand: IFilterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
-const filterStock: ISliderSelector = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
-const filterPrice: ISliderSelector = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
+const filterStock: ISliderSelector<number> = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
+const filterPrice: ISliderSelector<number> = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
 
 function CreateFilter(
-  setting: IFilterSelector | ISliderSelector,
+  setting: IFilterSelector | ISliderSelector<number>,
   location: string
 ): void {
   // значения строки category, brand, stock, price
@@ -29,7 +29,7 @@ function CreateFilter(
       }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
-    const value = setting as ISliderSelector;
+    const value = setting as ISliderSelector<number>;
     dataDom.push(`<div class="value-container">
       <p class="${location}-from _from" data-from="${value.min}">${value.min}</p>
       <p class="${location}-to _to" data-to="${value.max}">${value.max}</p>
