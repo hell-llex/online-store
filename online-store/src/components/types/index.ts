@@ -30,3 +30,11 @@ export interface IFilterSelector {
   arrFilter: string[];
   countFilter: number[];
 }
+
+export enum basketButton {
+  plus = 'plus',
+  minus = 'minus',
+  del = 'del',
+  plusPage = 'plusPage',
+  minusPage = 'minusPage',
+}

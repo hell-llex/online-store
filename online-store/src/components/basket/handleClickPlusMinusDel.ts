@@ -1,13 +1,13 @@
 import { itemInBasket } from '../../index';
-import { IProduct } from '../types';
+import { IProduct, basketButton } from '../types';
 
 export function handleClickPlusMinusDel(event: Event) {
   if (
     event !== null &&
     event.target instanceof HTMLElement &&
-    (event.target.dataset.action === 'plus' ||
-      event.target.dataset.action === 'minus' ||
-      event.target.dataset.action === 'del')
+    (event.target.dataset.action === basketButton.plus ||
+      event.target.dataset.action === basketButton.minus ||
+      event.target.dataset.action === basketButton.del)
   ) {
     const itemCard = event.target.closest(
       '.products__item-card'
@@ -19,7 +19,7 @@ export function handleClickPlusMinusDel(event: Event) {
         if (
           event !== null &&
           event.target instanceof HTMLElement &&
-          event.target.dataset.action === 'plus'
+          event.target.dataset.action === basketButton.plus
         ) {
           if (el.count < el.stock) {
             el.count = ++el.count;
@@ -28,7 +28,7 @@ export function handleClickPlusMinusDel(event: Event) {
         if (
           event !== null &&
           event.target instanceof HTMLElement &&
-          event.target.dataset.action === 'minus'
+          event.target.dataset.action === basketButton.minus
         ) {
           if (el.count === 1) {
             delCardBasket(el);
@@ -40,7 +40,7 @@ export function handleClickPlusMinusDel(event: Event) {
         if (
           event !== null &&
           event.target instanceof HTMLElement &&
-          event.target.dataset.action === 'del'
+          event.target.dataset.action === basketButton.del
         ) {
           delCardBasket(el);
         }

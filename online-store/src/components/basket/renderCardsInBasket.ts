@@ -1,5 +1,5 @@
 import { itemInBasket } from '../../index';
-import { IProduct } from '../types';
+import { IProduct, basketButton } from '../types';
 
 import { addLocalStoragePage, getLocalStoragePage } from './localStorage';
 const productCardContainer = document.querySelector(
@@ -50,7 +50,7 @@ function displayPagination(event: Event) {
 
   if (event !== null && event.target instanceof HTMLElement) {
     if (
-      event.target.dataset.action === 'plusPage' &&
+      event.target.dataset.action === basketButton.plusPage &&
       currentPage < Math.ceil(itemInBasket.length / rows)
     ) {
       currentPage = currentPage + 1;
@@ -58,7 +58,10 @@ function displayPagination(event: Event) {
       addLocalStoragePage();
       displayList(postData, rows, currentPage);
     }
-    if (event.target.dataset.action === 'minusPage' && currentPage > 1) {
+    if (
+      event.target.dataset.action === basketButton.minusPage &&
+      currentPage > 1
+    ) {
       currentPage = currentPage - 1;
       PageCounter.innerText = currentPage.toString();
       addLocalStoragePage();

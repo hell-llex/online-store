@@ -3,6 +3,7 @@ import { renderTotalPrice } from './renderTotalPrice';
 import { renderProductHeader } from './renderProductHeader';
 import { renderCardsInBasket } from './renderCardsInBasket';
 import { handleClickPlusMinusDel } from './handleClickPlusMinusDel';
+import { basketButton } from '../types';
 
 const productCardContainer = document.querySelector(
   '.products__card-container'
@@ -38,9 +39,9 @@ productCardContainer.addEventListener('click', (e: Event) => {
   if (
     e !== null &&
     e.target instanceof HTMLElement &&
-    (e.target.dataset.action === 'plus' ||
-      e.target.dataset.action === 'minus' ||
-      e.target.dataset.action === 'del')
+    (e.target.dataset.action === basketButton.plus ||
+      e.target.dataset.action === basketButton.minus ||
+      e.target.dataset.action === basketButton.del)
   ) {
     handleClickPlusMinusDel(e);
     renderBasket();
@@ -51,8 +52,8 @@ productCardContainer.addEventListener('click', (e: Event) => {
   if (
     e !== null &&
     e.target instanceof HTMLElement &&
-    (e.target.dataset.action === 'plusPage' ||
-      e.target.dataset.action === 'minusPage')
+    (e.target.dataset.action === basketButton.plusPage ||
+      e.target.dataset.action === basketButton.minusPage)
   ) {
     renderBasket();
   }
