@@ -14,7 +14,7 @@ export function searchProductCard(
 
   function update() {
     const search = document.querySelector('.search') as HTMLInputElement;
-    let changeInput = search.value;
+
     const categoryContainer = document.querySelector(
       '.category-container'
     ) as HTMLElement; // блок слайдера stock
@@ -52,8 +52,6 @@ export function searchProductCard(
     ) {
       searchArrProducts = resultData.slice();
     }
-
-    changeInput = search.value;
 
     const value = `${search.value.trim().toLowerCase()}`;
 

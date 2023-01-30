@@ -9,7 +9,8 @@
     "deploy": "npm run build:dev && npx gh-pages -d dist -e online-store",
     "build:dev": "webpack --mode=development",
     "watch": "webpack --watch",
-    "start": "webpack serve --open --config ./webpack.config.js"
+    "start": "webpack serve --open --config ./webpack.config.js",
+    "lint": "eslint online-store/src"
   },
   "repository": {
     "type": "git",
