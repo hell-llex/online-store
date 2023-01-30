@@ -161,7 +161,7 @@ export class Button {
   search = document.querySelector('.search') as HTMLInputElement;
   sort = document.querySelector('.sort-input') as HTMLInputElement;
 
-  btnFilter(e: Event) {
+  btnFilter(e: Event): void {
     if (
       (e.target! as HTMLElement).closest('.btn-reset') ||
       (e.target! as HTMLElement).closest('.logo')
@@ -276,7 +276,7 @@ export class Button {
     }
   }
 
-  listeners() {
+  listeners(): void {
     this.btnView.addEventListener('click', () => {
       this.btnView.classList.toggle('active');
       if (
