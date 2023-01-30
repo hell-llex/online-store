@@ -1,4 +1,4 @@
-export interface productsArrayI {
+export interface IProduct {
   // интерфейс для объекта с карточками
   id: number;
   count: number;
@@ -14,19 +14,19 @@ export interface productsArrayI {
   images: string[];
 }
 
-export interface productsDataI {
+export interface IProductsData {
   limit: number;
-  products: productsArrayI[];
+  products: IProduct[];
   skip: number;
   total: number;
 }
 
-export interface sliderSelector {
+export interface ISliderSelector {
   min: number;
   max: number;
 }
 
-export interface filterSelector {
+export interface IFilterSelector {
   arrFilter: string[];
   countFilter: number[];
 }

@@ -1,16 +1,13 @@
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { countView, resultData } from '../filter/filter';
 import { SortProductCard } from '../sort/sort';
 import { searchParams } from '../routing/routing';
 
-export let searchResult: Array<productsArrayI> = [];
+export let searchResult: Array<IProduct> = [];
 
-export function searchProductCard(
-  trigger: string,
-  arraySearch?: productsArrayI[]
-) {
-  let searchArrProducts: productsArrayI[] = productsData.products.slice();
+export function searchProductCard(trigger: string, arraySearch?: IProduct[]) {
+  let searchArrProducts: IProduct[] = productsData.products.slice();
 
   function update() {
     const search = document.querySelector('.search') as HTMLInputElement;

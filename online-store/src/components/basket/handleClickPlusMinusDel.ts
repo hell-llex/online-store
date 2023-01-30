@@ -1,5 +1,5 @@
 import { itemInBasket } from '../../index';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 
 export function handleClickPlusMinusDel(event: Event) {
   if (
@@ -13,7 +13,7 @@ export function handleClickPlusMinusDel(event: Event) {
       '.products__item-card'
     ) as HTMLElement; // get closest .products__item-card from event.target
     const itemID = itemCard.getAttribute('data-identifier');
-    itemInBasket.forEach((el: productsArrayI) => {
+    itemInBasket.forEach((el: IProduct) => {
       if (itemID !== null && el.id === +itemID) {
         // compare itemInBasket.id and DOM element data-identifier
         if (
@@ -49,9 +49,9 @@ export function handleClickPlusMinusDel(event: Event) {
   }
 }
 
-function delCardBasket(product: productsArrayI) {
+function delCardBasket(product: IProduct) {
   // del product from itemInBasket array
-  itemInBasket.forEach((el: productsArrayI, index: number) => {
+  itemInBasket.forEach((el: IProduct, index: number) => {
     if (el.id === product.id) {
       itemInBasket.splice(index, 1);
     }

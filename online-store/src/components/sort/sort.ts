@@ -1,14 +1,14 @@
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { resultData } from '../filter/filter';
 import { searchResult } from '../search/search';
 import { searchParams } from '../routing/routing';
 
-export function SortProductCard(trigger: string, arraySort?: productsArrayI[]) {
+export function SortProductCard(trigger: string, arraySort?: IProduct[]) {
   // 'now' для выпослнения сразу после фильтрации
 
   const sort = document.querySelector('.sort-input') as HTMLInputElement;
-  let sortArrproducts: Array<productsArrayI> = [];
+  let sortArrproducts: Array<IProduct> = [];
 
   function update() {
     sortArrproducts = productsData.products.slice(); // копирование полченного массива данных

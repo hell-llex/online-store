@@ -3,7 +3,7 @@ import Data from '../../products-v1.json';
 import { renderBasket } from '../basket/basket';
 import { renderBuyForm } from '../basket/buyForm';
 import { productsData } from '../cards/cards';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 const detailsContainer = document.querySelector(
   '.details-container'
 ) as HTMLElement;
@@ -104,7 +104,7 @@ detailsContainer.addEventListener('click', (e: Event) => {
   ) {
     const closestCard = e.target.closest('.details__card') as HTMLElement;
     const identifier = closestCard.dataset.identifier;
-    itemInBasket.forEach((el: productsArrayI, index: number) => {
+    itemInBasket.forEach((el: IProduct, index: number) => {
       if (el.id === +identifier!) {
         itemInBasket.splice(index, 1);
       }

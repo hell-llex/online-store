@@ -1,5 +1,5 @@
 import { itemInBasket } from '../../index';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 import { renderBuyForm } from './buyForm';
 const summary = document.querySelector('.summary') as HTMLElement;
 
@@ -9,7 +9,7 @@ export function renderTotalPrice(): number {
   let totalCountEl = 0;
 
   // iterate array and get count and price for the total price
-  itemInBasket.forEach((el: productsArrayI) => {
+  itemInBasket.forEach((el: IProduct) => {
     priceTotal += el.count * el.price;
     totalCountEl += el.count;
   });

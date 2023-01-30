@@ -12,7 +12,7 @@ import {
 } from './components/basket/localStorage';
 import { Routing, recoveryValue } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
-import { productsArrayI } from './components/types';
+import { IProduct } from './components/types';
 import { renderBasket } from './components/basket/basket';
 
 loadProduct(50);
@@ -48,4 +48,4 @@ window.addEventListener('beforeunload', addLocalStorageBasket);
 window.addEventListener('load', getLocalStorageBasket);
 window.addEventListener('load', renderBasket);
 
-export const itemInBasket: productsArrayI[] = getLocalStorageBasket() ?? [];
+export const itemInBasket: IProduct[] = getLocalStorageBasket() ?? [];

@@ -1,5 +1,5 @@
 import { itemInBasket } from '../../index';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 
 import { addLocalStoragePage, getLocalStoragePage } from './localStorage';
 const productCardContainer = document.querySelector(
@@ -68,7 +68,7 @@ function displayPagination(event: Event) {
 }
 
 function displayList(
-  arrData: productsArrayI[],
+  arrData: IProduct[],
   rowPerPage: number,
   page: number
 ): void {

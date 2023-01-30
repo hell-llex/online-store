@@ -5,7 +5,7 @@ import { renderDetails } from '../details/productCard';
 import { itemInBasket } from '../..';
 import { productsData } from '../cards/cards';
 import { renderBasket } from '../basket/basket';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 import { changeFilter } from '../filter/filter';
 import { localStorageUrl } from '../basket/localStorage';
 
@@ -219,7 +219,7 @@ export function Routing(): void {
       e.target instanceof HTMLElement &&
       e.target.dataset.action === 'Drop item'
     ) {
-      itemInBasket.forEach((el: productsArrayI, index: number) => {
+      itemInBasket.forEach((el: IProduct, index: number) => {
         if (el.id === nCard) {
           itemInBasket.splice(index, 1);
         }

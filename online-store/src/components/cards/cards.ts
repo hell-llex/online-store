@@ -1,11 +1,11 @@
 import './cards.scss';
-import { productsArrayI, productsDataI } from '../types';
+import { IProduct, IProductsData } from '../types';
 import { loadFilter } from '../filter/filter';
 import { searchProductCard } from '../search/search';
 import { itemInBasket } from '../..';
 import { localStorageUrl } from '../basket/localStorage';
 
-export const productsData: productsDataI = {
+export const productsData: IProductsData = {
   limit: 0,
   products: [],
   skip: 0,
@@ -14,7 +14,7 @@ export const productsData: productsDataI = {
 
 export let products: string[] = []; // array with all elements like HTML code
 
-export function CreateProductCard(setting: productsArrayI[] | string): void {
+export function CreateProductCard(setting: IProduct[] | string): void {
   // accepts an array of data
   const currentProducts: string[] = [];
   if (typeof setting === 'string' || setting.length === 0) {
@@ -77,7 +77,7 @@ export function loadProduct(quantity = 100): void {
   // the default value is 100 cards, redefined in the function call
   void fetch(`https://dummyjson.com/products?limit=${quantity}`)
     .then(async (data) => data.json())
-    .then((data: productsDataI) => {
+    .then((data: IProductsData) => {
       data.products.forEach((elem) => (elem.count = 1));
       Object.assign(productsData, data); // clone object
       CreateProductCard(data.products); // passes an array to a function CreateProductCard

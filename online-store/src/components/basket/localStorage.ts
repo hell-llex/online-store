@@ -1,13 +1,13 @@
 import { itemInBasket } from '../../index';
-import { productsArrayI } from '../types';
+import { IProduct } from '../types';
 import { currentPage } from './renderCardsInBasket';
 export function addLocalStorageBasket(): void {
   localStorage.setItem('storage', JSON.stringify(itemInBasket)); // serialize and write to the localstorage
 }
 
-export function getLocalStorageBasket(): productsArrayI[] | void {
+export function getLocalStorageBasket(): IProduct[] | void {
   if (localStorage.storage) {
-    return JSON.parse(localStorage.storage) as productsArrayI[];
+    return JSON.parse(localStorage.storage) as IProduct[];
   } else {
     console.error('Not found Array Basket');
   }

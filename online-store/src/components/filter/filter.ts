@@ -1,35 +1,35 @@
 import './filter.scss';
-import { filterSelector, productsArrayI, sliderSelector } from '../types';
+import { IFilterSelector, IProduct, ISliderSelector } from '../types';
 import { productsData, CreateProductCard } from '../cards/cards';
 import { SortProductCard } from '../sort/sort';
 import { slider } from './slider/slider';
 import { searchProductCard } from '../search/search';
 import { searchParams } from '../routing/routing';
 
-const filterCategory: filterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
-const filterBrand: filterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
-const filterStock: sliderSelector = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
-const filterPrice: sliderSelector = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
+const filterCategory: IFilterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
+const filterBrand: IFilterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
+const filterStock: ISliderSelector = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
+const filterPrice: ISliderSelector = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
 
 function CreateFilter(
-  setting: filterSelector | sliderSelector,
+  setting: IFilterSelector | ISliderSelector,
   location: string
 ): void {
   // значения строки category, brand, stock, price
   const dataDom: string[] = [];
   if (location === 'category' || location === 'brand') {
-    (setting as filterSelector).arrFilter.forEach((elem, i) => {
+    (setting as IFilterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
         <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}"
         data-count="${
-          (setting as filterSelector).countFilter[i]
+          (setting as IFilterSelector).countFilter[i]
         }">${elem}</label><p class="quantity">
-        <span>${(setting as filterSelector).countFilter[i]}</span>/${
-        (setting as filterSelector).countFilter[i]
+        <span>${(setting as IFilterSelector).countFilter[i]}</span>/${
+        (setting as IFilterSelector).countFilter[i]
       }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
-    const value = setting as sliderSelector;
+    const value = setting as ISliderSelector;
     dataDom.push(`<div class="value-container">
       <p class="${location}-from _from" data-from="${value.min}">${value.min}</p>
       <p class="${location}-to _to" data-to="${value.max}">${value.max}</p>
@@ -44,7 +44,7 @@ function CreateFilter(
     dataDom.join(''); // создание фильтров
 }
 
-export function loadFilter(arrProd: productsArrayI[]): void {
+export function loadFilter(arrProd: IProduct[]): void {
   const stock: number[] = [];
   const price: number[] = [];
 
@@ -82,7 +82,7 @@ export function loadFilter(arrProd: productsArrayI[]): void {
   changeFilter(); // вызов функции для использования всей фильтрации
 }
 
-export function countView(arrProd: productsArrayI[] | string): void {
+export function countView(arrProd: IProduct[] | string): void {
   // console.log('arrProd :>> ', arrProd);
   const containerItem = document.querySelectorAll(
     '.filters .container-item'
@@ -106,7 +106,7 @@ export function countView(arrProd: productsArrayI[] | string): void {
   const viewPrice: number[] = [];
 
   if (typeof arrProd !== 'string') {
-    (arrProd as productsArrayI[]).forEach((elem) => {
+    (arrProd as IProduct[]).forEach((elem) => {
       viewCategory.push(elem.category);
       viewBrand.push(elem.brand);
       viewStock.push(elem.stock);
@@ -172,11 +172,11 @@ export function countView(arrProd: productsArrayI[] | string): void {
   }
 }
 
-export let resultData: productsArrayI[] = []; // массив с данным для сортировки во время фильтрации
+export let resultData: IProduct[] = []; // массив с данным для сортировки во время фильтрации
 
 export function changeFilter(trigger?: string): void {
   function filtering(e?: Event): void {
-    let productFilter: productsArrayI[] = productsData.products.slice();
+    let productFilter: IProduct[] = productsData.products.slice();
     if (
       ((document.querySelector('.search') as HTMLInputElement).value.length ===
         0 &&
@@ -193,7 +193,7 @@ export function changeFilter(trigger?: string): void {
     }
     const checkboxCategory: string[] = []; // массив с выбранными фильтрами
     const checkboxBrand: string[] = []; // массив с выбранными фильтрами
-    let result: productsArrayI[] = [];
+    let result: IProduct[] = [];
 
     if (
       document.querySelectorAll('.category-container .checkbox:checked')
@@ -370,10 +370,10 @@ export function changeFilter(trigger?: string): void {
     +valuesLowerSliderAll[1].dataset.from!,
   ];
 
-  function sliderSelector(a: number, b: string): void {
+  function ISliderSelector(a: number, b: string): void {
     // функция которая передается в обработчик событий input (stock = 0 или price = 1, to = нижний или from = верхний)
 
-    let productFilter: productsArrayI[] = productsData.products.slice();
+    let productFilter: IProduct[] = productsData.products.slice();
     if (
       ((document.querySelector('.search') as HTMLInputElement).value.length ===
         0 &&
@@ -388,7 +388,7 @@ export function changeFilter(trigger?: string): void {
     ) {
       productFilter = searchProductCard('now', productsData.products)!;
     }
-    let result: productsArrayI[] = [];
+    let result: IProduct[] = [];
 
     const stockRange = document.querySelector(
       '.stock-container'
@@ -546,27 +546,27 @@ export function changeFilter(trigger?: string): void {
   // ======================stock==========================
 
   upperSliderAll[0].addEventListener('input', () => {
-    sliderSelector(0, 'to');
+    ISliderSelector(0, 'to');
   });
   lowerSliderAll[0].addEventListener('input', () => {
-    sliderSelector(0, 'from');
+    ISliderSelector(0, 'from');
   });
 
   // ======================price==========================
 
   upperSliderAll[1].addEventListener('input', () => {
-    sliderSelector(1, 'to');
+    ISliderSelector(1, 'to');
   });
   lowerSliderAll[1].addEventListener('input', () => {
-    sliderSelector(1, 'from');
+    ISliderSelector(1, 'from');
   });
 
   if (trigger === 'now') {
     filtering();
-    sliderSelector(0, 'to');
-    sliderSelector(0, 'from');
-    sliderSelector(1, 'to');
-    sliderSelector(1, 'from');
+    ISliderSelector(0, 'to');
+    ISliderSelector(0, 'from');
+    ISliderSelector(1, 'to');
+    ISliderSelector(1, 'from');
   }
   // =====================================================
 }
