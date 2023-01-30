@@ -9,9 +9,9 @@ export function renderTotalPrice(): number {
   let totalCountEl = 0;
 
   // iterate array and get count and price for the total price
-  itemInBasket.forEach((el: IProduct) => {
-    priceTotal += el.count * el.price;
-    totalCountEl += el.count;
+  itemInBasket.forEach((purchase: IProduct) => {
+    priceTotal += purchase.count * purchase.price;
+    totalCountEl += purchase.count;
   });
 
   const summaryHTML = `
@@ -54,6 +54,7 @@ export function renderTotalPrice(): number {
           `;
 
   summary.insertAdjacentHTML('afterbegin', summaryHTML);
+
   const summaryInput = document.querySelector(
     'input[type="text"]'
   ) as HTMLInputElement;
