@@ -22,8 +22,12 @@ export function CreateProductCard(setting: IProduct[] | string): void {
       'flex';
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML =
       '<p class="not-found">No products found <br> (ಥ﹏ಥ)</p>';
-    (document.querySelector('.found') as HTMLElement).innerHTML = 'Found:0';
-    (document.querySelector('.found') as HTMLElement).dataset.found = '0';
+    (document.querySelectorAll('.found') as NodeListOf<HTMLElement>).forEach(
+      (elem) => (elem.dataset.found = '0'),
+    );
+    (
+      document.querySelectorAll('.found .new') as NodeListOf<HTMLElement>
+    ).forEach((elem) => (elem.innerHTML = '0'));
   } else {
     setting.forEach((elem) => {
       const images: string[] = [];
@@ -36,7 +40,7 @@ export function CreateProductCard(setting: IProduct[] | string): void {
       //we change the button and the date attribute Add/Drop on the product button
       function addDropCard(): string {
         for (const el of itemInBasket) {
-          if (el.id === elem.id) return 'Drop item';
+          if (el.id === elem.id) return 'Remove';
         }
         return 'Add';
       }
@@ -49,14 +53,17 @@ export function CreateProductCard(setting: IProduct[] | string): void {
     <p><b>Description: </b> ${elem.description}</p>
     <p><b>Category: </b> ${elem.category}</p>
     <p><b>Brand: </b> ${elem.brand}</p>
-    <p><b>Price: €</b>${elem.price}</p>
+    <p><b>Price: </b> <span>${Math.round(
+      (elem.price / 100) * (100 + elem.discountPercentage),
+    )}$</span>/<span>${elem.price}$</span></p>
     <p><b>Discount: </b> ${elem.discountPercentage}%</p>
     <p><b>Rating: </b> ${elem.rating}</p>
     <p><b>Stock: </b> ${elem.stock}</p>
-    <div class="product-btn">
-      <div class="btn__addBasket" data-action="${addDropCard()}">${addDropCard()}</div>
-      <div class="btn__description">Details</div>
-    </div></div>`;
+      <div class="product-btn">
+        <div class="btn__addBasket" data-action="${addDropCard()}">${addDropCard()}</div>
+        <div class="btn__description">Details</div>
+      </div>
+    </div>`;
       currentProducts.push(card);
     });
     products = currentProducts.slice();
@@ -64,12 +71,13 @@ export function CreateProductCard(setting: IProduct[] | string): void {
       'grid';
     (document.querySelector('.catalog-products') as HTMLElement).innerHTML =
       currentProducts.join('');
+
+    (document.querySelectorAll('.found') as NodeListOf<HTMLElement>).forEach(
+      (elem) => (elem.dataset.found = `${currentProducts.length}`),
+    );
     (
-      document.querySelector('.found') as HTMLElement
-    ).innerHTML = `Found:${currentProducts.length}`;
-    (
-      document.querySelector('.found') as HTMLElement
-    ).dataset.found = `${currentProducts.length}`;
+      document.querySelectorAll('.found .new') as NodeListOf<HTMLElement>
+    ).forEach((elem) => (elem.innerHTML = `${currentProducts.length}`));
   }
 }
 
@@ -84,5 +92,9 @@ export function loadProduct(quantity = 100): void {
       loadFilter(data.products);
       searchProductCard('notNow');
       window.location.href = localStorageUrl('get') as string;
+
+      (
+        document.querySelectorAll('.found .all') as NodeListOf<HTMLElement>
+      ).forEach((elem) => (elem.innerHTML = `${quantity}`));
     });
 }

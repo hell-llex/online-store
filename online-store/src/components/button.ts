@@ -3,12 +3,22 @@ import { CreateProductCard, productsData } from './cards/cards';
 import { searchParams } from './routing/routing';
 
 export class Button {
-  btnView = document.querySelector('.btn-switch-view') as HTMLElement;
-  logo = document.querySelector('.logo') as HTMLElement;
+  btnView = document.querySelectorAll(
+    '.btn-switch-view',
+  ) as NodeListOf<HTMLElement>;
+  // logo = document.querySelector('.logo') as HTMLElement;
   btnContainer = document.querySelector('.btn-container') as HTMLElement;
   catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
   search = document.querySelector('.search') as HTMLInputElement;
-  sort = document.querySelector('.sort-input') as HTMLInputElement;
+  searchBtn = document.querySelector('.search-icon') as HTMLInputElement;
+  searchContainer = document.querySelector(
+    '.search-container',
+  ) as HTMLInputElement;
+  sort = document.querySelectorAll(
+    '.sort-input',
+  ) as NodeListOf<HTMLSelectElement>;
+  filtersBtn = document.querySelector('.filters-btn') as HTMLInputElement;
+  // html = document.querySelector('.filters-btn') as HTMLInputElement;
 
   btnFilter(e: Event): void {
     if (
@@ -16,45 +26,45 @@ export class Button {
       (e.target! as HTMLElement).closest('.logo')
     ) {
       const containerItem = document.querySelectorAll(
-        '.filters .container-item'
+        '.filters .container-item',
       ) as NodeListOf<HTMLElement>;
       const containerItemValue = document.querySelectorAll(
-        '.filters .quantity'
+        '.filters .quantity',
       ) as NodeListOf<HTMLElement>;
 
       const categoryCheck = document.querySelectorAll(
-        '.category-container .checkbox'
+        '.category-container .checkbox',
       ) as NodeListOf<HTMLInputElement>;
       const brandCheck = document.querySelectorAll(
-        '.brand-container .checkbox'
+        '.brand-container .checkbox',
       ) as NodeListOf<HTMLInputElement>;
 
       const stockLowerSlider = document.querySelector(
-        `.stock-lower`
+        `.stock-lower`,
       ) as HTMLInputElement;
       const stockUpperSlider = document.querySelector(
-        `.stock-upper`
+        `.stock-upper`,
       ) as HTMLInputElement;
 
       const priceLowerSlider = document.querySelector(
-        `.price-lower`
+        `.price-lower`,
       ) as HTMLInputElement;
       const priceUpperSlider = document.querySelector(
-        `.price-upper`
+        `.price-upper`,
       ) as HTMLInputElement;
 
       const stockLowerValues = document.querySelector(
-        `.stock-from`
+        `.stock-from`,
       ) as HTMLElement;
       const stockUpperValues = document.querySelector(
-        `.stock-to`
+        `.stock-to`,
       ) as HTMLElement;
 
       const priceLowerValues = document.querySelector(
-        `.price-from`
+        `.price-from`,
       ) as HTMLElement;
       const priceUpperValues = document.querySelector(
-        `.price-to`
+        `.price-to`,
       ) as HTMLElement;
 
       categoryCheck.forEach((elem) => {
@@ -85,10 +95,15 @@ export class Button {
 
       this.search.value = '';
 
-      this.sort.value = 'select';
+      this.sort[0].value = 'select';
+      this.sort[1].value = 'select';
 
       window.location.hash = '#';
       localStorageUrl('set') as string;
+
+      this.btnView[0].classList.remove('active');
+      this.btnView[1].classList.remove('active');
+      this.catalogProducts.classList.remove('active');
 
       containerItem.forEach((elem, i) => {
         elem.classList.remove('inactive');
@@ -98,7 +113,7 @@ export class Button {
           )?.innerText[2];
           (
             document.querySelectorAll(
-              '.filters .quantity span'
+              '.filters .quantity span',
             ) as NodeListOf<HTMLElement>
           )[i].innerHTML = x;
         }
@@ -110,42 +125,83 @@ export class Button {
         .writeText(window.location.href)
         .then(() => {
           setTimeout(() => {
-            this.btnContainer.children[1].innerHTML = '<p>Copied</p>';
+            this.btnContainer.children[1].innerHTML = `<p>Copying...</p>`;
             (this.btnContainer.children[1] as HTMLElement).style.background =
-              '#008000';
+              '#000000';
+            (this.btnContainer.children[1] as HTMLElement).style.color =
+              '#ffffff';
           }, 100);
         })
         .then(() => {
           setTimeout(() => {
-            this.btnContainer.children[1].innerHTML = '<p>Copy</p>';
+            this.btnContainer.children[1].innerHTML = `<p>Copy</p>`;
             (this.btnContainer.children[1] as HTMLElement).style.background =
-              '#800080';
+              '';
+            (this.btnContainer.children[1] as HTMLElement).style.color = '';
           }, 600);
         });
     }
   }
 
   listeners(): void {
-    this.btnView.addEventListener('click', () => {
-      this.btnView.classList.toggle('active');
-      if (
-        (
-          document.querySelector('.btn-switch-view') as HTMLElement
-        ).classList.contains('active')
-      ) {
-        searchParams('set', 'view', 'active');
-      } else searchParams('del', 'view');
+    this.btnView.forEach((elem) => {
+      elem.addEventListener('click', () => {
+        this.btnView[0].classList.toggle('active');
+        this.btnView[1].classList.toggle('active');
+        if (
+          this.btnView[0].classList.contains('active') &&
+          this.btnView[1].classList.contains('active')
+        ) {
+          searchParams('set', 'view', 'active');
+        } else searchParams('del', 'view');
 
-      this.catalogProducts.classList.toggle('active');
+        this.catalogProducts.classList.toggle('active');
+      });
     });
 
     this.btnContainer.addEventListener('click', (e: Event) => {
       this.btnFilter(e);
     });
 
-    this.logo!.addEventListener('click', (e: Event) => {
-      this.btnFilter(e);
-      CreateProductCard(productsData.products);
+    // this.logo!.addEventListener('click', (e: Event) => {
+      // this.btnFilter(e);
+      // CreateProductCard(productsData.products);
+    // });
+
+    // this.searchBtn!.addEventListener('click', (e: Event) => {
+    //   this.searchContainer.classList.add('active');
+    // });
+
+    window.addEventListener('click', (e: Event) => {
+      if ((e.target! as HTMLElement).closest('.filters-btn')) {
+        if (this.filtersBtn.classList.contains('active')) {
+          (
+            document.querySelector('.filters') as HTMLInputElement
+          ).classList.remove('active');
+          this.filtersBtn.classList.remove('active');
+        } else {
+          (
+            document.querySelector('.filters') as HTMLInputElement
+          ).classList.add('active');
+          this.filtersBtn.classList.add('active');
+        }
+      } else if (
+        this.filtersBtn.classList.contains('active') &&
+        !(e.target! as HTMLElement).closest('.filters')
+      ) {
+        (
+          document.querySelector('.filters') as HTMLInputElement
+        ).classList.remove('active');
+        this.filtersBtn.classList.remove('active');
+      }
+      if ((e.target! as HTMLElement).closest('.search-icon')) {
+        this.searchContainer.classList.add('active');
+      } else if (
+        this.searchContainer.classList.contains('active') &&
+        !(e.target! as HTMLElement).closest('.search-container')
+      ) {
+        this.searchContainer.classList.remove('active');
+      }
     });
   }
 }

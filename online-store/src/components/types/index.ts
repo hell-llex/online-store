@@ -35,6 +35,6 @@ export enum basketButton {
   plus = 'plus',
   minus = 'minus',
   del = 'del',
-  plusPage = 'plusPage',
-  minusPage = 'minusPage',
+  increment = 'increment',
+  decrement = 'decrement',
 }

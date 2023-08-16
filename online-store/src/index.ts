@@ -1,7 +1,9 @@
 import '../index.html';
 import '../styles.scss';
+// import './components/basket/basket.scss';
 import './components/loader/loader.scss';
-import './components/basket/basket';
+// import './components/cards/cards.scss';
+// import './components/basket/basket';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';
 import {
@@ -14,8 +16,9 @@ import { Routing, recoveryValue } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { IProduct } from './components/types';
 import { renderBasket } from './components/basket/basket';
+// import { renderBuyForm } from './components/basket/buyForm';
 
-loadProduct(50);
+loadProduct(30);
 
 Routing();
 const buttons = new Button();
@@ -32,7 +35,7 @@ const intervalId = setInterval(function () {
     (document.querySelector('.search') as HTMLInputElement) &&
     (document.querySelector('.sort-input') as HTMLInputElement) &&
     (document.querySelectorAll(
-      '.filters .checkbox'
+      '.filters .checkbox',
     ) as NodeListOf<HTMLInputElement>) &&
     (document.querySelector('.btn-container') as HTMLElement) &&
     (document.querySelector('.catalog-products') as HTMLElement)
@@ -49,3 +52,9 @@ window.addEventListener('load', getLocalStorageBasket);
 window.addEventListener('load', renderBasket);
 
 export const itemInBasket: IProduct[] = getLocalStorageBasket() ?? [];
+
+export const total = {
+  totalPrice: 0,
+  totalElements: 0,
+};
+

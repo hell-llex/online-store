@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
@@ -17,6 +18,15 @@ const config = {
     filename: 'index.js',
     assetModuleFilename: 'assets/[name][ext]'
   },
+  // devServer: {
+  //   open: true,
+  //   hot: true,
+  //   port: 8080,
+
+  //   liveReload: true,
+  //   // watchContentBase: true,
+  //   // contentBase: path.join(__dirname, 'public'),
+  // },
   devServer: {
     open: true,
     host: 'localhost',
@@ -29,6 +39,7 @@ const config = {
     }
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new ESLintPlugin({
       files: './online-store/src/*.ts'
     }),

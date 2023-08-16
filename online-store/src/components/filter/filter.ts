@@ -13,20 +13,40 @@ const filterPrice: ISliderSelector<number> = { min: 0, max: 1 }; // минима
 
 function CreateFilter(
   setting: IFilterSelector | ISliderSelector<number>,
-  location: string
+  location: string,
 ): void {
   // значения строки category, brand, stock, price
   const dataDom: string[] = [];
   if (location === 'category' || location === 'brand') {
     (setting as IFilterSelector).arrFilter.forEach((elem, i) => {
       dataDom.push(`<div class="container-item">
-        <label class="item-label"><input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}"
-        data-count="${
-          (setting as IFilterSelector).countFilter[i]
-        }">${elem}</label><p class="quantity">
+        <label class="item-label">
+          <input type="checkbox" name="${elem}" class="checkbox" data-${location}="${elem}" data-count="${
+            (setting as IFilterSelector).countFilter[i]
+          }">
+          <svg viewBox="0 0 21 18">
+            <symbol id="tick-path" viewBox="0 0 21 18" xmlns="http://www.w3.org/2000/svg">
+              <path d="M5.22003 7.26C5.72003 7.76 7.57 9.7 8.67 11.45C12.2 6.05 15.65 3.5 19.19 1.69" fill="none" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" />
+            </symbol>
+              <defs>
+                <mask id="tick">
+                  <use class="tick mask" href="#tick-path" />
+                </mask>
+              </defs>
+              <use class="tick" href="#tick-path" stroke="currentColor" />
+              <path fill="white" mask="url(#tick)" d="M18 9C18 10.4464 17.9036 11.8929 17.7589 13.1464C17.5179 15.6054 15.6054 17.5179 13.1625 17.7589C11.8929 17.9036 10.4464 18 9 18C7.55357 18 6.10714 17.9036 4.85357 17.7589C2.39464 17.5179 0.498214 15.6054 0.241071 13.1464C0.0964286 11.8929 0 10.4464 0 9C0 7.55357 0.0964286 6.10714 0.241071 4.8375C0.498214 2.39464 2.39464 0.482143 4.85357 0.241071C6.10714 0.0964286 7.55357 0 9 0C10.4464 0 11.8929 0.0964286 13.1625 0.241071C15.6054 0.482143 17.5179 2.39464 17.7589 4.8375C17.9036 6.10714 18 7.55357 18 9Z" />
+          </svg>
+          <svg class="lines" viewBox="0 0 11 11">
+              <path d="M5.88086 5.89441L9.53504 4.26746" />
+              <path d="M5.5274 8.78838L9.45391 9.55161" />
+              <path d="M3.49371 4.22065L5.55387 0.79198" />
+          </svg>
+          <p class="checkbox-text">${elem}</p>
+        </label>
+        <p class="quantity">
         <span>${(setting as IFilterSelector).countFilter[i]}</span>/${
-        (setting as IFilterSelector).countFilter[i]
-      }</p></div>`);
+          (setting as IFilterSelector).countFilter[i]
+        }</p></div>`);
     });
   } else if (location === 'stock' || location === 'price') {
     const value = setting as ISliderSelector<number>;
@@ -83,15 +103,14 @@ export function loadFilter(arrProd: IProduct[]): void {
 }
 
 export function countView(arrProd: IProduct[] | string): void {
-  // console.log('arrProd :>> ', arrProd);
   const containerItem = document.querySelectorAll(
-    '.filters .container-item'
+    '.filters .container-item',
   ) as NodeListOf<HTMLElement>;
   const containerItemValue = document.querySelectorAll(
-    '.filters .quantity span'
+    '.filters .quantity span',
   ) as NodeListOf<HTMLElement>;
   const containerCheckbox = document.querySelectorAll(
-    '.filters .checkbox'
+    '.filters .checkbox',
   ) as NodeListOf<HTMLInputElement>;
 
   const stockLowerValues = document.querySelector(`.stock-from`) as HTMLElement;
@@ -119,7 +138,7 @@ export function countView(arrProd: IProduct[] | string): void {
     containerCheckbox.forEach((elem, i) => {
       if ((elem as HTMLInputElement).dataset.category) {
         const countCategory = viewCategory.filter(
-          (item) => item === (elem as HTMLInputElement).dataset.category
+          (item) => item === (elem as HTMLInputElement).dataset.category,
         );
         if (countCategory.length !== 0) {
           containerItem[i].classList.remove('inactive');
@@ -131,7 +150,7 @@ export function countView(arrProd: IProduct[] | string): void {
       }
       if ((elem as HTMLInputElement).dataset.brand) {
         const countBrand = viewBrand.filter(
-          (item) => item === (elem as HTMLInputElement).dataset.brand
+          (item) => item === (elem as HTMLInputElement).dataset.brand,
         );
         if (countBrand.length !== 0) {
           containerItem[i].classList.remove('inactive');
@@ -237,10 +256,10 @@ export function changeFilter(trigger?: string): void {
         });
 
       const stockRange = document.querySelector(
-        '.stock-container'
+        '.stock-container',
       ) as HTMLElement;
       const priceRange = document.querySelector(
-        '.price-container'
+        '.price-container',
       ) as HTMLElement;
 
       // =============================================блок проверок по массиву=============================================================
@@ -248,7 +267,7 @@ export function changeFilter(trigger?: string): void {
       result = productFilter.filter(
         (item) =>
           checkboxCategory.includes(item.category) ||
-          checkboxBrand.includes(item.brand)
+          checkboxBrand.includes(item.brand),
       );
 
       if (
@@ -275,7 +294,7 @@ export function changeFilter(trigger?: string): void {
         result = productFilter.filter(
           (item) =>
             checkboxCategory.includes(item.category) &&
-            checkboxBrand.includes(item.brand)
+            checkboxBrand.includes(item.brand),
         );
       }
 
@@ -391,10 +410,10 @@ export function changeFilter(trigger?: string): void {
     let result: IProduct[] = [];
 
     const stockRange = document.querySelector(
-      '.stock-container'
+      '.stock-container',
     ) as HTMLElement; // блок слайдера stock
     const priceRange = document.querySelector(
-      '.price-container'
+      '.price-container',
     ) as HTMLElement; // блок слайдера price
 
     const checkboxCategory: string[] = []; // массив с выбранными фильтрами
@@ -403,13 +422,13 @@ export function changeFilter(trigger?: string): void {
     document
       .querySelectorAll('.category-container .checkbox:checked')
       .forEach((elem) =>
-        checkboxCategory.push((elem as HTMLInputElement).dataset.category!)
+        checkboxCategory.push((elem as HTMLInputElement).dataset.category!),
       );
 
     document
       .querySelectorAll('.brand-container .checkbox:checked')
       .forEach((elem) =>
-        checkboxBrand.push((elem as HTMLInputElement).dataset.brand!)
+        checkboxBrand.push((elem as HTMLInputElement).dataset.brand!),
       );
 
     if (a === 0 && b === 'to') {

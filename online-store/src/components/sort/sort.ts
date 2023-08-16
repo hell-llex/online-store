@@ -6,11 +6,21 @@ import { searchParams } from '../routing/routing';
 
 export function SortProductCard(trigger: string, arraySort?: IProduct[]) {
   // 'now' для выпослнения сразу после фильтрации
-
-  const sort = document.querySelector('.sort-input') as HTMLInputElement;
+  const sortArray = document.querySelectorAll(
+    '.sort-input',
+  ) as NodeListOf<HTMLSelectElement>;
   let sortArrproducts: Array<IProduct> = [];
 
   function update() {
+    const sortNone =
+      getComputedStyle(sortArray[0]).display === 'none'
+        ? sortArray[0]
+        : sortArray[1];
+    const sort =
+      getComputedStyle(sortArray[0]).display === 'none'
+        ? sortArray[1]
+        : sortArray[0];
+    sortNone.value = sort.value;
     sortArrproducts = productsData.products.slice(); // копирование полченного массива данных
     if (trigger === 'now') {
       sortArrproducts = arraySort!.slice();
@@ -55,7 +65,8 @@ export function SortProductCard(trigger: string, arraySort?: IProduct[]) {
       CreateProductCard(sortArrproducts); // вызов функции создания карточек
     }
   }
-  if (trigger !== 'now') sort?.addEventListener('change', update);
+  if (trigger !== 'now')
+    sortArray.forEach((elem) => elem?.addEventListener('change', update));
   if (trigger === 'now') {
     update();
     return sortArrproducts;

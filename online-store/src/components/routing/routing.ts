@@ -3,7 +3,7 @@ import Router from 'vanilla-router';
 import './404.scss';
 import { renderDetails } from '../details/productCard';
 import { itemInBasket } from '../..';
-import { productsData } from '../cards/cards';
+import { CreateProductCard, productsData } from '../cards/cards';
 import { renderBasket } from '../basket/basket';
 import { IProduct } from '../types';
 import { changeFilter } from '../filter/filter';
@@ -11,42 +11,42 @@ import { localStorageUrl } from '../basket/localStorage';
 
 export function recoveryValue(value: string) {
   const stockLowerSlider = document.querySelector(
-    '.stock-lower'
+    '.stock-lower',
   ) as HTMLInputElement;
   const stockUpperSlider = document.querySelector(
-    '.stock-upper'
+    '.stock-upper',
   ) as HTMLInputElement;
 
   const priceLowerSlider = document.querySelector(
-    '.price-lower'
+    '.price-lower',
   ) as HTMLInputElement;
   const priceUpperSlider = document.querySelector(
-    '.price-upper'
+    '.price-upper',
   ) as HTMLInputElement;
 
   const stockLowerValue = document.querySelector(
-    '.stock-from'
+    '.stock-from',
   ) as HTMLInputElement;
   const stockUpperValue = document.querySelector(
-    '.stock-to'
+    '.stock-to',
   ) as HTMLInputElement;
 
   const priceLowerValue = document.querySelector(
-    '.price-from'
+    '.price-from',
   ) as HTMLInputElement;
   const priceUpperValue = document.querySelector(
-    '.price-to'
+    '.price-to',
   ) as HTMLInputElement;
 
   const searchDom = document.querySelector('.search') as HTMLInputElement;
   const sortDom = document.querySelector('.sort-input') as HTMLInputElement;
   const filterCheck = document.querySelectorAll(
-    '.filters .checkbox'
+    '.filters .checkbox',
   ) as NodeListOf<HTMLInputElement>;
 
   const btnView = document.querySelector('.btn-switch-view') as HTMLElement;
   const catalogProducts = document.querySelector(
-    '.catalog-products'
+    '.catalog-products',
   ) as HTMLElement;
 
   value = value.slice(value.indexOf('#') + 2);
@@ -99,11 +99,12 @@ export function recoveryValue(value: string) {
   if (view === 'active') {
     btnView.classList.add('active');
     catalogProducts.classList.add('active');
+    searchParams('set', 'view', 'active');
   } else {
     btnView.classList.remove('active');
     catalogProducts.classList.remove('active');
+    searchParams('del', 'view');
   }
-
   changeFilter('now');
   searchProductCard('now');
 }
@@ -113,31 +114,35 @@ export function Routing(): void {
     window.location.hash.length === 0
       ? new URL(`#`, window.location.href).href
       : window.location.href;
-
-  const basket = document.querySelector('.icon-basket');
+  const basket = document.querySelector('.btn-basket');
   const logo = document.querySelector('.logo');
+  const homeLinkBtn = document.querySelector('.not-found-home-link');
+  const header = document.querySelector('.header');
   const main = document.querySelector('.main')!.children as HTMLCollection;
   const catalog = document.querySelector('.catalog-products');
   const productCardContainer = document.querySelector(
-    '.products__card-container'
+    '.products__card-container',
   ) as HTMLElement;
 
   const router = new Router({
     mode: 'hash',
-    page404: function (/* path */) {
-      (main[0] as HTMLElement).style.display = 'none';
-      (main[1] as HTMLElement).style.display = 'none';
-      (main[2] as HTMLElement).style.display = 'none';
-      (main[3] as HTMLElement).style.display = 'flex';
+    page404: function () {
+      router.navigateTo('page404');
     },
   });
 
   router.add('', function () {
     (main[0] as HTMLElement).style.display = 'flex';
     (main[1] as HTMLElement).style.display = 'none';
+    // (main[0] as HTMLElement).style.display = 'none';
+    // (main[1] as HTMLElement).style.display = 'flex';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
-    if (window.location.hash) {
+    (header as HTMLElement).classList.add('active');
+    (basket as HTMLElement).classList.remove('active');
+    CreateProductCard(productsData.products);
+    // if (!!window.location.hash) {
+    if (!!window.location.hash.toString()) {
       recoveryValue(window.location.href.toString());
     }
   });
@@ -147,6 +152,17 @@ export function Routing(): void {
     (main[1] as HTMLElement).style.display = 'flex';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
+    (header as HTMLElement).classList.remove('active');
+    (basket as HTMLElement).classList.add('active');
+  });
+
+  router.add('page404', function () {
+    (main[0] as HTMLElement).style.display = 'none';
+    (main[1] as HTMLElement).style.display = 'none';
+    (main[2] as HTMLElement).style.display = 'none';
+    (main[3] as HTMLElement).style.display = 'flex';
+    (header as HTMLElement).classList.remove('active');
+    (basket as HTMLElement).classList.remove('active');
   });
 
   router.add('products/(:any)', function (name) {
@@ -158,38 +174,72 @@ export function Routing(): void {
         (main[1] as HTMLElement).style.display = 'none';
         (main[2] as HTMLElement).style.display = 'flex';
         (main[3] as HTMLElement).style.display = 'none';
+        (header as HTMLElement).classList.remove('active');
+        (basket as HTMLElement).classList.remove('active');
       } else {
         (
           document.querySelector('.catalog-products') as HTMLElement
         ).style.display = 'flex';
         (document.querySelector('.catalog-products') as HTMLElement).innerHTML =
           '<p class="not-found">No products found <br> (ಥ﹏ಥ)</p>';
-        (document.querySelector('.found') as HTMLElement).innerHTML = 'Found:0';
+        (document.querySelector('.found .new') as HTMLElement).innerHTML = '0';
         (document.querySelector('.found') as HTMLElement).dataset.found = '0';
         (main[0] as HTMLElement).style.display = 'flex';
         (main[1] as HTMLElement).style.display = 'none';
         (main[2] as HTMLElement).style.display = 'none';
         (main[3] as HTMLElement).style.display = 'none';
+        (header as HTMLElement).classList.add('active');
+        (basket as HTMLElement).classList.remove('active');
       }
     } else alert('Please enter the product number');
   });
-
   router.addUriListener();
-
   router.navigateTo('#');
-
   logo?.addEventListener('click', () => {
-    window.location.href = new URL(
-      '#',
-      window.location.origin + window.location.pathname
-    ).href;
+    if (!!window.location.hash.toString()) {
+      router.navigateTo('#');
+      const recoveryUrl =
+        localStorageUrl('get') ?? window.location.href.toString();
+      recoveryValue(recoveryUrl);
+    }
+  });
+
+  homeLinkBtn?.addEventListener('click', () => {
+    if (!!window.location.hash.toString()) {
+      router.navigateTo('#');
+      const recoveryUrl =
+        localStorageUrl('get') ?? window.location.href.toString();
+      recoveryValue(recoveryUrl);
+    }
   });
 
   basket?.addEventListener('click', () => {
-    window.location.href = new URL(
-      '#basket',
-      window.location.origin + window.location.pathname
-    ).href;
+    // basket.classList.contains('active')
+    //   ? (basket as HTMLElement).classList.remove('active')
+    //   : (basket as HTMLElement).classList.add('active');
+    if (basket.classList.contains('active')) {
+      (basket as HTMLElement).classList.remove('active');
+      (basket as HTMLElement).classList.add('start');
+      if (!!window.location.hash.toString()) {
+        router.navigateTo('#');
+        const recoveryUrl =
+          localStorageUrl('get') ?? window.location.href.toString();
+        recoveryValue(recoveryUrl);
+      }
+      // window.location.href = new URL(
+      //   '#',
+      //   window.location.origin + window.location.pathname,
+      // ).href;
+      (basket as HTMLElement).classList.remove('start');
+    } else {
+      (basket as HTMLElement).classList.add('active');
+      (basket as HTMLElement).classList.add('start');
+      window.location.href = new URL(
+        '#basket',
+        window.location.origin + window.location.pathname,
+      ).href;
+      (basket as HTMLElement).classList.remove('start');
+    }
   });
 
   function cardSelection(e: Event) {
@@ -198,7 +248,7 @@ export function Routing(): void {
     ).dataset.identifier!;
 
     const currentAddBtn = (e.target! as HTMLElement).closest(
-      '.btn__addBasket'
+      '.btn__addBasket',
     ) as HTMLElement;
 
     if (
@@ -209,15 +259,15 @@ export function Routing(): void {
       e.target.dataset.action === 'Add'
     ) {
       itemInBasket.push(productsData.products[nCard - 1]);
-      e.target.dataset.action = 'Drop item';
-      currentAddBtn.innerText = 'Drop item';
+      e.target.dataset.action = 'Remove';
+      currentAddBtn.innerText = 'Remove';
       renderBasket();
     } else if (
-      //добавил этот if отслеживаем клик по Drop  удаляем из карзины меняем указатели на кнопках
+      //добавил этот if отслеживаем клик по Remove удаляем из карзины меняем указатели на кнопках
       (e.target! as HTMLElement).closest('.btn__addBasket') &&
       e !== null &&
       e.target instanceof HTMLElement &&
-      e.target.dataset.action === 'Drop item'
+      e.target.dataset.action === 'Remove'
     ) {
       itemInBasket.forEach((el: IProduct, index: number) => {
         if (el.id === nCard) {
@@ -228,35 +278,36 @@ export function Routing(): void {
       currentAddBtn.innerText = 'Add';
       renderBasket();
     } else if (
-      (e.target! as HTMLElement).closest('.product-item') ||
+      // (e.target! as HTMLElement).closest('.product-item') ||
       (e.target! as HTMLElement).closest('.btn__description')
     ) {
       window.location.href = new URL(
         `#products/${nCard}`,
-        window.location.origin + window.location.pathname
+        window.location.origin + window.location.pathname,
       ).href;
       renderDetails(nCard);
     }
   }
-
   catalog?.addEventListener('click', (e) => {
     cardSelection(e);
   });
-
   productCardContainer?.addEventListener('click', (e: Event) => {
     if (
       e !== null &&
       e.target instanceof HTMLElement &&
-      e.target.closest('.item-card__info')
+      e.target.closest('.products__item-card')
     ) {
       const cardForRender = e.target.closest(
-        '.products__item-card'
+        '.products__item-card',
       ) as HTMLElement;
-      window.location.href = new URL(
-        `#products/${+cardForRender.dataset.identifier!}`,
-        window.location.href
-      ).href;
-      renderDetails(+cardForRender.dataset.identifier!);
+
+      if (e.target.closest('.btn-det')) {
+        window.location.href = new URL(
+          `#products/${+cardForRender.dataset.identifier!}`,
+          window.location.href,
+        ).href;
+        renderDetails(+cardForRender.dataset.identifier!);
+      }
     }
   });
 }
@@ -265,7 +316,7 @@ const params = new URLSearchParams();
 export function searchParams(
   action: string,
   key: string,
-  value?: string | string[]
+  value?: string | string[],
 ): void {
   // add - добавление, set - замена, del - удаление
   if (!value) {
@@ -295,6 +346,5 @@ export function searchParams(
     params.toString().length !== 0
       ? '?' + params.toString()
       : params.toString();
-
   localStorageUrl('set');
 }
