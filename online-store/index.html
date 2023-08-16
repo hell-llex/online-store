@@ -6,30 +6,68 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Online Store</title>
-<link rel="icon" href="favicon.ico"><script defer src="index.js"></script><link href="main.eebf3edf43c601c65c77.css" rel="stylesheet"></head>
+<link rel="icon" href="favicon.ico"><script defer src="index.js"></script><link href="main.814efba5c6354fb7c9d8.css" rel="stylesheet"></head>
 
 <body class="body">
   <div class="wrapper">
-    <header class="header">
-      <div class="logo" class="logo">Online-Store</div>
-      <div class="icon-basket">
-        <p>0</p>
-        <p class="header-total">0€</p>
-      </div>
-      <!-- <a href="#/" data-href="#/" onclick="locationResolver(this.dataset.href)" class="logo">Online-Store</a>
-      <a href="#/basket/" data-href="#/basket/" onclick="locationResolver(this.dataset.href)" class="basket">
-        <p>0</p>
-      </a> -->
-      <!-- <a href="#/" data-href="#/" class="logo">Online-Store</a> -->
-      <!-- <a href="#/basket" data-href="#/basket/" class="icon-basket">
-        <p>0</p>
-      </a> -->
+    <header class="header active">
+      <div class="logo"></div>
+      <nav class="nav">
+        <div class="search-container">
+          <input type="search" name="search" id="search" class="search" placeholder="Search here..." autocomplete="off">
+          <p class="found" data-found="0">
+            <span>Found:</span>
+            <span class="new">***</span>
+            <span>/</span>
+            <span class="all">***</span>
+          </p>
+        </div>
+        <!-- <div class="search-container">
+
+        </div> -->
+
+
+        <div class="search-icon-container">
+          <div class="search-icon"><span></span></div>
+          <p class="found" data-found="0">
+            <span>Found:</span>
+            <span class="new">***</span>
+            <span>/</span>
+            <span class="all">***</span>
+          </p>
+        </div>
+        <div class="btn-basket">
+          <div class="icon-basket">
+            <div class="notification">
+              <div class="notification-container">
+                <p class="header-total">0$</p>
+                <span class="spacer"></span>
+              </div>
+              <p class="counter">0</p>
+            </div>
+          </div>
+        </div>
+      </nav>
     </header>
     <main class="main">
+
       <div class="page__home">
         <div class="main-container">
           <aside class="filters">
             <ul class="filters-list">
+              <li class="filters-item filters-item__mobile">
+                <div class="btn-switch-view">
+                  <span></span><span></span><span></span><span></span>
+                </div>
+
+                <select name="sort" id="sort" class="sort-input">
+                  <option value="select" selected disabled>Select sorting</option>
+                  <option value="rating-highest">RATING ⇧</option>
+                  <option value="rating-lowest">RATING ⇩</option>
+                  <option value="price-highest">PRICE ⇧</option>
+                  <option value="price-lowest">PRICE ⇩</option>
+                </select>
+              </li>
               <li class="filters-item">
                 <h3>Category</h3>
                 <div class="category-container" data-active="false">
@@ -73,23 +111,18 @@
           </aside>
           <div class="catalog">
             <div class="catalog-sort">
+              <p class="filters-btn">FILTERS</p>
               <div class="btn-switch-view">
                 <span></span><span></span><span></span><span></span>
               </div>
-              <span class="line"></span>
-              <p class="found" data-found="0">Found:***</p>
-              <span class="line"></span>
-              <input type="search" name="search" id="search" class="search" placeholder="Search here..." autocomplete="off">
-              <span class="line"></span>
-              <div class="btn-sort">
-                <select name="sort" id="sort" class="sort-input">
-                  <option value="select" selected disabled>Select sorting</option>
-                  <option value="rating-highest">RATING ⇧</option>
-                  <option value="rating-lowest">RATING ⇩</option>
-                  <option value="price-highest">PRICE ⇧</option>
-                  <option value="price-lowest">PRICE ⇩</option>
-                </select>
-              </div>
+
+              <select name="sort" id="sort" class="sort-input">
+                <option value="select" selected disabled>Select sorting</option>
+                <option value="rating-highest">RATING ⇧</option>
+                <option value="rating-lowest">RATING ⇩</option>
+                <option value="price-highest">PRICE ⇧</option>
+                <option value="price-lowest">PRICE ⇩</option>
+              </select>
             </div>
             <div class="catalog-products">
               <div class="preloader">
@@ -104,34 +137,69 @@
       </div>
 
       <div class="page__basket">
-        <section class="basket wrapper">
-          <div class="page page2" data-page="page2">
-
+        <div class="page page2" data-page="page2">
+          <div class="summary-container">
             <div class="summary">
-        <!--<h2 class="summary__title">Summary</h2>
-              <div class="summary__products">Products: 0
+              <h2 class="summary__title">Summary</h2>
+              <p class="summary__products">Products: 0
+              </p>
+              <p class="summary__total">Total: 0
+              </p>
+              <p class="summary__discount hide">Total: 0</p>
+
+              <input type="text" placeholder="Code..." class="summary__input" tabindex="1" required maxlength="20">
+              <div class="apply-code-container">
+                <p class="apply-code__title"><b>Applied codes:</b></p>
+                <div class="apply-code__items">
+                  <p>Сodes not found<br>(ಥ﹏ಥ)</p>
+                </div>
               </div>
-              <div class="summary__total">Total: 0
+
+              <div class="summary__example-text"></div>
+
+              <div class="summary-btn">
+                <div class="summary__buy-btn">BUY NOW!</div>
               </div>
-              <div class="summary__promo">
-                <input type="text" placeholder="Enter promo code" class="summary__input">
-                <div class="summary__input-text">Промокод '123'</div>
-              </div>
-              <button class="summary__buy-btn">BUY NOW!</button> -->
             </div>
-
-            <div class="products">
-
-              <div class="products__header">
-              </div>
-
-              <div class="products__card-container">
-                <div class="empty">Basket is empty</div>
-              </div>
-            </div>
-
           </div>
-        </section>
+
+
+          <div class="products">
+
+            <div class="products__header">
+            </div>
+
+            <div class="products__card-container">
+              <div class="empty">Basket is empty</div>
+            </div>
+            <!-- <div class="summary-container__mobile">
+              <div class="summary">
+                <h2 class="summary__title">Summary</h2>
+                <p class="summary__products">Products: 0
+                </p>
+                <p class="summary__total">Total: 0
+                </p>
+                <p class="summary__discount hide">Total: 0</p>
+
+                <input type="text" placeholder="Code: hell, store, new..." class="summary__input" tabindex="1" required
+                  maxlength="20">
+                <div class="apply-code-container">
+                  <p class="apply-code__title"><b>Applied codes:</b></p>
+                  <div class="apply-code__items">
+                    <p>Сodes not found<br>(ಥ﹏ಥ)</p>
+                  </div>
+                </div>
+
+                <div class="summary__example-text"></div>
+
+                <div class="summary-btn">
+                  <div class="summary__buy-btn">BUY NOW!</div>
+                </div>
+              </div>
+            </div> -->
+          </div>
+
+        </div>
       </div>
 
       <div class="page__product-description">
@@ -161,34 +229,30 @@
               </span>
               <span style="display:block">}</span>
               <span style="color: #777;font-style:italic;">
-                // <a href="#">Go home!</a>
+                // <a class="not-found-home-link">Go home!</a>
               </span>
             </span>
           </div>
         </div>
       </div>
 
-
-      <div class="shadow-wrapper hide">
+      <div class="shadow-wrapper" style="display: none;">
+        <div class="buy-form hide">
+        </div>
       </div>
       <span class="before"></span>
-      <div class="buy-form hide">
-      </div>
-      <div class="order-accepted hide">
+      <!-- <div class="order-accepted hide">
         <h3 class="title-accepted">Order accepted!</h3>
-      </div>
+      </div> -->
     </main>
     <footer class="footer">
       <a href="https://github.com/hell-llex" class="my-logo"></a>
-      <p class="footer-link">© 2022</p>
-      <a href="https://github.com/hell-llex" class="footer-link">hell-llex</a>
-      <a href="https://github.com/gru6" class="footer-link">gru6</a>
-      <a href="https://rs.school/js/" class="rs-logo"></a>
+      <div>
+        <a href="https://github.com/hell-llex" class="footer-link">hell-llex</a>
+        <p>© 2022</p>
+      </div>
     </footer>
   </div>
-
 </body>
-
-
 
 </html>
