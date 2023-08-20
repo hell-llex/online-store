@@ -5,11 +5,18 @@ import { localStorageUrl } from '../basket/localStorage';
 import { productsData } from '../cards/cards';
 import { recoveryValue } from '../routing/routing';
 import { IProduct } from '../types';
+
+// Get the details container element
+// Получение элемента контейнера для деталей товара
 const detailsContainer = document.querySelector(
   '.details-container',
 ) as HTMLElement;
 
+// Function to render the details of a product
+// Функция для отображения деталей товара
 export function renderDetails(identifier: number): void {
+  // Function to determine the "Add" or "Remove" status of the card
+  // Функция для определения состояния кнопки "Add" или "Remove" на карточке
   function addDropCard(): string {
     for (const el of itemInBasket) {
       if (el.id === identifier) return 'Remove';
@@ -17,8 +24,12 @@ export function renderDetails(identifier: number): void {
     return 'Add';
   }
 
+  // Clear the details container
+  // Очистка контейнера с деталями товара
   detailsContainer.innerHTML = '';
 
+  // Generate HTML for the details container
+  // Генерация HTML для контейнера с деталями товара
   const detailsContainerHTML = `
             <div class="bread-crumbs-container">
               <div class="bread-crumbs">
@@ -117,9 +128,13 @@ export function renderDetails(identifier: number): void {
             </div>
 `;
 
+  // Insert the generated HTML into the details container
+  // Вставка сгенерированного HTML в контейнер с деталями товара
   detailsContainer.insertAdjacentHTML('beforeend', detailsContainerHTML);
 }
 
+// Event listener for changing the displayed image when a small image is clicked
+// Обработчик события для смены отображаемого изображения при нажатии на маленькое изображение
 detailsContainer.addEventListener('click', (e) => {
   if (
     e !== null &&
@@ -135,6 +150,8 @@ detailsContainer.addEventListener('click', (e) => {
   }
 });
 
+// Event listener for adding/removing a product to/from the basket
+// Обработчик события для добавления/удаления товара из корзины
 detailsContainer.addEventListener('click', (e: Event) => {
   if (
     (e.target! as HTMLElement).closest('.btn__addBasket') &&

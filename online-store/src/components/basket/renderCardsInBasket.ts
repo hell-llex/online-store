@@ -9,6 +9,8 @@ import {
 } from './localStorage';
 import { renderTotalPrice } from './renderTotalPrice';
 
+// Selecting necessary DOM elements
+// Выбор необходимых элементов DOM
 const productCardContainer = document.querySelector(
   '.products__card-container',
 ) as HTMLElement;
@@ -16,9 +18,13 @@ const productHeader = document.querySelector(
   '.products__header',
 ) as HTMLElement;
 
+// Initializing global variables for current page and items per page limit
+// Инициализация глобальных переменных для текущей страницы и лимита элементов на странице
 export let currentPage = 1;
 export let limitItemsBasket = 4;
 
+// Function to render the product cards in the basket
+// Функция для отображения карточек товаров в корзине
 export function renderCardsInBasket(): void {
   const limitEl = document.querySelector('.limit__count') as HTMLInputElement;
   const summaryContainer = document.querySelector('.summary') as HTMLElement;
@@ -49,7 +55,7 @@ export function renderCardsInBasket(): void {
   }
   inactiveBtn();
 
-  const productList = document.querySelector(
+  let productList = document.querySelector(
     '.products__card-container',
   ) as HTMLElement;
 
@@ -70,7 +76,7 @@ export function renderCardsInBasket(): void {
 
   let scrollOffset = 110;
 
-  const scrollElement = productList.children[productList.children.length - 2];
+  let scrollElement = productList.children[productList.children.length - 2];
 
   const elementInView = (el: Element | null, offset = 0) => {
     const elementTop = el!.getBoundingClientRect().top;
@@ -91,16 +97,24 @@ export function renderCardsInBasket(): void {
 
   productList.addEventListener('scroll', () => {
     if (window.innerWidth <= 768) {
+      productList = document.querySelector(
+        '.products__card-container',
+      ) as HTMLElement;
+      scrollElement = productList.children[productList.children.length - 2];
       scrollOffset = scrollElement.clientHeight * 2;
       handleScrollAnimation();
     }
   });
 }
 
+// Event listener for clicks on the header
+// Обработчик событий для кликов по заголовку
 productHeader.addEventListener('click', (e: Event) => {
   managementHeader(e);
 });
 
+// Event listener for changes in the header (limit and page)
+// Обработчик событий для изменений в заголовке (лимит и страница)
 productHeader.addEventListener('change', (e: Event) => {
   if (
     e !== null &&
@@ -110,6 +124,8 @@ productHeader.addEventListener('change', (e: Event) => {
     renderCardsInBasket();
 });
 
+// Function to manage the header for changing limit and page
+// Функция для управления заголовком для изменения лимита и страницы
 function managementHeader(event: Event) {
   const limitEl = document.querySelector('.limit__count') as HTMLInputElement;
   const PageCounter = document.querySelector(
@@ -152,6 +168,8 @@ function managementHeader(event: Event) {
   inactiveBtn();
 }
 
+// Function to manage the inactive state of buttons
+// Функция для управления состоянием неактивных кнопок
 function inactiveBtn() {
   if (limitItemsBasket === 2)
     (document.querySelector('.limit-minus') as HTMLElement).classList.add(
@@ -190,6 +208,8 @@ function inactiveBtn() {
     );
 }
 
+// Function to display a list of products with pagination
+// Функция для отображения списка товаров с пагинацией
 function displayList(
   arrData: IProduct[],
   rowPerPage: number,

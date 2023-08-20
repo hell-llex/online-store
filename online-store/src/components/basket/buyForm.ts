@@ -1,13 +1,18 @@
 import { itemInBasket } from '../../index';
 import { renderBasket } from './basket';
 import { addLocalStorageBasket } from './localStorage';
+import { activeCode } from './renderTotalPrice';
 
+// Type definition for the purchased item
+// Определение типа для купленного товара
 type itemBuy = {
   item: string;
   price: number;
   countProducts: number;
 };
 
+// Function to render the purchase form
+// Функция для отображения формы покупки
 export function renderBuyForm(itemBuy: itemBuy): void {
   const buyForm = document.querySelector('.buy-form') as HTMLFormElement;
   const shadowWrapper = document.querySelector(
@@ -20,6 +25,8 @@ export function renderBuyForm(itemBuy: itemBuy): void {
   body.style.overflow = 'hidden';
   buyForm.innerHTML = '';
 
+  // Data about countries for selecting country code and operator
+  // Данные о странах для выбора кода страны и оператора
   const sngCountriesData = [
     {
       countryCode: '375',
@@ -251,10 +258,14 @@ export function renderBuyForm(itemBuy: itemBuy): void {
       .join('');
   }
 
+  // Event listener for changing the selected country for the country code
+  // Обработчик события изменения выбранной страны для кода страны
   selectCountryCode.addEventListener('change', changeOperatorCode);
 
   changeOperatorCode();
 
+  // Event listener for clicking on the shadow to close the form
+  // Обработчик события клика по тени для закрытия формы
   shadowWrapper.addEventListener('click', (e: Event) => {
     if ((e.target! as HTMLElement).classList.contains('shadow-wrapper'))
       shadowWrapperCloser();
@@ -433,6 +444,8 @@ export function renderBuyForm(itemBuy: itemBuy): void {
 
   inputPhone.addEventListener('input', validPhone);
 
+  // Event handler for clicking the "BUY" button
+  // Обработчик события клика по кнопке "BUY"
   buyBtn.addEventListener('click', (e: Event) => {
     if ((e.target! as HTMLElement).classList.contains('active')) {
       buyForm.innerHTML = `<div class='order-accepted-container'>
@@ -444,6 +457,10 @@ export function renderBuyForm(itemBuy: itemBuy): void {
 
       if (itemBuy.item === 'All Basket') {
         itemInBasket.splice(0, itemInBasket.length);
+        activeCode.length = 0;
+        (
+          document.querySelector('.apply-code__items') as HTMLElement
+        ).innerHTML = '<p>Сodes not found<br>(ಥ﹏ಥ)</p>';
         renderBasket();
         addLocalStorageBasket();
       }

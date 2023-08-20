@@ -6,11 +6,15 @@ import { slider } from './slider/slider';
 import { searchProductCard } from '../search/search';
 import { searchParams } from '../routing/routing';
 
+// Define filter selectors and initial slider settings
+// Определение селекторов фильтров и начальных настроек слайдеров
 const filterCategory: IFilterSelector = { arrFilter: [], countFilter: [] };
 const filterBrand: IFilterSelector = { arrFilter: [], countFilter: [] };
 const filterStock: ISliderSelector<number> = { min: 0, max: 1 };
 const filterPrice: ISliderSelector<number> = { min: 0, max: 1 };
 
+// Function to create filter elements
+// Функция для создания элементов фильтра
 function CreateFilter(
   setting: IFilterSelector | ISliderSelector<number>,
   location: string,
@@ -63,6 +67,8 @@ function CreateFilter(
     dataDom.join('');
 }
 
+// Function to load filters based on product data
+// Функция для загрузки фильтров на основе данных о продуктах
 export function loadFilter(arrProd: IProduct[]): void {
   const stock: number[] = [];
   const price: number[] = [];
@@ -101,6 +107,8 @@ export function loadFilter(arrProd: IProduct[]): void {
   changeFilter(); // вызов функции для использования всей фильтрации
 }
 
+// Function to update the view based on filters
+// Функция для обновления представления на основе фильтров
 export function countView(arrProd: IProduct[] | string): void {
   const containerItem = document.querySelectorAll(
     '.filters .container-item',
@@ -190,8 +198,12 @@ export function countView(arrProd: IProduct[] | string): void {
   }
 }
 
+// Initialize the resultData array for sorting during filtering
+// Инициализация массива resultData для сортировки во время фильтрации
 export let resultData: IProduct[] = []; // массив с данным для сортировки во время фильтрации
 
+// Function to handle filter changes
+// Функция для обработки изменений в фильтрах
 export function changeFilter(trigger?: string): void {
   function filtering(e?: Event): void {
     let productFilter: IProduct[] = productsData.products.slice();
@@ -580,6 +592,8 @@ export function changeFilter(trigger?: string): void {
   });
 
   if (trigger === 'now') {
+    // Trigger filtering and slider initialization
+    // Запуск фильтрации и инициализация слайдеров
     filtering();
     ISliderSelector(0, 'to');
     ISliderSelector(0, 'from');

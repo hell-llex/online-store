@@ -2,18 +2,27 @@ import { itemInBasket, total } from '../../index';
 import { IProduct } from '../types';
 import { renderBuyForm } from './buyForm';
 
+// Interface for a promotional code
+// Интерфейс для промо-кода
 interface IpromoCode {
   text: string;
   discount: number;
 }
 
+// Array of predefined promo codes
+// Массив заранее определенных промо-кодов
 const promoCodeArr: IpromoCode[] = [
   { text: 'hell', discount: 10 },
   { text: 'store', discount: 10 },
   { text: 'new', discount: 10 },
 ];
 
-let activeCode: IpromoCode[] = [];
+// Array to hold active promo codes
+// Массив для активных промо-кодов
+export let activeCode: IpromoCode[] = [];
+
+// HTML markup for the summary container
+// HTML-разметка для контейнера с суммарной информацией
 export const summaryConatiner = `
   <div class="summary">
     <h2 class="summary__title">Summary</h2>
@@ -36,6 +45,8 @@ export const summaryConatiner = `
   </div>
 `;
 
+// Function to render the total price, discounts, and promo code functionality
+// Функция для отображения общей стоимости, скидок и функциональности промо-кодов
 export function renderTotalPrice(): void {
   let priceTotal = 0;
   let priceDiscountTotal = 0;
@@ -44,6 +55,8 @@ export function renderTotalPrice(): void {
     '.summary-container',
   ) as HTMLInputElement;
 
+  // Function to generate promo code button HTML
+  // Функция для генерации HTML-кнопки с промо-кодом
   const promoCodeBtn = (promoCode: IpromoCode, active: boolean) => `
   <div class="promo-code-item ${active ? 'active' : ''}" data-code="${
     promoCode.text
@@ -150,12 +163,16 @@ export function renderTotalPrice(): void {
     }
   });
 
+  // Event listeners for applying and managing promo codes
+  // Обработчики событий для применения и управления промо-кодами
   applyCodesItems.forEach((elem) =>
     elem.addEventListener('click', (e: Event) => {
       addDiscount(e.target as HTMLInputElement);
     }),
   );
 
+  // Function to add or drop a promo code
+  // Функция для добавления или удаления промо-кода
   function addDiscount(element: HTMLElement) {
     if (element.closest('.change-btn')) {
       if (
@@ -234,6 +251,8 @@ export function renderTotalPrice(): void {
     }
   }
 
+  // Function to find and display discounts based on input promo code
+  // Функция для поиска и отображения скидок на основе введенного промо-кода
   function findDiscount(promoCode: string) {
     const code = promoCodeArr.find(
       (elem) =>
@@ -269,6 +288,8 @@ export function renderTotalPrice(): void {
     '.products .summary-btn',
   ) as HTMLElement;
 
+  // Event listener for the "BUY NOW!" button on computers
+  // Обработчик событий для кнопки "BUY NOW!" на компьютерах
   buyButtonComputers.addEventListener('click', () => {
     if (window.innerWidth > 768) {
       renderBuyForm({
@@ -281,16 +302,21 @@ export function renderTotalPrice(): void {
     }
   });
 
-  buyButtonMobile.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-      renderBuyForm({
-        price: activeCode.length !== 0 ? priceDiscountTotal : priceTotal,
-        item: 'All Basket',
-        countProducts: totalCountEl,
-      });
-    }
-  });
+  // Event listener for the "BUY NOW!" button on mobile devices
+  // Обработчик событий для кнопки "BUY NOW!" на мобильных устройствах
+  if (buyButtonMobile)
+    buyButtonMobile.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        renderBuyForm({
+          price: activeCode.length !== 0 ? priceDiscountTotal : priceTotal,
+          item: 'All Basket',
+          countProducts: totalCountEl,
+        });
+      }
+    });
 
+  // Update total values in the "total" object
+  // Обновление значений общей стоимости и количества продуктов в объекте "total"
   total.totalPrice = priceTotal;
   total.totalElements = totalCountEl;
 }

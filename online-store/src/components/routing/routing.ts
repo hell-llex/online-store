@@ -9,7 +9,11 @@ import { IProduct } from '../types';
 import { changeFilter } from '../filter/filter';
 import { localStorageUrl } from '../basket/localStorage';
 
+// Function to recover values from URL parameters
+// Функция для извлечения значений из параметров URL
 export function recoveryValue(value: string) {
+  // DOM element references for various UI components
+  // Ссылки на элементы DOM для различных компонентов интерфейса
   const stockLowerSlider = document.querySelector(
     '.stock-lower',
   ) as HTMLInputElement;
@@ -49,6 +53,8 @@ export function recoveryValue(value: string) {
     '.catalog-products',
   ) as HTMLElement;
 
+  // Parse the URL parameters
+  // Разбор параметров URL
   value = value.slice(value.indexOf('#') + 2);
   const params = new URLSearchParams(value);
   const category = params.has('category')
@@ -65,6 +71,8 @@ export function recoveryValue(value: string) {
     : [priceLowerSlider.min, priceUpperSlider.max];
   const view = params.has('view') ? params.get('view') : 'inactive';
 
+  // Apply the parsed values to UI components
+  // Применение извлеченных значений к компонентам интерфейса
   filterCheck.forEach((elem) => {
     if (elem.dataset.category && category!.includes(elem.dataset.category)) {
       elem.checked = true;
@@ -96,6 +104,8 @@ export function recoveryValue(value: string) {
 
   sortDom.value = sort!;
 
+  // Update the view mode and filters
+  // Обновление режима просмотра и фильтров
   if (view === 'active') {
     btnView.classList.add('active');
     catalogProducts.classList.add('active');
@@ -105,10 +115,14 @@ export function recoveryValue(value: string) {
     catalogProducts.classList.remove('active');
     searchParams('del', 'view');
   }
+  // Trigger filter and product card functions
+  // Вызов функций фильтрации и отображения карточек товаров
   changeFilter('now');
   searchProductCard('now');
 }
 
+// Router setup and routing logic
+// Настройка маршрутизатора и логика маршрутизации
 export function Routing(): void {
   window.location.href =
     window.location.hash.length === 0
@@ -124,6 +138,8 @@ export function Routing(): void {
     '.products__card-container',
   ) as HTMLElement;
 
+  // Router initialization and configuration
+  // Инициализация и конфигурация маршрутизатора
   const router = new Router({
     mode: 'hash',
     page404: function () {
@@ -131,6 +147,8 @@ export function Routing(): void {
     },
   });
 
+  // Router navigation and event listeners
+  // Навигация маршрутизатора и обработчики событий
   router.add('', function () {
     (main[0] as HTMLElement).style.display = 'flex';
     (main[1] as HTMLElement).style.display = 'none';
@@ -285,7 +303,11 @@ export function Routing(): void {
     }
   });
 
+  // Function to handle card selection and navigation
+  // Функция для обработки выбора карточки и навигации
   function cardSelection(e: Event) {
+    // Check button action and update UI accordingly
+    // Проверка действия кнопки и обновление пользовательского интерфейса
     const nCard = +(
       (e.target! as HTMLElement).closest('.product-item') as HTMLElement
     ).dataset.identifier!;
@@ -294,6 +316,8 @@ export function Routing(): void {
       '.btn__addBasket',
     ) as HTMLElement;
 
+    // Navigate to product details page
+    // Переход на страницу с подробностями о товаре
     if (
       (e.target! as HTMLElement).closest('.btn__addBasket') &&
       e !== null &&
@@ -326,6 +350,8 @@ export function Routing(): void {
       renderDetails(nCard);
     }
   }
+  // Event listeners for card and product container
+  // Обработчики событий для карточки товара и контейнера с товарами
   catalog?.addEventListener('click', (e) => {
     cardSelection(e);
   });
@@ -341,6 +367,8 @@ export function Routing(): void {
       ) as HTMLElement;
 
       if (e.target.closest('.btn-det')) {
+        // Navigate to product details page
+        // Переход на страницу с подробностями о товаре
         window.location.href = new URL(
           `#products/${+cardForRender.dataset.identifier!}`,
           window.location.href,
@@ -351,12 +379,16 @@ export function Routing(): void {
   });
 }
 
+// Function to manage URL search parameters
+// Функция для управления параметрами поиска URL
 const params = new URLSearchParams();
 export function searchParams(
   action: string,
   key: string,
   value?: string | string[],
 ): void {
+  // Update search parameters based on action and values
+  // Обновление параметров поиска на основе действия и значений
   if (!value) {
     params.delete(key);
   } else if (typeof value === 'string') {
@@ -380,6 +412,8 @@ export function searchParams(
     }
   }
 
+  // Update window location hash and save to local storage
+  // Обновление хэша местоположения окна и сохранение в локальном хранилище
   window.location.hash =
     params.toString().length !== 0
       ? '?' + params.toString()
