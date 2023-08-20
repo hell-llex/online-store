@@ -26,14 +26,14 @@
     "@typescript-eslint/unbound-method": "off",
     "@typescript-eslint/no-empty-function": "off",
 
-    "prettier/prettier": [
-      // "error",
-      "warn",
-      {
-        "singleQuote": true,
-        "endOfLine": "auto"
-      }
-    ],
+    // "prettier/prettier": [
+    //   // "error"
+    //   "warn",
+    //   {
+    //     "singleQuote": true,
+    //     "endOfLine": "auto"
+    //   }
+    // ],
 
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/no-unsafe-argument": "off",

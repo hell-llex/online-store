@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack --mode=production --mode=production",
     "deploy": "npm run build:dev && npx gh-pages -d dist -e online-store",
     "build:dev": "webpack --mode=development",
@@ -44,6 +43,7 @@
     "mini-css-extract-plugin": "^2.7.2",
     "postcss": "^8.4.20",
     "postcss-loader": "^7.0.2",
+    "prettier": "^3.0.0",
     "sass": "^1.56.2",
     "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",

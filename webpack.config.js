@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
@@ -9,7 +10,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const stylesHandler = MiniCssExtractPlugin.loader
 
 const config = {
-  // entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')],
   entry: path.resolve(__dirname, './online-store/src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -29,6 +29,7 @@ const config = {
     }
   },
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
     new ESLintPlugin({
       files: './online-store/src/*.ts'
     }),

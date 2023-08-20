@@ -1,106 +1,173 @@
 import { itemInBasket } from '../..';
-import Data from '../../products-v1.json';
 import { renderBasket } from '../basket/basket';
 import { renderBuyForm } from '../basket/buyForm';
+import { localStorageUrl } from '../basket/localStorage';
 import { productsData } from '../cards/cards';
+import { recoveryValue } from '../routing/routing';
 import { IProduct } from '../types';
+
+// Get the details container element
+// Получение элемента контейнера для деталей товара
 const detailsContainer = document.querySelector(
-  '.details-container'
+  '.details-container',
 ) as HTMLElement;
 
+// Function to render the details of a product
+// Функция для отображения деталей товара
 export function renderDetails(identifier: number): void {
+  // Function to determine the "Add" or "Remove" status of the card
+  // Функция для определения состояния кнопки "Add" или "Remove" на карточке
   function addDropCard(): string {
     for (const el of itemInBasket) {
-      if (el.id === identifier) return 'Drop item';
+      if (el.id === identifier) return 'Remove';
     }
     return 'Add';
   }
 
+  // Clear the details container
+  // Очистка контейнера с деталями товара
   detailsContainer.innerHTML = '';
-  const detailsContainerHTML = `
-            <div class="bread-crumbs">
-              <a href="#">Store</a>
-              <p>${Data[identifier - 1].category}</p>
-              <p>${Data[identifier - 1].brand}</p>
-              <p>${Data[identifier - 1].title}</p>
-            </div>
-            <div class="details__card" data-identifier="${identifier}">
-              <div class="card__info">
-                  <div class="cards__image">
-                    <div class="small__images">
-                    <img class="small__img" src="${
-                      Data[identifier - 1].images[0]
-                    }">
-                    <img class="small__img" src="${
-                      Data[identifier - 1].images[1]
-                    }">
-                    <img class="small__img" src="${
-                      Data[identifier - 1].images[2]
-                    }">
-                    </div>
-                  <img class="focus__img" src="${
-                    Data[identifier - 1].images[0]
-                  }">
-                  </div>
-                  <div class="card__description">
-                    <div class="item-card__title">
-                      <h3>${Data[identifier - 1].title}</h3>
-                    </div>
-                    <div class="item-card__description">${
-                      Data[identifier - 1].description
-                    }
-                    </div>
-                    <div>Stock: ${Data[identifier - 1].stock}</div>
-                    <div>Rating: ${Data[identifier - 1].rating}</div>
-                    <div>Discount: ${
-                      Data[identifier - 1].discountPercentage
-                    }%</div>
-                    <div>Price: ${Data[identifier - 1].price} €</div>
-                  </div>
 
-                  <div class="card__buy">
-                  <div class="card-price">${Data[identifier - 1].price} €</div>
-                  <div class="btn__addBasket" data-action="${addDropCard()}">${addDropCard()}</div>
-                  <button class = "details__buy-btn">Buy now!</button>
+  // Generate HTML for the details container
+  // Генерация HTML для контейнера с деталями товара
+  const detailsContainerHTML = `
+            <div class="bread-crumbs-container">
+              <div class="bread-crumbs">
+                <a class="home-link">Store</a>
+                <span>></span>
+                <p>${productsData.products[identifier - 1].category}</p>
+                <span>></span>
+                <p>${productsData.products[identifier - 1].brand}</p>
+                <span>></span>
+                <p>${productsData.products[identifier - 1].title}</p>
+              </div>
+            </div>
+            <div class="details__card-container">
+              <div class="details__card" data-identifier="${identifier}">
+                <div class="card__info">
+                    <div class="cards__image">
+                      <div class="small__images">
+                        ${
+                          productsData.products[identifier - 1].images[0]
+                            ? `<div class="small__img active" style="background-image: url('${
+                                productsData.products[identifier - 1].images[0]
+                              }');"></div>`
+                            : ''
+                        }
+                        ${
+                          productsData.products[identifier - 1].images[1]
+                            ? `<div class="small__img" style="background-image: url('${
+                                productsData.products[identifier - 1].images[1]
+                              }');"></div>`
+                            : ''
+                        }
+                        ${
+                          productsData.products[identifier - 1].images[2]
+                            ? `<div class="small__img" style="background-image: url('${
+                                productsData.products[identifier - 1].images[2]
+                              }');"></div>`
+                            : ''
+                        }
+                        ${
+                          productsData.products[identifier - 1].images[3]
+                            ? `<div class="small__img" style="background-image: url('${
+                                productsData.products[identifier - 1].images[3]
+                              }');"></div>`
+                            : ''
+                        }
+                      </div>
+                      <div class="focus__img">
+                        ${
+                          productsData.products[identifier - 1].thumbnail
+                            ? `<div class="small__img" style="background-image: url('${
+                                productsData.products[identifier - 1].thumbnail
+                              }');"></div>`
+                            : ''
+                        }
+                      </div>
+                    </div>
+
+                    <div class="card__description">
+                      <h3>${productsData.products[identifier - 1].title}</h3>
+                      <div class="item-card__description">${
+                        productsData.products[identifier - 1].description
+                      }
+                      </div>
+                      <p><b>Category: </b> ${
+                        productsData.products[identifier - 1].category
+                      }</p>
+                      <p><b>Brand: </b> ${
+                        productsData.products[identifier - 1].brand
+                      }</p>
+                      <p><b>Old price: </b><span> ${Math.round(
+                        (productsData.products[identifier - 1].price / 100) *
+                          (100 +
+                            productsData.products[identifier - 1]
+                              .discountPercentage),
+                      )}$</span></p>
+                      <p><b>Discount: </b>${
+                        productsData.products[identifier - 1].discountPercentage
+                      }%</p>
+                      <p><b>New price: </b><span> ${
+                        productsData.products[identifier - 1].price
+                      }$</span></p>
+                      <p><b>Stock: </b>${
+                        productsData.products[identifier - 1].stock
+                      }</p>
+                      <p><b>Rating: </b>${
+                        productsData.products[identifier - 1].rating
+                      }</p>
+                    </div>
+
+                    <div class="card__buy">
+                    <div class="btn__addBasket" data-action="${addDropCard()}">${addDropCard()}</div>
+                    <button class="details__buy-btn">Buy now!</button>
+                    </div>
                   </div>
-                </div>
+              </div>
             </div>
 `;
 
+  // Insert the generated HTML into the details container
+  // Вставка сгенерированного HTML в контейнер с деталями товара
   detailsContainer.insertAdjacentHTML('beforeend', detailsContainerHTML);
-  const buyButton = document.querySelector('.details__buy-btn') as HTMLElement;
-  buyButton.addEventListener('click', (e: Event) => {
-    buyFromDescriptions(e);
-  });
 }
 
+// Event listener for changing the displayed image when a small image is clicked
+// Обработчик события для смены отображаемого изображения при нажатии на маленькое изображение
 detailsContainer.addEventListener('click', (e) => {
   if (
     e !== null &&
-    e.target instanceof HTMLImageElement &&
-    e.target.classList.contains('small__img')
+    e.target instanceof HTMLElement &&
+    e.target.closest('.small__img')
   ) {
-    const focusImg = document.querySelector('.focus__img') as HTMLImageElement;
-    focusImg.setAttribute('src', e.target.src);
+    document.querySelectorAll('.small__img').forEach((elem) => {
+      elem.classList.remove('active');
+    });
+    e.target.closest('.small__img')?.classList.add('active');
+    (document.querySelector('.focus__img') as HTMLElement).innerHTML =
+      e.target.outerHTML;
   }
 });
 
+// Event listener for adding/removing a product to/from the basket
+// Обработчик события для добавления/удаления товара из корзины
 detailsContainer.addEventListener('click', (e: Event) => {
   if (
-    (e.target! as HTMLElement).classList.contains('btn__addBasket') &&
+    (e.target! as HTMLElement).closest('.btn__addBasket') &&
     e.target instanceof HTMLElement &&
     e.target.dataset.action === 'Add'
   ) {
     const closestCard = e.target.closest('.details__card') as HTMLElement;
     const identifier = closestCard.dataset.identifier;
-    itemInBasket.push(Data[+identifier! - 1]);
-    e.target.dataset.action = 'Drop item';
-    e.target.innerText = 'Drop item';
+    itemInBasket.push(productsData.products[+identifier! - 1]);
+    e.target.dataset.action = 'Remove';
+    e.target.innerText = 'Remove';
     renderBasket();
   } else if (
-    (e.target! as HTMLElement).classList.contains('btn__addBasket') &&
+    (e.target! as HTMLElement).closest('.btn__addBasket') &&
     e.target instanceof HTMLElement &&
-    e.target.dataset.action === 'Drop item'
+    e.target.dataset.action === 'Remove'
   ) {
     const closestCard = e.target.closest('.details__card') as HTMLElement;
     const identifier = closestCard.dataset.identifier;
@@ -113,31 +180,29 @@ detailsContainer.addEventListener('click', (e: Event) => {
     e.target.innerText = 'Add';
     renderBasket();
     renderDetails(+identifier!);
+  } else if (
+    (e.target! as HTMLElement).closest('.details__buy-btn') &&
+    e.target instanceof HTMLElement
+  ) {
+    const closestCard = e.target.closest('.details__card') as HTMLElement;
+    const identifier = closestCard.dataset.identifier;
+    const itemProduct = productsData.products[+identifier! - 1];
+    renderBuyForm({
+      price: itemProduct.price,
+      item: itemProduct.title,
+      countProducts: 1,
+    });
+  } else if (
+    (e.target! as HTMLElement).closest('.home-link') &&
+    e.target instanceof HTMLElement
+  ) {
+    window.location.href = new URL(
+      '#',
+      window.location.origin + window.location.pathname,
+    ).href;
+
+    const recoveryUrl =
+      localStorageUrl('get') ?? window.location.href.toString();
+    recoveryValue(recoveryUrl);
   }
 });
-
-function buyFromDescriptions(e: Event) {
-  const itemCard = (e.target! as HTMLElement)
-    .previousElementSibling as HTMLElement;
-  //if product in basket render bye form
-  if (
-    e !== null &&
-    e.target instanceof HTMLElement &&
-    itemCard!.dataset.action === 'Drop item'
-  ) {
-    renderBuyForm();
-  }
-  //if no one in basket push in array, change btn text and redirect
-  else if (
-    e !== null &&
-    e.target instanceof HTMLElement &&
-    itemCard!.dataset.action === 'Add'
-  ) {
-    itemInBasket.push(productsData.products[+!e.target.dataset.identifier]);
-    e.target.dataset.action = 'Drop item';
-    itemCard.innerText = 'Drop item';
-    window.location.replace('#basket');
-    renderBasket();
-    renderBuyForm();
-  }
-}
