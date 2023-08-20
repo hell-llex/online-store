@@ -7,8 +7,6 @@ $color-grey: #888888;
 $font-height-130: 130%;
 $all-radius: 5px;
 
-//PRODUCT DETAILS
-
 .details-container {
   padding: 0 5rem;
   width: 90vw;
@@ -37,7 +35,6 @@ $all-radius: 5px;
     justify-content: space-around;
     align-items: center;
     gap: 1vw;
-    // flex-wrap: wrap;
     font-size: 2rem;
     white-space: nowrap;
     border: 2px solid $color-black;
@@ -81,7 +78,6 @@ $all-radius: 5px;
     p {
       padding: 1rem;
       color: $color-black;
-      // background-color: $color-grey;
 
       &:first-letter {
         text-transform: uppercase;
@@ -167,7 +163,6 @@ $all-radius: 5px;
 
       .small__img {
         margin: 0;
-        // max-width: 7rem;
         min-width: 4rem;
         width: 100%;
         height: 8rem;
@@ -403,7 +398,6 @@ body.overflow-hidden {
 
         .small__img {
           margin: 0;
-          // max-width: 7rem;
           min-width: 4rem;
           width: 100%;
           height: 8rem;

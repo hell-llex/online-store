@@ -10,12 +10,11 @@ export const productsData: IProductsData = {
   products: [],
   skip: 0,
   total: 0,
-}; // get full object
+};
 
-export let products: string[] = []; // array with all elements like HTML code
+export let products: string[] = [];
 
 export function CreateProductCard(setting: IProduct[] | string): void {
-  // accepts an array of data
   const currentProducts: string[] = [];
   if (typeof setting === 'string' || setting.length === 0) {
     (document.querySelector('.catalog-products') as HTMLElement).style.display =
@@ -37,7 +36,6 @@ export function CreateProductCard(setting: IProduct[] | string): void {
         images.push(image);
       });
 
-      //we change the button and the date attribute Add/Drop on the product button
       function addDropCard(): string {
         for (const el of itemInBasket) {
           if (el.id === elem.id) return 'Remove';
@@ -82,13 +80,12 @@ export function CreateProductCard(setting: IProduct[] | string): void {
 }
 
 export function loadProduct(quantity = 100): void {
-  // the default value is 100 cards, redefined in the function call
   void fetch(`https://dummyjson.com/products?limit=${quantity}`)
     .then(async (data) => data.json())
     .then((data: IProductsData) => {
       data.products.forEach((elem) => (elem.count = 1));
-      Object.assign(productsData, data); // clone object
-      CreateProductCard(data.products); // passes an array to a function CreateProductCard
+      Object.assign(productsData, data);
+      CreateProductCard(data.products);
       loadFilter(data.products);
       searchProductCard('notNow');
       window.location.href = localStorageUrl('get') as string;

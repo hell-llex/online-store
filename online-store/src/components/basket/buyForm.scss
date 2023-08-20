@@ -7,7 +7,6 @@ $color-grey: #888888;
 $font-height-130: 130%;
 $all-radius: 5px;
 
-//BUY FORM
 .shadow-wrapper {
   position: fixed;
   top: 0;
@@ -238,7 +237,6 @@ $all-radius: 5px;
 
     .row {
       padding: 0 0 2rem 0;
-      // width: 100%;
       display: flex;
       flex-direction: row;
       justify-content: space-around;
@@ -291,11 +289,6 @@ $all-radius: 5px;
             flex-direction: row;
             justify-content: center;
             align-items: center;
-
-            // =========================================================================
-
-
-            // =========================================================================
 
             .js-select-country-code {
               -webkit-appearance: none;
@@ -706,7 +699,7 @@ $all-radius: 5px;
       .row {
         padding: 1rem 2rem 2rem 2rem;
         margin: 0 0 2vh 0;
-        height: 70vh;
+        height: 55vh;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -765,7 +758,6 @@ $all-radius: 5px;
                 min-width: 8rem;
                 text-align: center;
                 border-radius: $all-radius 0 0 $all-radius;
-                // border: 1px solid $color-white;
                 border-right: 1px solid $color-black;
                 padding: 10px 0;
                 font-size: 1.5rem;
@@ -776,7 +768,6 @@ $all-radius: 5px;
                 min-width: 6rem;
                 text-align: center;
                 border-radius: 0;
-                // border: 1px solid $color-white;
                 border-right: 1px solid $color-black;
                 border-left: 1px solid $color-black;
                 padding: 10px 0;
@@ -791,8 +782,6 @@ $all-radius: 5px;
               .js-select-country {
                 text-align: center;
                 border-radius: $all-radius 0 0 $all-radius;
-                // border: 1px solid $color-white;
-                // border-right: 0px solid $color-white;
                 padding: 10px 0;
                 font-size: 1.5rem;
                 text-transform: none;
@@ -814,7 +803,6 @@ $all-radius: 5px;
                 text-align: center;
                 border-radius: 0 $all-radius $all-radius 0;
                 border-left: 1px solid $color-black;
-                // border-left: 0px solid $color-white;
               }
 
               select {
@@ -884,10 +872,8 @@ $all-radius: 5px;
               }
 
               &:valid {
-                // border-color: green;
                 background: $color-black;
                 color: $color-white;
-                // border-color: $color-white;
                 transform: translate(-2px, 2px);
                 -webkit-box-shadow: 0px 0px 0px 0px $color-black;
                 -moz-box-shadow: 0px 0px 0px 0px $color-black;
@@ -936,6 +922,7 @@ $all-radius: 5px;
     max-width: 900px;
     min-height: 55rem;
     max-height: 90vh;
+    margin-bottom: 10vh;
 
     .js-form {
       padding: 2rem 1rem;

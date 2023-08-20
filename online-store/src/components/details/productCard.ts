@@ -1,11 +1,9 @@
 import { itemInBasket } from '../..';
-// import Data from '../../products-v1.json';
 import { renderBasket } from '../basket/basket';
 import { renderBuyForm } from '../basket/buyForm';
 import { localStorageUrl } from '../basket/localStorage';
 import { productsData } from '../cards/cards';
 import { recoveryValue } from '../routing/routing';
-// import { productsData } from '../cards/cards';
 import { IProduct } from '../types';
 const detailsContainer = document.querySelector(
   '.details-container',
@@ -41,28 +39,28 @@ export function renderDetails(identifier: number): void {
                         ${
                           productsData.products[identifier - 1].images[0]
                             ? `<div class="small__img active" style="background-image: url('${
-                              productsData.products[identifier - 1].images[0]
+                                productsData.products[identifier - 1].images[0]
                               }');"></div>`
                             : ''
                         }
                         ${
                           productsData.products[identifier - 1].images[1]
                             ? `<div class="small__img" style="background-image: url('${
-                              productsData.products[identifier - 1].images[1]
+                                productsData.products[identifier - 1].images[1]
                               }');"></div>`
                             : ''
                         }
                         ${
                           productsData.products[identifier - 1].images[2]
                             ? `<div class="small__img" style="background-image: url('${
-                              productsData.products[identifier - 1].images[2]
+                                productsData.products[identifier - 1].images[2]
                               }');"></div>`
                             : ''
                         }
                         ${
                           productsData.products[identifier - 1].images[3]
                             ? `<div class="small__img" style="background-image: url('${
-                              productsData.products[identifier - 1].images[3]
+                                productsData.products[identifier - 1].images[3]
                               }');"></div>`
                             : ''
                         }
@@ -71,7 +69,7 @@ export function renderDetails(identifier: number): void {
                         ${
                           productsData.products[identifier - 1].thumbnail
                             ? `<div class="small__img" style="background-image: url('${
-                              productsData.products[identifier - 1].thumbnail
+                                productsData.products[identifier - 1].thumbnail
                               }');"></div>`
                             : ''
                         }
@@ -84,11 +82,17 @@ export function renderDetails(identifier: number): void {
                         productsData.products[identifier - 1].description
                       }
                       </div>
-                      <p><b>Category: </b> ${productsData.products[identifier - 1].category}</p>
-                      <p><b>Brand: </b> ${productsData.products[identifier - 1].brand}</p>
+                      <p><b>Category: </b> ${
+                        productsData.products[identifier - 1].category
+                      }</p>
+                      <p><b>Brand: </b> ${
+                        productsData.products[identifier - 1].brand
+                      }</p>
                       <p><b>Old price: </b><span> ${Math.round(
                         (productsData.products[identifier - 1].price / 100) *
-                          (100 + productsData.products[identifier - 1].discountPercentage),
+                          (100 +
+                            productsData.products[identifier - 1]
+                              .discountPercentage),
                       )}$</span></p>
                       <p><b>Discount: </b>${
                         productsData.products[identifier - 1].discountPercentage
@@ -96,8 +100,12 @@ export function renderDetails(identifier: number): void {
                       <p><b>New price: </b><span> ${
                         productsData.products[identifier - 1].price
                       }$</span></p>
-                      <p><b>Stock: </b>${productsData.products[identifier - 1].stock}</p>
-                      <p><b>Rating: </b>${productsData.products[identifier - 1].rating}</p>
+                      <p><b>Stock: </b>${
+                        productsData.products[identifier - 1].stock
+                      }</p>
+                      <p><b>Rating: </b>${
+                        productsData.products[identifier - 1].rating
+                      }</p>
                     </div>
 
                     <div class="card__buy">
@@ -110,29 +118,7 @@ export function renderDetails(identifier: number): void {
 `;
 
   detailsContainer.insertAdjacentHTML('beforeend', detailsContainerHTML);
-
-  // const buyButton = document.querySelector('.details__buy-btn') as HTMLElement;
-  // const buttonsDetails = document.querySelector('.card__buy') as HTMLElement;
-
-  // buttonsDetails.addEventListener('click', (e: Event) => {
-  //   buyFromDescriptions(e);
-  // });
 }
-// cards__image
-// (document.querySelector('.home-link') as HTMLElement).addEventListener(
-//   'click',
-//   () => {
-//     // router.navigateTo('#');
-//     window.location.href = new URL(
-//       '#',
-//       window.location.origin + window.location.pathname,
-//     ).href;
-
-//     const recoveryUrl =
-//       localStorageUrl('get') ?? window.location.href.toString();
-//     recoveryValue(recoveryUrl);
-//   },
-// );
 
 detailsContainer.addEventListener('click', (e) => {
   if (
@@ -146,7 +132,6 @@ detailsContainer.addEventListener('click', (e) => {
     e.target.closest('.small__img')?.classList.add('active');
     (document.querySelector('.focus__img') as HTMLElement).innerHTML =
       e.target.outerHTML;
-    // focusImg.setAttribute('src', e.target.src);
   }
 });
 
@@ -204,41 +189,3 @@ detailsContainer.addEventListener('click', (e: Event) => {
     recoveryValue(recoveryUrl);
   }
 });
-
-// function buyFromDescriptions(e: Event) {
-//   // console.log('e :>> ', e.target);
-//   // const
-//   if ((e.target as HTMLElement).closest('.btn__addBasket')) {
-//
-//
-//     // const itemCard = (e.target! as HTMLElement)
-//     //   .previousElementSibling as HTMLElement;
-//     // if product in basket render bye form
-//     // if (itemCard!.dataset.action === 'Remove') {
-//     //   const itemProduct = productsData.products[+!e.target.dataset.identifier];
-//     //   console.log('object :>> ', productsData.products[+!e.target.dataset.identifier]);
-//     //   renderBuyForm({
-//     //     price: productsData.products[+!e.target.dataset.identifier].price,
-//     //     item: productsData.products[+!e.target.dataset.identifier].title,
-//     //     countProducts: 1,
-//     //   });
-//     // }
-//     //if no one in basket push in array, change btn text and redirect
-//     // else if (itemCard!.dataset.action === 'Add') {
-//     //   const itemProduct = productsData.products[+!e.target.dataset.identifier];
-//     //   itemInBasket.push(itemProduct);
-//     //   e.target.dataset.action = 'Remove';
-//     //   itemCard.innerText = 'Remove';
-//     //   window.location.replace('#basket');
-//     //   renderBasket();
-//     //   console.log('object :>> ', productsData.products[+!e.target.dataset.identifier]);
-//     //   // renderBuyForm({
-//     //   //   price: productsData.products[+!e.target.dataset.identifier].price,
-//     //   //   item: productsData.products[+!e.target.dataset.identifier].title,
-//     //   //   countProducts: 1,
-//     //   // });
-//     // }
-//   } else if ((e.target as HTMLElement).closest('.details__buy-btn')) {
-//
-//   }
-// }

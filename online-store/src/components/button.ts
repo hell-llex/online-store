@@ -6,7 +6,6 @@ export class Button {
   btnView = document.querySelectorAll(
     '.btn-switch-view',
   ) as NodeListOf<HTMLElement>;
-  // logo = document.querySelector('.logo') as HTMLElement;
   btnContainer = document.querySelector('.btn-container') as HTMLElement;
   catalogProducts = document.querySelector('.catalog-products') as HTMLElement;
   search = document.querySelector('.search') as HTMLInputElement;
@@ -18,7 +17,6 @@ export class Button {
     '.sort-input',
   ) as NodeListOf<HTMLSelectElement>;
   filtersBtn = document.querySelector('.filters-btn') as HTMLInputElement;
-  // html = document.querySelector('.filters-btn') as HTMLInputElement;
 
   btnFilter(e: Event): void {
     if (
@@ -161,47 +159,6 @@ export class Button {
 
     this.btnContainer.addEventListener('click', (e: Event) => {
       this.btnFilter(e);
-    });
-
-    // this.logo!.addEventListener('click', (e: Event) => {
-      // this.btnFilter(e);
-      // CreateProductCard(productsData.products);
-    // });
-
-    // this.searchBtn!.addEventListener('click', (e: Event) => {
-    //   this.searchContainer.classList.add('active');
-    // });
-
-    window.addEventListener('click', (e: Event) => {
-      if ((e.target! as HTMLElement).closest('.filters-btn')) {
-        if (this.filtersBtn.classList.contains('active')) {
-          (
-            document.querySelector('.filters') as HTMLInputElement
-          ).classList.remove('active');
-          this.filtersBtn.classList.remove('active');
-        } else {
-          (
-            document.querySelector('.filters') as HTMLInputElement
-          ).classList.add('active');
-          this.filtersBtn.classList.add('active');
-        }
-      } else if (
-        this.filtersBtn.classList.contains('active') &&
-        !(e.target! as HTMLElement).closest('.filters')
-      ) {
-        (
-          document.querySelector('.filters') as HTMLInputElement
-        ).classList.remove('active');
-        this.filtersBtn.classList.remove('active');
-      }
-      if ((e.target! as HTMLElement).closest('.search-icon')) {
-        this.searchContainer.classList.add('active');
-      } else if (
-        this.searchContainer.classList.contains('active') &&
-        !(e.target! as HTMLElement).closest('.search-container')
-      ) {
-        this.searchContainer.classList.remove('active');
-      }
     });
   }
 }

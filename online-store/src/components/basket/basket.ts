@@ -9,16 +9,11 @@ import { basketButton } from '../types';
 const productCardContainer = document.querySelector(
   '.products__card-container',
 ) as HTMLElement;
-const summary = document.querySelector('.summary') as HTMLElement;
-const productHeader = document.querySelector(
-  '.products__header',
-) as HTMLElement;
 
 export function renderBasket(): void {
   renderProductHeader();
   renderCardsInBasket();
   renderTotalPrice();
-
   (
     document.querySelector('.counter') as HTMLElement
   ).innerHTML = `${itemInBasket.reduce((acc, item) => acc + item.count, 0)}`;
@@ -26,17 +21,8 @@ export function renderBasket(): void {
   (
     document.querySelector('.header-total') as HTMLElement
   ).innerHTML = `${total.totalPrice}$`;
-
-  // if (itemInBasket.length === 0) {
-  //   summary.classList.add('hidden');
-  //   productHeader.classList.add('hidden');
-  // } else {
-  //   summary.classList.remove('hidden');
-  //   productHeader.classList.remove('hidden');
-  // }
 }
 
-// handle clicking on + - Del
 productCardContainer.addEventListener('click', (e: Event) => {
   if (
     e !== null &&

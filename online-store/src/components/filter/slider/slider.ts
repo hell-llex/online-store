@@ -2,18 +2,17 @@ import './slider.scss';
 
 export function slider() {
   function dualRange(location: string) {
-    // 2 values  stock or price
     const lowerSlider = document.querySelector(
-      `.${location}-lower`
+      `.${location}-lower`,
     ) as HTMLInputElement;
     const upperSlider = document.querySelector(
-      `.${location}-upper`
+      `.${location}-upper`,
     ) as HTMLInputElement;
     const valuesLowerSlider = document.querySelector(
-      `.${location}-from`
+      `.${location}-from`,
     ) as HTMLElement;
     const valuesUpperSlider = document.querySelector(
-      `.${location}-to`
+      `.${location}-to`,
     ) as HTMLElement;
 
     let lowerVal: number;

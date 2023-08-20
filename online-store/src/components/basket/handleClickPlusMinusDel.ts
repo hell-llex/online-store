@@ -10,12 +10,12 @@ export function handleClickPlusMinusDel(event: Event) {
       event.target.dataset.action === basketButton.del)
   ) {
     const itemCard = event.target.closest(
-      '.products__item-card'
-    ) as HTMLElement; // get closest .products__item-card from event.target
+      '.products__item-card',
+    ) as HTMLElement;
+
     const itemID = itemCard.getAttribute('data-identifier');
     itemInBasket.forEach((el: IProduct) => {
       if (itemID !== null && el.id === +itemID) {
-        // compare itemInBasket.id and DOM element data-identifier
         if (
           event !== null &&
           event.target instanceof HTMLElement &&
@@ -50,7 +50,6 @@ export function handleClickPlusMinusDel(event: Event) {
 }
 
 function delCardBasket(product: IProduct) {
-  // del product from itemInBasket array
   itemInBasket.forEach((el: IProduct, index: number) => {
     if (el.id === product.id) {
       itemInBasket.splice(index, 1);

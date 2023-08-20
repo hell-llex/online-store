@@ -7,6 +7,8 @@ import {
   getLocalStorageLimitItems,
   getLocalStoragePage,
 } from './localStorage';
+import { renderTotalPrice } from './renderTotalPrice';
+
 const productCardContainer = document.querySelector(
   '.products__card-container',
 ) as HTMLElement;
@@ -26,15 +28,24 @@ export function renderCardsInBasket(): void {
   currentPage = getLocalStoragePage();
   if (postData.length === 0) {
     productCardContainer.innerHTML = `<div class="empty">Basket is empty<br>(ಥ﹏ಥ)</div>`;
-    summaryContainer.classList.add('inactive');
-    (document.querySelector('.summary__products') as HTMLElement).innerHTML =
-      '<b>Products:</b> 0';
-    (document.querySelector('.summary__total') as HTMLElement).innerHTML =
-      '<b>Total:</b> 0';
+    if (summaryContainer) {
+      summaryContainer.classList.add('inactive');
+      (document.querySelector('.summary__products') as HTMLElement).innerHTML =
+        '<b>Products:</b> 0';
+      (document.querySelector('.summary__total') as HTMLElement).innerHTML =
+        '<b>Total:</b> 0';
+    }
   } else {
-    summaryContainer.classList.remove('inactive');
+    if (summaryContainer) summaryContainer.classList.remove('inactive');
     limitEl.value = `${limitItemsBasket}`;
+
     displayList(postData, limitItemsBasket, currentPage);
+
+    productCardContainer.insertAdjacentHTML(
+      'beforeend',
+      (document.querySelector('.summary-container') as HTMLElement).innerHTML,
+    );
+    renderTotalPrice();
   }
   inactiveBtn();
 
@@ -42,7 +53,7 @@ export function renderCardsInBasket(): void {
     '.products__card-container',
   ) as HTMLElement;
 
-  if (productList.children.length <= 3) {
+  if (productList.children.length <= 3 && window.innerWidth <= 768) {
     summary.classList.add('active');
   } else {
     summary.classList.remove('active');
@@ -57,69 +68,34 @@ export function renderCardsInBasket(): void {
     }
   });
 
-  productList.addEventListener('scroll', () => {
-    if (
-      productList.scrollHeight <=
-      productList.scrollTop +
-        productList.clientHeight +
-        productList.children[productList.children.length - 1].clientHeight
-    ) {
+  let scrollOffset = 110;
+
+  const scrollElement = productList.children[productList.children.length - 2];
+
+  const elementInView = (el: Element | null, offset = 0) => {
+    const elementTop = el!.getBoundingClientRect().top;
+
+    return (
+      elementTop <=
+      (window.innerHeight || document.documentElement.clientHeight) - offset
+    );
+  };
+
+  const handleScrollAnimation = () => {
+    if (elementInView(scrollElement, scrollOffset)) {
       summary.classList.add('active');
-    } else if (
-      !(
-        productList.scrollHeight <=
-        productList.scrollTop +
-          productList.clientHeight +
-          productList.children[productList.children.length - 1].clientHeight
-      ) &&
-      productList.children.length > 3
-    ) {
+    } else {
       summary.classList.remove('active');
+    }
+  };
+
+  productList.addEventListener('scroll', () => {
+    if (window.innerWidth <= 768) {
+      scrollOffset = scrollElement.clientHeight * 2;
+      handleScrollAnimation();
     }
   });
 }
-
-// productHeader.addEventListener('click', (e: Event) => {
-//   const limitCountText = document.querySelector(
-//     '.limit__count',
-//   ) as HTMLInputElement;
-//   // const pageCountText = document.querySelector(
-//   //   '.page__count',
-//   // ) as HTMLInputElement;
-
-//   if ((e.target as HTMLElement).closest('.products__items-limit')) {
-//     let limitItemsBasket = +limitCountText.value;
-//     if (
-//       (e.target as HTMLElement).closest('.limit-minus') &&
-//       limitItemsBasket > 2
-//     ) {
-//       // limitCountText.value += 1;
-//       limitItemsBasket--;
-//       // renderCardsInBasket();
-//     } else if (
-//       (e.target as HTMLElement).closest('.limit-plus') &&
-//       limitItemsBasket < 10
-//     ) {
-//       // limitCountText.value = `${+limitCountText.value + 1}`;
-//       limitItemsBasket++;
-//       // renderCardsInBasket();
-//     }
-//     limitCountText.value = `${limitItemsBasket}`;
-//     // limitCountText.innerHTML = `${limitItemsBasket}`;
-//   }
-//   // else if ((e.target as HTMLElement).closest('.products__page-count')) {
-//   //   if ((e.target as HTMLElement).closest('.page-minus') && currentPage > 1) {
-//   //     currentPage--;
-//   //   } else if (
-//   //     (e.target as HTMLElement).closest('.page-plus') &&
-//   //     currentPage < Math.ceil(itemInBasket.length / limitItemsBasket)
-//   //   ) {
-//   //     currentPage++;
-//   //   }
-//   //   pageCountText.value = `${currentPage}`;
-//   //   // pageCountText.innerHTML = `${currentPage}`;
-//   // }
-// });
 
 productHeader.addEventListener('click', (e: Event) => {
   managementHeader(e);
@@ -171,7 +147,6 @@ function managementHeader(event: Event) {
     }
     PageCounter.value = `${currentPage}`;
     addLocalStoragePage();
-    // displayList(postData, limitItemsBasket, currentPage);
     renderCardsInBasket();
   }
   inactiveBtn();
@@ -223,7 +198,6 @@ function displayList(
   const PageCounter = document.querySelector(
     '.page__count',
   ) as HTMLInputElement;
-  // PageCounter.innerText = `${currentPage}`;
   PageCounter.value = `${currentPage}`;
   productCardContainer.innerHTML = '';
   page--;
@@ -231,7 +205,6 @@ function displayList(
   const end = start + rowPerPage;
   const paginatedData = arrData.slice(start, end);
 
-  //decriment pagination on 1 if no more products and click del or -
   if (paginatedData.length === 0) {
     currentPage = currentPage - 1;
     addLocalStoragePage();

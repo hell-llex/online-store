@@ -1,5 +1,4 @@
 import { itemInBasket } from '../../index';
-// import { CreateProductCard, productsData } from '../cards/cards';
 import { renderBasket } from './basket';
 import { addLocalStorageBasket } from './localStorage';
 
@@ -18,7 +17,7 @@ export function renderBuyForm(itemBuy: itemBuy): void {
 
   buyForm.classList.remove('hide');
   shadowWrapper.style.display = 'flex';
-  body.classList.add('overflow-hidden');
+  body.style.overflow = 'hidden';
   buyForm.innerHTML = '';
 
   const sngCountriesData = [
@@ -256,20 +255,17 @@ export function renderBuyForm(itemBuy: itemBuy): void {
 
   changeOperatorCode();
 
-  // Outside buyForm-close
   shadowWrapper.addEventListener('click', (e: Event) => {
     if ((e.target! as HTMLElement).classList.contains('shadow-wrapper'))
       shadowWrapperCloser();
   });
 
   function shadowWrapperCloser(): void {
-    // shadowWrapper.classList.add('hide');
     shadowWrapper.style.display = 'none';
     buyForm.classList.add('hide');
-    body.classList.remove('overflow-hidden');
+    body.style.overflow = 'visible';
   }
 
-  // Form card-term validation
   const inputCardNumber = document.querySelector(
     '.js-input-card-number',
   ) as HTMLInputElement;
@@ -444,23 +440,18 @@ export function renderBuyForm(itemBuy: itemBuy): void {
         <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
       </div>`;
 
-      // const orderAccepted = document.querySelector(
-      //   '.order-accepted',
-      // ) as HTMLElement;
-
       shadowWrapper.removeEventListener('click', shadowWrapperCloser);
+
       if (itemBuy.item === 'All Basket') {
-        // itemInBasket.length = 0;
         itemInBasket.splice(0, itemInBasket.length);
         renderBasket();
         addLocalStorageBasket();
       }
 
       setTimeout(() => {
-        // window.location.replace('/#');
         window.location.hash = '#';
         shadowWrapper.style.display = 'none';
-        body.classList.remove('overflow-hidden');
+        body.style.overflow = 'visible';
       }, 2000);
     }
   });
@@ -480,16 +471,12 @@ export function renderBuyForm(itemBuy: itemBuy): void {
       let validForm = true;
       allInputForm.forEach((elem) => {
         if (elem.classList.contains('js-input-phone') && elem.validity.valid) {
-          selectPhone.forEach(elem => elem.classList.add('active'));
-          // selectPhone[0].classList.add('active');
-          // selectPhone[1].classList.add('active');
+          selectPhone.forEach((elem) => elem.classList.add('active'));
         } else if (
           elem.classList.contains('js-input-phone') &&
           !elem.validity.valid
         ) {
-          selectPhone.forEach(elem => elem.classList.remove('active'));
-          // selectPhone[0].classList.remove('active');
-          // selectPhone[1].classList.remove('active');
+          selectPhone.forEach((elem) => elem.classList.remove('active'));
         }
 
         if (

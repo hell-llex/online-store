@@ -1,5 +1,4 @@
 export interface IProduct {
-  // интерфейс для объекта с карточками
   id: number;
   count: number;
   title: string;

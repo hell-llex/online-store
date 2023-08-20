@@ -10,7 +10,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 const stylesHandler = MiniCssExtractPlugin.loader
 
 const config = {
-  // entry: ['@babel/polyfill', path.resolve(__dirname, './online-store/src/index.ts')],
   entry: path.resolve(__dirname, './online-store/src/index.ts'),
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -18,15 +17,6 @@ const config = {
     filename: 'index.js',
     assetModuleFilename: 'assets/[name][ext]'
   },
-  // devServer: {
-  //   open: true,
-  //   hot: true,
-  //   port: 8080,
-
-  //   liveReload: true,
-  //   // watchContentBase: true,
-  //   // contentBase: path.join(__dirname, 'public'),
-  // },
   devServer: {
     open: true,
     host: 'localhost',

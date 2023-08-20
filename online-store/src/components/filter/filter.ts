@@ -6,16 +6,15 @@ import { slider } from './slider/slider';
 import { searchProductCard } from '../search/search';
 import { searchParams } from '../routing/routing';
 
-const filterCategory: IFilterSelector = { arrFilter: [], countFilter: [] }; // категории по всему списку товаров
-const filterBrand: IFilterSelector = { arrFilter: [], countFilter: [] }; // брэнды по всему списку товаров
-const filterStock: ISliderSelector<number> = { min: 0, max: 1 }; // минимальное и максимальное кол-во товара по всему списку товаров
-const filterPrice: ISliderSelector<number> = { min: 0, max: 1 }; // минимальная и максимальная стоимость товара по всему списку товаров
+const filterCategory: IFilterSelector = { arrFilter: [], countFilter: [] };
+const filterBrand: IFilterSelector = { arrFilter: [], countFilter: [] };
+const filterStock: ISliderSelector<number> = { min: 0, max: 1 };
+const filterPrice: ISliderSelector<number> = { min: 0, max: 1 };
 
 function CreateFilter(
   setting: IFilterSelector | ISliderSelector<number>,
   location: string,
 ): void {
-  // значения строки category, brand, stock, price
   const dataDom: string[] = [];
   if (location === 'category' || location === 'brand') {
     (setting as IFilterSelector).arrFilter.forEach((elem, i) => {
@@ -61,7 +60,7 @@ function CreateFilter(
   }
 
   (document.querySelector(`.${location}-container`) as HTMLElement).innerHTML =
-    dataDom.join(''); // создание фильтров
+    dataDom.join('');
 }
 
 export function loadFilter(arrProd: IProduct[]): void {

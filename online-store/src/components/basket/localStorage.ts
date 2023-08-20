@@ -2,7 +2,7 @@ import { itemInBasket } from '../../index';
 import { IProduct } from '../types';
 import { currentPage, limitItemsBasket } from './renderCardsInBasket';
 export function addLocalStorageBasket(): void {
-  localStorage.setItem('storage', JSON.stringify(itemInBasket)); // serialize and write to the localstorage
+  localStorage.setItem('storage', JSON.stringify(itemInBasket));
 }
 
 export function getLocalStorageBasket(): IProduct[] | void {
@@ -14,7 +14,7 @@ export function getLocalStorageBasket(): IProduct[] | void {
 }
 
 export function addLocalStoragePage(): void {
-  localStorage.setItem('page', JSON.stringify(currentPage)); // serialize and write to the localstorage
+  localStorage.setItem('page', JSON.stringify(currentPage));
 }
 
 export function getLocalStoragePage(): number {
@@ -23,10 +23,10 @@ export function getLocalStoragePage(): number {
   if (!parsedPage) {
     throw new Error('Invalid page number');
   }
-  return parsedPage; // we take it out of the locale and parse it back
+  return parsedPage;
 }
 export function addLocalStorageLimitItems(): void {
-  localStorage.setItem('limit', JSON.stringify(limitItemsBasket)); // serialize and write to the localstorage
+  localStorage.setItem('limit', JSON.stringify(limitItemsBasket));
 }
 export function getLocalStorageLimitItems(): number {
   const limit = localStorage.getItem('limit');
@@ -34,7 +34,7 @@ export function getLocalStorageLimitItems(): number {
   if (!parsedLimit) {
     throw new Error('Invalid limit number');
   }
-  return parsedLimit; // we take it out of the locale and parse it back
+  return parsedLimit;
 }
 
 export function localStorageUrl(trigger: string): void | string {

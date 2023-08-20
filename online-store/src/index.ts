@@ -1,9 +1,6 @@
 import '../index.html';
 import '../styles.scss';
-// import './components/basket/basket.scss';
 import './components/loader/loader.scss';
-// import './components/cards/cards.scss';
-// import './components/basket/basket';
 import { Button } from './components/button';
 import { loadProduct } from './components/cards/cards';
 import {
@@ -16,9 +13,8 @@ import { Routing, recoveryValue } from './components/routing/routing';
 import { SortProductCard } from './components/sort/sort';
 import { IProduct } from './components/types';
 import { renderBasket } from './components/basket/basket';
-// import { renderBuyForm } from './components/basket/buyForm';
 
-loadProduct(30);
+loadProduct(100);
 
 Routing();
 const buttons = new Button();
@@ -45,7 +41,7 @@ const intervalId = setInterval(function () {
   }
 }, 1000);
 
-window.addEventListener('beforeunload', addLocalStoragePage); // catch reload-page event
+window.addEventListener('beforeunload', addLocalStoragePage);
 window.addEventListener('load', getLocalStoragePage);
 window.addEventListener('beforeunload', addLocalStorageBasket);
 window.addEventListener('load', getLocalStorageBasket);
@@ -57,4 +53,3 @@ export const total = {
   totalPrice: 0,
   totalElements: 0,
 };
-

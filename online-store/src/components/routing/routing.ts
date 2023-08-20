@@ -134,14 +134,11 @@ export function Routing(): void {
   router.add('', function () {
     (main[0] as HTMLElement).style.display = 'flex';
     (main[1] as HTMLElement).style.display = 'none';
-    // (main[0] as HTMLElement).style.display = 'none';
-    // (main[1] as HTMLElement).style.display = 'flex';
     (main[2] as HTMLElement).style.display = 'none';
     (main[3] as HTMLElement).style.display = 'none';
     (header as HTMLElement).classList.add('active');
     (basket as HTMLElement).classList.remove('active');
     CreateProductCard(productsData.products);
-    // if (!!window.location.hash) {
     if (!!window.location.hash.toString()) {
       recoveryValue(window.location.href.toString());
     }
@@ -203,6 +200,59 @@ export function Routing(): void {
       recoveryValue(recoveryUrl);
     }
   });
+  const searchBtn = document.querySelector('.search-icon') as HTMLInputElement;
+  const searchContainer = document.querySelector(
+    '.search-container-wrapper',
+  ) as HTMLInputElement;
+  const catalogFiltersBtn = document.querySelector(
+    '.catalog__filters-btn',
+  ) as HTMLInputElement;
+  const filtersBtn = document.querySelector('.filters-btn') as HTMLInputElement;
+  const filtersContainer = document.querySelector(
+    '.filters',
+  ) as HTMLInputElement;
+  const filtersWrapper = document.querySelector(
+    '.filters-wrapper',
+  ) as HTMLInputElement;
+
+  catalogFiltersBtn.addEventListener('click', () => {
+    filtersContainer.classList.add('active');
+    filtersBtn.classList.add('active');
+    filtersWrapper.classList.add('active');
+  });
+
+  filtersBtn.addEventListener('click', () => {
+    filtersContainer.classList.remove('active');
+    filtersBtn.classList.remove('active');
+    filtersWrapper.classList.remove('active');
+  });
+
+  filtersWrapper.addEventListener('click', () => {
+    filtersContainer.classList.remove('active');
+    filtersBtn.classList.remove('active');
+    filtersWrapper.classList.remove('active');
+  });
+
+  searchBtn.addEventListener('click', () => {
+    searchContainer.classList.add('active');
+    searchContainer.addEventListener('click', (e: Event) => {
+      if (
+        (e.target! as HTMLElement).classList.contains(
+          'search-container-wrapper active',
+        )
+      ) {
+        searchContainer.classList.remove('active');
+      }
+    });
+  });
+
+  searchContainer.addEventListener('click', (e: Event) => {
+    if (
+      (e.target! as HTMLElement).classList.contains('search-container-wrapper')
+    ) {
+      searchContainer.classList.remove('active');
+    }
+  });
 
   homeLinkBtn?.addEventListener('click', () => {
     if (!!window.location.hash.toString()) {
@@ -214,9 +264,6 @@ export function Routing(): void {
   });
 
   basket?.addEventListener('click', () => {
-    // basket.classList.contains('active')
-    //   ? (basket as HTMLElement).classList.remove('active')
-    //   : (basket as HTMLElement).classList.add('active');
     if (basket.classList.contains('active')) {
       (basket as HTMLElement).classList.remove('active');
       (basket as HTMLElement).classList.add('start');
@@ -226,10 +273,6 @@ export function Routing(): void {
           localStorageUrl('get') ?? window.location.href.toString();
         recoveryValue(recoveryUrl);
       }
-      // window.location.href = new URL(
-      //   '#',
-      //   window.location.origin + window.location.pathname,
-      // ).href;
       (basket as HTMLElement).classList.remove('start');
     } else {
       (basket as HTMLElement).classList.add('active');
@@ -252,7 +295,6 @@ export function Routing(): void {
     ) as HTMLElement;
 
     if (
-      //добавил этот if отслеживаем клик по Add добавляем в карзину, меняем указатели на кнопках
       (e.target! as HTMLElement).closest('.btn__addBasket') &&
       e !== null &&
       e.target instanceof HTMLElement &&
@@ -263,7 +305,6 @@ export function Routing(): void {
       currentAddBtn.innerText = 'Remove';
       renderBasket();
     } else if (
-      //добавил этот if отслеживаем клик по Remove удаляем из карзины меняем указатели на кнопках
       (e.target! as HTMLElement).closest('.btn__addBasket') &&
       e !== null &&
       e.target instanceof HTMLElement &&
@@ -277,10 +318,7 @@ export function Routing(): void {
       e.target.dataset.action = 'Add';
       currentAddBtn.innerText = 'Add';
       renderBasket();
-    } else if (
-      // (e.target! as HTMLElement).closest('.product-item') ||
-      (e.target! as HTMLElement).closest('.btn__description')
-    ) {
+    } else if ((e.target! as HTMLElement).closest('.btn__description')) {
       window.location.href = new URL(
         `#products/${nCard}`,
         window.location.origin + window.location.pathname,
@@ -291,6 +329,7 @@ export function Routing(): void {
   catalog?.addEventListener('click', (e) => {
     cardSelection(e);
   });
+
   productCardContainer?.addEventListener('click', (e: Event) => {
     if (
       e !== null &&
@@ -318,7 +357,6 @@ export function searchParams(
   key: string,
   value?: string | string[],
 ): void {
-  // add - добавление, set - замена, del - удаление
   if (!value) {
     params.delete(key);
   } else if (typeof value === 'string') {
