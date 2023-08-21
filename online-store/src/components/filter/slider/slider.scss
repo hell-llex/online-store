@@ -1,11 +1,19 @@
+$font-n3: 2rem;
+$font-n4: 1.4rem;
+$color-white: #FFFFFF;
+$color-black: #000000;
+$color-grey: #888888;
+$font-height-130: 130%;
+$all-radius: 5px;
+
 input[type=range] {
+  -webkit-appearance: none;
   box-sizing: border-box;
   appearance: none;
   width: 100%;
   height: 100%;
-  margin: 0;
-  padding: 0 0px;
-  overflow: hidden;
+  margin: 0 0rem;
+  padding: 0 0rem;
   border: 0;
   border-radius: 1px;
   outline: none;
@@ -16,6 +24,28 @@ input[type=range] {
   &:active,
   &:focus {
     outline: none;
+  }
+
+  &::-webkit-slider-thumb:hover,
+  &::-webkit-slider-thumb:focus,
+  &::-webkit-slider-thumb:active {
+    background-color: $color-black;
+    color: $color-white;
+    border: 2px solid $color-white;
+    transition: all 0.1s ease-in-out;
+  }
+
+  &::-moz-range-thumb:hover,
+  &::-moz-range-thumb:focus,
+  &::-moz-range-thumb:active {
+    background-color: $color-black;
+    color: $color-white;
+    border: 2px solid $color-white;
+    transition: all 0.1s ease-in-out;
+  }
+
+  &.active {
+    background-color: red;
   }
 
   &::-webkit-slider-thumb {
@@ -29,6 +59,21 @@ input[type=range] {
     appearance: none;
     pointer-events: all;
     box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+
+    border: 2px solid black;
+    background-color: #FFFFFF;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    padding: 0.3rem;
+    background: $color-white;
+    transition: all 0.3s ease-in-out;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     &::before {
       content: ' ';
@@ -52,6 +97,21 @@ input[type=range] {
     appearance: none;
     pointer-events: all;
     box-shadow: 0 1px 4px 0.5px rgba(0, 0, 0, 0.25);
+
+    border: 2px solid black;
+    background-color: #FFFFFF;
+    color: #000000;
+    cursor: pointer;
+    transition: all 0.1s ease-in-out;
+    padding: 0.3rem;
+    background: $color-white;
+    transition: all 0.3s ease-in-out;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     &::before {
       content: ' ';
@@ -105,6 +165,7 @@ input[type=range] {
 
 .multi-range {
   position: relative;
+  padding: 0 0rem;
   height: 5vh;
   min-height: 3rem;
   width: 100%;

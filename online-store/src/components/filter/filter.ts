@@ -575,19 +575,19 @@ export function changeFilter(trigger?: string): void {
 
   // ======================stock==========================
 
-  upperSliderAll[0].addEventListener('input', () => {
+  upperSliderAll[0].addEventListener('change', () => {
     ISliderSelector(0, 'to');
   });
-  lowerSliderAll[0].addEventListener('input', () => {
+  lowerSliderAll[0].addEventListener('change', () => {
     ISliderSelector(0, 'from');
   });
 
   // ======================price==========================
 
-  upperSliderAll[1].addEventListener('input', () => {
+  upperSliderAll[1].addEventListener('change', () => {
     ISliderSelector(1, 'to');
   });
-  lowerSliderAll[1].addEventListener('input', () => {
+  lowerSliderAll[1].addEventListener('change', () => {
     ISliderSelector(1, 'from');
   });
 
