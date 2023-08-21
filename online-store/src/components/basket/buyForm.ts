@@ -461,6 +461,24 @@ export function renderBuyForm(itemBuy: itemBuy): void {
         (
           document.querySelector('.apply-code__items') as HTMLElement
         ).innerHTML = '<p>Сodes not found<br>(ಥ﹏ಥ)</p>';
+        const summaryTotal = document.querySelectorAll(
+          '.summary__total',
+        ) as NodeListOf<HTMLElement>;
+        const summaryDiscount = document.querySelectorAll(
+          '.summary__discount',
+        ) as NodeListOf<HTMLElement>;
+        summaryTotal.forEach(
+          (elem) => (
+            (elem.innerHTML = `<b>Total:</b> <span>0$</span>`),
+            elem.classList.remove('active')
+          ),
+        );
+        summaryDiscount.forEach(
+          (elem) => (
+            (elem.innerHTML = `<b>New total:</b> <span>0$</span>`),
+            elem.classList.add('hide')
+          ),
+        );
         renderBasket();
         addLocalStorageBasket();
       }
